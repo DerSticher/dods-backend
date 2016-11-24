@@ -27,7 +27,7 @@ public class Ritual extends Attribut implements Dauernd, HatProbe, Reichweite, N
     private Kostentabelle kostentabelle;
 
     @ApiModelProperty(required = true)
-    @ManyToOne
+    @Embedded
     private Probe probe;
 
     @ApiModelProperty(required = true)

@@ -44,7 +44,7 @@ public class LiturgieService extends AbstractAttributService<Liturgie, CreateLit
     protected Liturgie parse(CreateLiturgie create) {
         List<Zielkategorie> zielkategorien = zielkategorieService.findByIds(create.getZielkategorienIds());
         Dauer dauer = dauerService.findById(create.getLiturgieDauerId());
-        Probe probe = probeService.findById(create.getProbeId());
+        Probe probe = probeService.create(create);
 
         String name = create.getName();
         String wirkung = create.getWirkung();

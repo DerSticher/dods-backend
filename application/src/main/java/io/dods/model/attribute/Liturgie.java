@@ -31,7 +31,7 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, Nutzkosten,
     private int kapKosten;
 
     @ApiModelProperty(required = true)
-    @ManyToOne
+    @Embedded
     private Probe probe;
 
     @ApiModelProperty(required = true)

@@ -47,7 +47,7 @@ public class ZeremonieService extends AbstractAttributService<Zeremonie, CreateZ
                 .map(id -> zielkategorieService.findById(id))
                 .collect(Collectors.toList());
 
-        Probe probe = probeService.findById(create.getProbeId());
+        Probe probe = probeService.create(create);
         int reichweite = create.getReichweiteInSchritt();
         String wirkung = create.getWirkung();
         Dauer dauer = dauerService.findById(create.getDauerId());

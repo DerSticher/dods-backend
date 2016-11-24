@@ -44,7 +44,7 @@ public class RitualService extends AbstractAttributService<Ritual, CreateRitual>
     protected Ritual parse(CreateRitual create) {
         List<Zielkategorie> zielkategorien = zielkategorieService.findByIds(create.getZielkategorienIds());
         Dauer dauer = dauerService.findById(create.getRitualDauerId());
-        Probe probe = probeService.findById(create.getProbeId());
+        Probe probe = probeService.create(create);
 
         String name = create.getName();
         String wirkung = create.getWirkung();

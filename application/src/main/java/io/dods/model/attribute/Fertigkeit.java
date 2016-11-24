@@ -37,7 +37,7 @@ public class Fertigkeit extends Attribut implements HatProbe, UsesKostentabelle 
     private Kostentabelle kostentabelle;
 
     @ApiModelProperty(required = true)
-    @ManyToOne
+    @Embedded
     private Probe probe;
 
     @ApiModelProperty(required = true)

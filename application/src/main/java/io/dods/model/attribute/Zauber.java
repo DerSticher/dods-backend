@@ -24,7 +24,7 @@ public class Zauber extends Attribut implements Dauernd, HatProbe, Nutzkosten, R
     private Kostentabelle kostentabelle;
 
     @ApiModelProperty(required = true)
-    @ManyToOne
+    @Embedded
     private Probe probe;
 
     @ApiModelProperty(required = true)

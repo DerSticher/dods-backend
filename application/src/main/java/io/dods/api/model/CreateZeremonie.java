@@ -1,5 +1,6 @@
 package io.dods.api.model;
 
+import io.dods.attributeService.probe.HatProbeApi;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.List;
@@ -7,9 +8,7 @@ import java.util.List;
 /**
  * @author Richard Gottschalk
  */
-public class CreateZeremonie {
-    @ApiModelProperty(required = true, example = "1")
-    private int probeId;
+public class CreateZeremonie implements HatProbeApi {
 
     @ApiModelProperty(required = true, example = "-1")
     private int reichweiteInSchritt;
@@ -32,13 +31,14 @@ public class CreateZeremonie {
     @ApiModelProperty(required = true, example = "Fancy Attribute's Name")
     private String name;
 
-    public int getProbeId() {
-        return probeId;
-    }
+    @ApiModelProperty(required = true, example = "1")
+    private int teilprobe1Id;
 
-    public void setProbeId(int probeId) {
-        this.probeId = probeId;
-    }
+    @ApiModelProperty(required = true, example = "1")
+    private int teilprobe2Id;
+
+    @ApiModelProperty(required = true, example = "8")
+    private int teilprobe3Id;
 
     public int getReichweiteInSchritt() {
         return reichweiteInSchritt;
@@ -94,5 +94,20 @@ public class CreateZeremonie {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public int getTeilprobe1Id() {
+        return teilprobe1Id;
+    }
+
+    @Override
+    public int getTeilprobe2Id() {
+        return teilprobe2Id;
+    }
+
+    @Override
+    public int getTeilprobe3Id() {
+        return teilprobe3Id;
     }
 }

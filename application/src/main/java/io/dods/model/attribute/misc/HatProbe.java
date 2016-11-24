@@ -12,10 +12,4 @@ public interface HatProbe {
     @JsonProperty
     Probe getProbe();
 
-    @NotNull
-    @JsonProperty
-    default String getBezeichnungProbe() {
-        Probe probe = getProbe();
-        return probe == null ? "" : probe.getBezeichnung();
-    }
 }

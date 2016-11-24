@@ -1,5 +1,6 @@
 package io.dods.api.model;
 
+import io.dods.attributeService.probe.HatProbeApi;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.List;
@@ -7,12 +8,10 @@ import java.util.List;
 /**
  * @author Richard Gottschalk
  */
-public class CreateLiturgie {
-    @ApiModelProperty(required = true, example = "1")
-    private int wirkungsdauerId;
+public class CreateLiturgie implements HatProbeApi {
 
     @ApiModelProperty(required = true, example = "1")
-    private int probeId;
+    private int wirkungsdauerId;
 
     @ApiModelProperty(required = true, example = "1")
     private int liturgieDauerId;
@@ -41,6 +40,15 @@ public class CreateLiturgie {
     @ApiModelProperty(required = true, example = "[1,2]")
     private List<Long> aspektIds;
 
+    @ApiModelProperty(required = true, example = "1")
+    private int teilprobe1Id;
+
+    @ApiModelProperty(required = true, example = "1")
+    private int teilprobe2Id;
+
+    @ApiModelProperty(required = true, example = "8")
+    private int teilprobe3Id;
+
     public int getReichweiteInSchritt() {
         return reichweiteInSchritt;
     }
@@ -55,14 +63,6 @@ public class CreateLiturgie {
 
     public void setWirkungsdauerId(int wirkungsdauerId) {
         this.wirkungsdauerId = wirkungsdauerId;
-    }
-
-    public int getProbeId() {
-        return probeId;
-    }
-
-    public void setProbeId(int probeId) {
-        this.probeId = probeId;
     }
 
     public int getLiturgieDauerId() {
@@ -127,5 +127,20 @@ public class CreateLiturgie {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public int getTeilprobe1Id() {
+        return teilprobe1Id;
+    }
+
+    @Override
+    public int getTeilprobe2Id() {
+        return teilprobe2Id;
+    }
+
+    @Override
+    public int getTeilprobe3Id() {
+        return teilprobe3Id;
     }
 }

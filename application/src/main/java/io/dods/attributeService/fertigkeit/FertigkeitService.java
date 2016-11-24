@@ -30,7 +30,7 @@ public class FertigkeitService extends AbstractAttributService<Fertigkeit, Creat
     @Override
     protected Fertigkeit parse(CreateFertigkeit create) {
         Kostentabelle kostentabelle = Kostentabelle.findOrThrow(create.getSteigerungsfaktor());
-        Probe probe = probeService.findById(create.getProbeId());
+        Probe probe = probeService.create(create);
         Fertigkeit.Gruppe gruppe = create.getGruppe();
 
         String name = create.getName();

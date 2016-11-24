@@ -49,7 +49,7 @@ public class ZauberService extends AbstractAttributService<Zauber, CreateZauber>
 
         int aspKosten = create.getNutzkosten();
         Kostentabelle kostentabelle = Kostentabelle.findOrThrow(create.getSteigerungsfaktor());
-        Probe probe = probeService.findById(create.getProbeId());
+        Probe probe = probeService.create(create);
         int reichweite = create.getReichweiteInSchritt();
         String wirkung = create.getWirkung();
         Wirkungsdauer wirkungsdauer = wirkungsdauerService.findById(create.getWirkungsdauerId());

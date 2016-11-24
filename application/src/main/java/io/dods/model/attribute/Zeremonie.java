@@ -15,7 +15,7 @@ import java.util.List;
 public class Zeremonie extends Attribut implements Dauernd, HatProbe, Nutzkosten, Reichweite, UsesKostentabelle, Wirkend, Zielend {
 
     @ApiModelProperty(required = true)
-    @ManyToOne
+    @Embedded
     private Probe probe;
 
     @ApiModelProperty(required = true)
