@@ -1,16 +1,20 @@
 package io.dods.model.attribute;
 
 import io.dods.model.attribute.misc.ApFix;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
  * @author Richard Gottschalk
  */
 @Entity
+@DiscriminatorValue("Vorteil")
 public class Vorteil extends Attribut implements ApFix {
 
+    @ApiModelProperty(required = true)
     @Column
     private int ap;
 

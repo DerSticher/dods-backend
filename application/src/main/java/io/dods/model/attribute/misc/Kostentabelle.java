@@ -47,4 +47,12 @@ public enum Kostentabelle {
     public boolean isActivated(int level) {
         return level > 0 || !this.equals(E);
     }
+
+    public static Kostentabelle findOrThrow(String name) throws IllegalArgumentException {
+        try {
+            return valueOf(name);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(String.format("Cannot parse %s to a corresponding table", name), e);
+        }
+    }
 }

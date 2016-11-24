@@ -1,6 +1,7 @@
 package io.dods.model.attribute;
 
 import io.dods.model.attribute.misc.*;
+import io.swagger.annotations.ApiModelProperty;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -11,29 +12,39 @@ import java.util.List;
  * @author Richard Gottschalk
  */
 @Entity
+@DiscriminatorValue("Zauber")
 public class Zauber extends Attribut implements Dauernd, HatProbe, Nutzkosten, Reichweite, UsesKostentabelle, Wirkend, Zielend {
 
+    @ApiModelProperty(required = true)
     @Column
     private int aspKosten;
 
+    @ApiModelProperty(required = true)
     @Enumerated(EnumType.STRING)
     private Kostentabelle kostentabelle;
 
+    @ApiModelProperty(required = true)
     @ManyToOne
     private Probe probe;
 
+    @ApiModelProperty(required = true)
     @Column
     private int reichweiteInSchritt;
 
-    @OneToOne
-    private Wirkung wirkung;
+    @ApiModelProperty(required = true)
+    @Lob
+    @Column
+    private String wirkung;
 
+    @ApiModelProperty(required = true)
     @ManyToOne
     private Wirkungsdauer wirkungsdauer;
 
+    @ApiModelProperty(required = true)
     @ManyToOne
     private Dauer zauberdauer;
 
+    @ApiModelProperty(required = true)
     @ManyToMany
     private List<Zielkategorie> zielkategorien = new ArrayList<>();
 
@@ -44,7 +55,7 @@ public class Zauber extends Attribut implements Dauernd, HatProbe, Nutzkosten, R
                   Kostentabelle kostentabelle,
                   Probe probe,
                   int reichweiteInSchritt,
-                  Wirkung wirkung,
+                  String wirkung,
                   Wirkungsdauer wirkungsdauer,
                   Dauer zauberdauer,
                   List<Zielkategorie> zielkategorien) {
@@ -62,7 +73,7 @@ public class Zauber extends Attribut implements Dauernd, HatProbe, Nutzkosten, R
                   Kostentabelle kostentabelle,
                   Probe probe,
                   int reichweiteInSchritt,
-                  Wirkung wirkung,
+                  String wirkung,
                   Wirkungsdauer wirkungsdauer,
                   Dauer zauberdauer,
                   List<Zielkategorie> zielkategorien,
@@ -104,7 +115,7 @@ public class Zauber extends Attribut implements Dauernd, HatProbe, Nutzkosten, R
     }
 
     @Override
-    public Wirkung getWirkung() {
+    public @NotNull String getWirkung() {
         return wirkung;
     }
 

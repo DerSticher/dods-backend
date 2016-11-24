@@ -1,6 +1,7 @@
 package io.dods.model.attribute;
 
 import io.dods.model.attribute.misc.*;
+import io.swagger.annotations.ApiModelProperty;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -10,26 +11,35 @@ import java.util.List;
  * @author Richard Gottschalk
  */
 @Entity
+@DiscriminatorValue("Zeremonie")
 public class Zeremonie extends Attribut implements Dauernd, HatProbe, Nutzkosten, Reichweite, UsesKostentabelle, Wirkend, Zielend {
 
+    @ApiModelProperty(required = true)
     @ManyToOne
     private Probe probe;
 
+    @ApiModelProperty(required = true)
     @Column
     private int reichweiteInSchritt;
 
+    @ApiModelProperty(required = true)
     @ManyToOne
     private Dauer dauer;
 
-    @OneToOne
-    private Wirkung wirkung;
+    @ApiModelProperty(required = true)
+    @Lob
+    @Column
+    private String wirkung;
 
+    @ApiModelProperty(required = true)
     @ManyToOne
     private Wirkungsdauer wirkungsdauer;
 
+    @ApiModelProperty(required = true)
     @Enumerated(EnumType.STRING)
     private Kostentabelle kostentabelle;
 
+    @ApiModelProperty(required = true)
     @ManyToMany
     private List<Zielkategorie> zielkategorien;
 
@@ -42,7 +52,7 @@ public class Zeremonie extends Attribut implements Dauernd, HatProbe, Nutzkosten
     public Zeremonie(Probe probe,
                      int reichweiteInSchritt,
                      Dauer dauer,
-                     Wirkung wirkung,
+                     String wirkung,
                      Wirkungsdauer wirkungsdauer,
                      Kostentabelle kostentabelle,
                      List<Zielkategorie> zielkategorien) {
@@ -58,7 +68,7 @@ public class Zeremonie extends Attribut implements Dauernd, HatProbe, Nutzkosten
     public Zeremonie(Probe probe,
                      int reichweiteInSchritt,
                      Dauer dauer,
-                     Wirkung wirkung,
+                     String wirkung,
                      Wirkungsdauer wirkungsdauer,
                      Kostentabelle kostentabelle,
                      List<Zielkategorie> zielkategorien,
@@ -89,7 +99,7 @@ public class Zeremonie extends Attribut implements Dauernd, HatProbe, Nutzkosten
     }
 
     @Override
-    public Wirkung getWirkung() {
+    public @NotNull String getWirkung() {
         return wirkung;
     }
 

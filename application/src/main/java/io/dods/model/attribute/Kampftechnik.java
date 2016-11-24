@@ -2,6 +2,7 @@ package io.dods.model.attribute;
 
 import io.dods.model.attribute.misc.Kostentabelle;
 import io.dods.model.attribute.misc.UsesKostentabelle;
+import io.swagger.annotations.ApiModelProperty;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -10,11 +11,14 @@ import javax.persistence.*;
  * @author Richard Gottschalk
  */
 @Entity
+@DiscriminatorValue("Kampftechnik")
 public class Kampftechnik extends Attribut implements UsesKostentabelle {
 
+    @ApiModelProperty(required = true)
     @OneToOne
     private Eigenschaft leiteigenschaft;
 
+    @ApiModelProperty(required = true)
     @Enumerated(EnumType.STRING)
     private Kostentabelle kostentabelle;
 

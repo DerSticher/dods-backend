@@ -4,6 +4,7 @@ import io.dods.model.attribute.misc.HatProbe;
 import io.dods.model.attribute.misc.Kostentabelle;
 import io.dods.model.attribute.misc.Probe;
 import io.dods.model.attribute.misc.UsesKostentabelle;
+import io.swagger.annotations.ApiModelProperty;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import javax.persistence.*;
  * @author Richard Gottschalk
  */
 @Entity
+@DiscriminatorValue("Fertigkeit")
 public class Fertigkeit extends Attribut implements HatProbe, UsesKostentabelle {
 
     public enum Gruppe {
@@ -19,15 +21,26 @@ public class Fertigkeit extends Attribut implements HatProbe, UsesKostentabelle 
         GESELLSCHAFT,
         NATUR,
         WISSEN,
-        HANDWERK
+        HANDWERK;
+
+        public static Gruppe findOrThrow(String name) throws IllegalArgumentException {
+            try {
+                return valueOf(name);
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException(String.format("Cannot parse %s to a Gruppe", name), e);
+            }
+        }
     }
 
+    @ApiModelProperty(required = true)
     @Enumerated(EnumType.STRING)
     private Kostentabelle kostentabelle;
 
+    @ApiModelProperty(required = true)
     @ManyToOne
     private Probe probe;
 
+    @ApiModelProperty(required = true)
     @Enumerated(EnumType.STRING)
     private Gruppe gruppe;
 

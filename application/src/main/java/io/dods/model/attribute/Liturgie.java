@@ -1,6 +1,7 @@
 package io.dods.model.attribute;
 
 import io.dods.model.attribute.misc.*;
+import io.swagger.annotations.ApiModelProperty;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -10,48 +11,43 @@ import java.util.List;
  * @author Richard Gottschalk
  */
 @Entity
+@DiscriminatorValue("Liturgie")
 public class Liturgie extends Attribut implements Dauernd, HatProbe, Nutzkosten, Reichweite, UsesKostentabelle, Wirkend, Zielend {
 
+    @ApiModelProperty(required = true)
     @ManyToOne
     private Dauer dauer;
 
+    @ApiModelProperty(required = true)
     @Enumerated(EnumType.STRING)
     private Kostentabelle kostentabelle;
 
+    @ApiModelProperty(required = true)
     @Column
     private int reichweiteInSchritt;
 
+    @ApiModelProperty(required = true)
     @Column
     private int kapKosten;
 
+    @ApiModelProperty(required = true)
     @ManyToOne
     private Probe probe;
 
-    @OneToOne
-    private Wirkung wirkung;
+    @ApiModelProperty(required = true)
+    @Lob
+    @Column
+    private String wirkung;
 
+    @ApiModelProperty(required = true)
     @ManyToOne
     private Wirkungsdauer wirkungsdauer;
 
+    @ApiModelProperty(required = true)
     @ManyToMany
-    private List<Zielkategorie> zielkategorie;
+    private List<Zielkategorie> zielkategorien;
 
-    public Liturgie(Dauer dauer,
-                    Kostentabelle kostentabelle,
-                    int reichweiteInSchritt,
-                    int kapKosten,
-                    Probe probe,
-                    Wirkung wirkung,
-                    Wirkungsdauer wirkungsdauer,
-                    List<Zielkategorie> zielkategorie) {
-        this.dauer = dauer;
-        this.kostentabelle = kostentabelle;
-        this.reichweiteInSchritt = reichweiteInSchritt;
-        this.kapKosten = kapKosten;
-        this.probe = probe;
-        this.wirkung = wirkung;
-        this.wirkungsdauer = wirkungsdauer;
-        this.zielkategorie = zielkategorie;
+    public Liturgie() {
     }
 
     public Liturgie(Dauer dauer,
@@ -59,9 +55,27 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, Nutzkosten,
                     int reichweiteInSchritt,
                     int kapKosten,
                     Probe probe,
-                    Wirkung wirkung,
+                    String wirkung,
                     Wirkungsdauer wirkungsdauer,
-                    List<Zielkategorie> zielkategorie,
+                    List<Zielkategorie> zielkategorien) {
+        this.dauer = dauer;
+        this.kostentabelle = kostentabelle;
+        this.reichweiteInSchritt = reichweiteInSchritt;
+        this.kapKosten = kapKosten;
+        this.probe = probe;
+        this.wirkung = wirkung;
+        this.wirkungsdauer = wirkungsdauer;
+        this.zielkategorien = zielkategorien;
+    }
+
+    public Liturgie(Dauer dauer,
+                    Kostentabelle kostentabelle,
+                    int reichweiteInSchritt,
+                    int kapKosten,
+                    Probe probe,
+                    String wirkung,
+                    Wirkungsdauer wirkungsdauer,
+                    List<Zielkategorie> zielkategorien,
                     String name) {
         super(name);
         this.dauer = dauer;
@@ -71,7 +85,7 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, Nutzkosten,
         this.probe = probe;
         this.wirkung = wirkung;
         this.wirkungsdauer = wirkungsdauer;
-        this.zielkategorie = zielkategorie;
+        this.zielkategorien = zielkategorien;
     }
 
     @Override
@@ -99,7 +113,7 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, Nutzkosten,
     }
 
     @Override
-    public Wirkung getWirkung() {
+    public @NotNull String getWirkung() {
         return wirkung;
     }
 
@@ -110,6 +124,10 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, Nutzkosten,
 
     @Override
     public @NotNull List<Zielkategorie> getZielkategorien() {
-        return zielkategorie;
+        return zielkategorien;
+    }
+
+    public void setDauer(Dauer dauer) {
+        this.dauer = dauer;
     }
 }

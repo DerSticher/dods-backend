@@ -63,7 +63,7 @@ public class HeldTest {
         Held held = new Held();
 
         CharakterEigenschaft eigenschaft = new CharakterEigenschaft();
-        Attribut attribut = new Vorteil(16, "HeldTest Attribut3");
+        Attribut attribut = new TestableAttribut(1, 16, "HeldTest Attribut3");
         eigenschaft.setAttribut(attribut);
         eigenschaft.setLevel(1);
 
@@ -71,7 +71,7 @@ public class HeldTest {
         assertEquals(16, held.getAp());
 
         CharakterEigenschaft eigenschaft2 = new CharakterEigenschaft();
-        eigenschaft2.setAttribut(new Vorteil(32, "HeldTest Attribut4"));
+        eigenschaft2.setAttribut(new TestableAttribut(2, 32, "HeldTest Attribut4"));
         eigenschaft2.setLevel(1);
 
         held.addEigenschaft(eigenschaft2);

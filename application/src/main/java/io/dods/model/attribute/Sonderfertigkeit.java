@@ -1,20 +1,24 @@
 package io.dods.model.attribute;
 
 import io.dods.model.attribute.misc.ApFix;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
  * @author Richard Gottschalk
  */
 @Entity
+@DiscriminatorValue("Sonderfertigkeit")
 public class Sonderfertigkeit extends Attribut implements ApFix {
 
+    @ApiModelProperty(required = true)
     @Column
     private int ap;
 
+    @ApiModelProperty(required = true)
     @Column
     private boolean isPassive;
 

@@ -3,10 +3,7 @@ package io.dods.model.attribute.misc;
 import io.dods.model.attribute.Eigenschaft;
 import org.jetbrains.annotations.NotNull;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,11 +14,18 @@ import java.util.List;
 public class Probe {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToMany
     private List<Eigenschaft> eigenschaften = new ArrayList<>();
+
+    public Probe() {
+    }
+
+    public Probe(List<Eigenschaft> eigenschaften) {
+        this.eigenschaften = eigenschaften;
+    }
 
     public @NotNull String getBezeichnung() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -33,5 +37,21 @@ public class Probe {
         }
 
         return stringBuilder.toString();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public List<Eigenschaft> getEigenschaften() {
+        return eigenschaften;
+    }
+
+    public void setEigenschaften(List<Eigenschaft> eigenschaften) {
+        this.eigenschaften = eigenschaften;
+    }
+
+    public void addEigenschaft(Eigenschaft eigenschaft) {
+        eigenschaften.add(eigenschaft);
     }
 }

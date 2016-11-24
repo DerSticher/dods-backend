@@ -1,5 +1,6 @@
 package io.dods.model.attribute.misc;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -7,17 +8,13 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface Wirkend {
 
-    Wirkung getWirkung();
+    @NotNull
+    String getWirkung();
 
     Wirkungsdauer getWirkungsdauer();
 
     @NotNull
-    default String getBezeichnungWirkung() {
-        Wirkung wirkung = getWirkung();
-        return wirkung == null ? "" : wirkung.getName();
-    }
-
-    @NotNull
+    @JsonIgnore
     default String getBezeichnungWirkungsdauer() {
         Wirkungsdauer wirkungsdauer = getWirkungsdauer();
         return wirkungsdauer == null ? "" : wirkungsdauer.getName();

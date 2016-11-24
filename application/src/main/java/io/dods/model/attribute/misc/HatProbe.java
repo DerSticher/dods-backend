@@ -1,5 +1,6 @@
 package io.dods.model.attribute.misc;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -8,9 +9,11 @@ import org.jetbrains.annotations.NotNull;
 public interface HatProbe {
 
     @NotNull
+    @JsonProperty
     Probe getProbe();
 
     @NotNull
+    @JsonProperty
     default String getBezeichnungProbe() {
         Probe probe = getProbe();
         return probe == null ? "" : probe.getBezeichnung();

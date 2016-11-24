@@ -1,6 +1,7 @@
 package io.dods.model.attribute;
 
 import io.dods.model.attribute.misc.*;
+import io.swagger.annotations.ApiModelProperty;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -11,35 +12,43 @@ import java.util.List;
  * @author Richard Gottschalk
  */
 @Entity
-public class Segnung extends Attribut implements ApFix, Nutzkosten, Reichweite, Wirkend, Zielend {
+@DiscriminatorValue("Segen")
+public class Segen extends Attribut implements ApFix, Kategorisiert, Nutzkosten, Reichweite, Wirkend, Zielend {
 
+    @ApiModelProperty(required = true)
     @ManyToMany
     private List<Aspekt> aspekte = new ArrayList<>();
 
+    @ApiModelProperty(required = true)
     @Column
     private int kapKosten;
 
+    @ApiModelProperty(required = true)
     @Column
     private int reichweiteInSchritt;
 
-    @OneToOne
-    private Wirkung wirkung;
+    @ApiModelProperty(required = true)
+    @Lob
+    @Column
+    private String wirkung;
 
+    @ApiModelProperty(required = true)
     @ManyToOne
     private Wirkungsdauer wirkungsdauer;
 
+    @ApiModelProperty(required = true)
     @ManyToMany
     private List<Zielkategorie> zielkategorien;
 
-    public Segnung() {
+    public Segen() {
     }
 
-    public Segnung(List<Aspekt> aspekte,
-                   int kapKosten,
-                   int reichweiteInSchritt,
-                   Wirkung wirkung,
-                   Wirkungsdauer wirkungsdauer,
-                   List<Zielkategorie> zielkategorien) {
+    public Segen(List<Aspekt> aspekte,
+                 int kapKosten,
+                 int reichweiteInSchritt,
+                 String wirkung,
+                 Wirkungsdauer wirkungsdauer,
+                 List<Zielkategorie> zielkategorien) {
         this.aspekte = aspekte;
         this.kapKosten = kapKosten;
         this.reichweiteInSchritt = reichweiteInSchritt;
@@ -48,13 +57,13 @@ public class Segnung extends Attribut implements ApFix, Nutzkosten, Reichweite, 
         this.zielkategorien = zielkategorien;
     }
 
-    public Segnung(List<Aspekt> aspekte,
-                   int kapKosten,
-                   int reichweiteInSchritt,
-                   Wirkung wirkung,
-                   Wirkungsdauer wirkungsdauer,
-                   List<Zielkategorie> zielkategorien,
-                   String name) {
+    public Segen(List<Aspekt> aspekte,
+                 int kapKosten,
+                 int reichweiteInSchritt,
+                 String wirkung,
+                 Wirkungsdauer wirkungsdauer,
+                 List<Zielkategorie> zielkategorien,
+                 String name) {
         super(name);
         this.aspekte = aspekte;
         this.kapKosten = kapKosten;
@@ -75,7 +84,7 @@ public class Segnung extends Attribut implements ApFix, Nutzkosten, Reichweite, 
     }
 
     @Override
-    public Wirkung getWirkung() {
+    public @NotNull String getWirkung() {
         return wirkung;
     }
 
@@ -87,5 +96,10 @@ public class Segnung extends Attribut implements ApFix, Nutzkosten, Reichweite, 
     @Override
     public @NotNull List<Zielkategorie> getZielkategorien() {
         return zielkategorien;
+    }
+
+    @Override
+    public @NotNull List<Aspekt> getKategorie() {
+        return aspekte;
     }
 }

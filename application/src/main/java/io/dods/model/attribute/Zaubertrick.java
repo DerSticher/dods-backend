@@ -1,6 +1,7 @@
 package io.dods.model.attribute;
 
 import io.dods.model.attribute.misc.*;
+import io.swagger.annotations.ApiModelProperty;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -10,19 +11,25 @@ import java.util.List;
  * @author Richard Gottschalk
  */
 @Entity
+@DiscriminatorValue("Zaubertrick")
 public class Zaubertrick extends Attribut implements ApFix, Nutzkosten, Reichweite, Wirkend, Zielend {
 
+    @ApiModelProperty(required = true)
     @Column
     private int reichweiteInSchritt;
 
+    @ApiModelProperty(required = true)
     @ManyToMany
     private List<Zielkategorie> zielkategorien;
 
+    @ApiModelProperty(required = true)
     @ManyToOne
     private Wirkungsdauer wirkungsdauer;
 
-    @OneToOne
-    private Wirkung wirkung;
+    @ApiModelProperty(required = true)
+    @Lob
+    @Column
+    private String wirkung;
 
     public Zaubertrick() {
     }
@@ -30,7 +37,7 @@ public class Zaubertrick extends Attribut implements ApFix, Nutzkosten, Reichwei
     public Zaubertrick(int reichweiteInSchritt,
                        List<Zielkategorie> zielkategorien,
                        Wirkungsdauer wirkungsdauer,
-                       Wirkung wirkung) {
+                       String wirkung) {
         this.reichweiteInSchritt = reichweiteInSchritt;
         this.zielkategorien = zielkategorien;
         this.wirkungsdauer = wirkungsdauer;
@@ -40,7 +47,7 @@ public class Zaubertrick extends Attribut implements ApFix, Nutzkosten, Reichwei
     public Zaubertrick(int reichweiteInSchritt,
                        List<Zielkategorie> zielkategorien,
                        Wirkungsdauer wirkungsdauer,
-                       Wirkung wirkung,
+                       String wirkung,
                        String name) {
         super(name);
         this.reichweiteInSchritt = reichweiteInSchritt;
@@ -60,7 +67,7 @@ public class Zaubertrick extends Attribut implements ApFix, Nutzkosten, Reichwei
     }
 
     @Override
-    public Wirkung getWirkung() {
+    public @NotNull String getWirkung() {
         return wirkung;
     }
 
