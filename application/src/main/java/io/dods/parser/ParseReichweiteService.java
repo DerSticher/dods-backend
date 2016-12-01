@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 @Service
 class ParseReichweiteService {
 
-    private static final Pattern PATTERN = Pattern.compile("Reichweite:<[^>]+> ?([^<]+)");
+    private static final Pattern PATTERN = Pattern.compile("Reichweite: ?(?:<[^>]+>)? ?([^<]+)");
 
     @Autowired
     private ReichweiteService reichweiteService;

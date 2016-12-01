@@ -2,6 +2,7 @@ package io.dods.parser;
 
 import io.dods.attributeService.wirkungsdauer.WirkungsdauerService;
 import io.dods.model.attribute.misc.Wirkungsdauer;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
@@ -19,9 +20,9 @@ import java.util.regex.Pattern;
 @Service
 class ParseWirkungService {
 
-    private static final Pattern PATTERN_WIRKUNG = Pattern.compile("Wirkung ?:<[^>]+>([^<]+)");
+    private static final Pattern PATTERN_WIRKUNG = Pattern.compile("Wirkung ?: ?(?:<[^>]+>)?(.+?)</p>");
 
-    private static final Pattern PATTERN_WIRKUNGSDAUER = Pattern.compile("Wirkungsdauer:<[^>]+>([^<]+)");
+    private static final Pattern PATTERN_WIRKUNGSDAUER = Pattern.compile("Wirkungsdauer: ?(?:<[^>]+>)? ?([^<]+)");
 
     @Autowired
     private WirkungsdauerService wirkungsdauerService;
@@ -30,7 +31,8 @@ class ParseWirkungService {
         Matcher matcher = PATTERN_WIRKUNG.matcher(document.html());
 
         if (matcher.find()) {
-            return matcher.group(1).trim();
+            String wirkung = matcher.group(1).trim();
+            return Jsoup.parse(wirkung).text();
         } else {
             return parseDescription(document);
         }
@@ -41,8 +43,10 @@ class ParseWirkungService {
         if (h1.size() > 0) {
             Element element = h1.get(0).nextElementSibling();
             List<TextNode> textNodes = element.textNodes();
-            TextNode textNode = textNodes.get(0);
-            return textNode.text();
+            if (textNodes.size() > 0) {
+                TextNode textNode = textNodes.get(0);
+                return textNode.text();
+            }
         }
 
         return "";

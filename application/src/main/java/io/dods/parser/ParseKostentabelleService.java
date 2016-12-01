@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 @Service
 class ParseKostentabelleService {
 
-    private static final Pattern PATTERN = Pattern.compile("Steigerungsfaktor:<[^>]+> ([^<]+)");
+    private static final Pattern PATTERN = Pattern.compile("Steigerungsfaktor: ?(?:<[^>]+>)? ?([^<]+)");
 
     public Kostentabelle parseKostentabelle(Document document) {
         Matcher matcher = PATTERN.matcher(document.html());
