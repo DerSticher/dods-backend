@@ -12,12 +12,10 @@ class ParsedValue {
     private String name;
     private String regel;
     private String wirkung;
-    private int kapKosten;
-    private int aspKosten;
-
 
     private Dauer dauer;
     private Kostentabelle kostentabelle;
+    private Nutzkosten nutzkosten;
     private Probe probe;
     private Reichweite reichweite;
     private Wirkungsdauer wirkungsdauer;
@@ -88,22 +86,6 @@ class ParsedValue {
         this.reichweite = reichweite;
     }
 
-    public int getKapKosten() {
-        return kapKosten;
-    }
-
-    public void setKapKosten(int kapKosten) {
-        this.kapKosten = kapKosten;
-    }
-
-    public int getAspKosten() {
-        return aspKosten;
-    }
-
-    public void setAspKosten(int aspKosten) {
-        this.aspKosten = aspKosten;
-    }
-
     public String getName() {
         return name;
     }
@@ -118,5 +100,13 @@ class ParsedValue {
 
     public List<Aspekt> getAspekt() {
         return aspekt;
+    }
+
+    public Nutzkosten getNutzkosten() {
+        return nutzkosten;
+    }
+
+    public void setNutzkosten(Nutzkosten nutzkosten) {
+        this.nutzkosten = nutzkosten;
     }
 }

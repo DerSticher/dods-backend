@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Entity
 @DiscriminatorValue("Liturgie")
-public class Liturgie extends Attribut implements Dauernd, HatProbe, Nutzkosten, HatReichweite, UsesKostentabelle, Wirkend, Zielend {
+public class Liturgie extends Attribut implements Dauernd, HatProbe, HatNutzkosten, HatReichweite, UsesKostentabelle, Wirkend, Zielend {
 
     @ApiModelProperty
     @ManyToOne
@@ -26,9 +26,9 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, Nutzkosten,
     @ManyToOne
     private Reichweite reichweite;
 
-    @ApiModelProperty(required = true)
-    @Column
-    private int kapKosten;
+    @ApiModelProperty
+    @ManyToOne
+    private Nutzkosten nutzkosten;
 
     @ApiModelProperty
     @Embedded
@@ -53,7 +53,7 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, Nutzkosten,
     public Liturgie(Dauer dauer,
                     Kostentabelle kostentabelle,
                     Reichweite reichweite,
-                    int kapKosten,
+                    Nutzkosten nutzkosten,
                     Probe probe,
                     String wirkung,
                     Wirkungsdauer wirkungsdauer,
@@ -61,7 +61,7 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, Nutzkosten,
         this.dauer = dauer;
         this.kostentabelle = kostentabelle;
         this.reichweite = reichweite;
-        this.kapKosten = kapKosten;
+        this.nutzkosten = nutzkosten;
         this.probe = probe;
         this.wirkung = wirkung;
         this.wirkungsdauer = wirkungsdauer;
@@ -71,7 +71,7 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, Nutzkosten,
     public Liturgie(Dauer dauer,
                     Kostentabelle kostentabelle,
                     Reichweite reichweite,
-                    int kapKosten,
+                    Nutzkosten nutzkosten,
                     Probe probe,
                     String wirkung,
                     Wirkungsdauer wirkungsdauer,
@@ -81,7 +81,7 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, Nutzkosten,
         this.dauer = dauer;
         this.kostentabelle = kostentabelle;
         this.reichweite = reichweite;
-        this.kapKosten = kapKosten;
+        this.nutzkosten = nutzkosten;
         this.probe = probe;
         this.wirkung = wirkung;
         this.wirkungsdauer = wirkungsdauer;
@@ -98,8 +98,8 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, Nutzkosten,
     }
 
     @Override
-    public int getNutzkosten() {
-        return kapKosten;
+    public Nutzkosten getNutzkosten() {
+        return nutzkosten;
     }
 
     @Override

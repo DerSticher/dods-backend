@@ -28,10 +28,6 @@ public class Reichweite implements Named {
         this.name = name;
     }
 
-    public long getId() {
-        return id;
-    }
-
     @Override
     public @NotNull String getName() {
         return name;

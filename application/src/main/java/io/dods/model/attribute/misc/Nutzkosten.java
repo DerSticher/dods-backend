@@ -1,13 +1,32 @@
 package io.dods.model.attribute.misc;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import io.dods.model.Named;
+import org.jetbrains.annotations.NotNull;
+
+import javax.persistence.*;
 
 /**
  * @author Richard Gottschalk
  */
-public interface Nutzkosten {
-    @JsonProperty
-    default int getNutzkosten() {
-        return 1;
+@Entity
+public class Nutzkosten implements Named {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column
+    private String name;
+
+    public Nutzkosten() {
+    }
+
+    public Nutzkosten(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public @NotNull String getName() {
+        return name;
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Entity
 @DiscriminatorValue("Zaubertrick")
-public class Zaubertrick extends Attribut implements ApFix, Nutzkosten, HatReichweite, Wirkend, Zielend {
+public class Zaubertrick extends Attribut implements ApFix, HatNutzkosten, HatReichweite, Wirkend, Zielend {
 
     @ApiModelProperty(required = true)
     @ManyToOne

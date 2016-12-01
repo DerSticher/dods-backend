@@ -25,10 +25,6 @@ public class Aspekt implements Named {
         this.name = name != null ? name : "";
     }
 
-    public long getId() {
-        return id;
-    }
-
     @Override
     public @NotNull String getName() {
         return name;

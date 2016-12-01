@@ -41,7 +41,7 @@ class ParserService {
     private ParseKapKostenService parseKapKostenService;
 
     @Autowired
-    private ParseAspKostenService parseAspKostenService;
+    private ParseNutzkostenService parseNutzkostenService;
 
     @Autowired
     private ParseAspektService parseAspektService;
@@ -53,8 +53,7 @@ class ParserService {
 
         value.setName(parseNameService.parseName(document));
         value.setReichweite(parseReichweiteService.parseReichweite(document));
-        value.setAspKosten(parseAspKostenService.parseAspKosten(document));
-        value.setKapKosten(parseKapKostenService.parseKapKosten(document));
+        value.setNutzkosten(parseNutzkostenService.parseNutzkosten(document));
 
         value.setDauer(parseDauerService.parseDauer(document));
         value.setKostentabelle(parseKostentabelleService.parseKostentabelle(document));
@@ -103,7 +102,7 @@ class ParserService {
                     value.getDauer(),
                     value.getKostentabelle(),
                     value.getReichweite(),
-                    value.getKapKosten(),
+                    value.getNutzkosten(),
                     value.getProbe(),
                     value.getWirkung(),
                     value.getWirkungsdauer(),
@@ -119,7 +118,7 @@ class ParserService {
             ParsedValue value = parseDetails(url);
 
             return new Ritual(
-                    value.getAspKosten(),
+                    value.getNutzkosten(),
                     value.getDauer(),
                     value.getKostentabelle(),
                     value.getReichweite(),
@@ -139,7 +138,7 @@ class ParserService {
 
             return new Segen(
                 value.getAspekt(),
-                value.getKapKosten() != 0 ? value.getKapKosten() : 1,
+                value.getNutzkosten(),
                 value.getReichweite(),
                 value.getWirkung(),
                 value.getWirkungsdauer(),
@@ -155,7 +154,7 @@ class ParserService {
             ParsedValue value = parseDetails(url);
 
             return new Zauber(
-                    value.getAspKosten(),
+                    value.getNutzkosten(),
                     value.getKostentabelle(),
                     value.getProbe(),
                     value.getReichweite(),
@@ -189,6 +188,7 @@ class ParserService {
             ParsedValue value = parseDetails(url);
 
             return new Zeremonie(
+                    value.getNutzkosten(),
                     value.getProbe(),
                     value.getReichweite(),
                     value.getDauer(),

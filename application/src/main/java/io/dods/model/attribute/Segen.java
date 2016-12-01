@@ -13,15 +13,15 @@ import java.util.List;
  */
 @Entity
 @DiscriminatorValue("Segen")
-public class Segen extends Attribut implements ApFix, Kategorisiert, Nutzkosten, HatReichweite, Wirkend, Zielend {
+public class Segen extends Attribut implements ApFix, Kategorisiert, HatNutzkosten, HatReichweite, Wirkend, Zielend {
 
     @ApiModelProperty(required = true)
     @ManyToMany
     private List<Aspekt> aspekte = new ArrayList<>();
 
-    @ApiModelProperty(required = true)
-    @Column
-    private int kapKosten;
+    @ApiModelProperty
+    @ManyToOne
+    private Nutzkosten nutzkosten;
 
     @ApiModelProperty(required = true)
     @ManyToOne
@@ -44,13 +44,13 @@ public class Segen extends Attribut implements ApFix, Kategorisiert, Nutzkosten,
     }
 
     public Segen(List<Aspekt> aspekte,
-                 int kapKosten,
+                 Nutzkosten nutzkosten,
                  Reichweite reichweite,
                  String wirkung,
                  Wirkungsdauer wirkungsdauer,
                  List<Zielkategorie> zielkategorien) {
         this.aspekte = aspekte;
-        this.kapKosten = kapKosten;
+        this.nutzkosten = nutzkosten;
         this.reichweite = reichweite;
         this.wirkung = wirkung;
         this.wirkungsdauer = wirkungsdauer;
@@ -58,7 +58,7 @@ public class Segen extends Attribut implements ApFix, Kategorisiert, Nutzkosten,
     }
 
     public Segen(List<Aspekt> aspekte,
-                 int kapKosten,
+                 Nutzkosten nutzkosten,
                  Reichweite reichweite,
                  String wirkung,
                  Wirkungsdauer wirkungsdauer,
@@ -66,7 +66,7 @@ public class Segen extends Attribut implements ApFix, Kategorisiert, Nutzkosten,
                  String name) {
         super(name);
         this.aspekte = aspekte;
-        this.kapKosten = kapKosten;
+        this.nutzkosten = nutzkosten;
         this.reichweite = reichweite;
         this.wirkung = wirkung;
         this.wirkungsdauer = wirkungsdauer;
@@ -79,8 +79,8 @@ public class Segen extends Attribut implements ApFix, Kategorisiert, Nutzkosten,
     }
 
     @Override
-    public int getNutzkosten() {
-        return kapKosten;
+    public Nutzkosten getNutzkosten() {
+        return nutzkosten;
     }
 
     @Override

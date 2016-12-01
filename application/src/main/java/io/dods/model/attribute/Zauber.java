@@ -13,11 +13,11 @@ import java.util.List;
  */
 @Entity
 @DiscriminatorValue("Zauber")
-public class Zauber extends Attribut implements Dauernd, HatProbe, Nutzkosten, HatReichweite, UsesKostentabelle, Wirkend, Zielend {
+public class Zauber extends Attribut implements Dauernd, HatProbe, HatNutzkosten, HatReichweite, UsesKostentabelle, Wirkend, Zielend {
 
-    @ApiModelProperty(required = true)
-    @Column
-    private int aspKosten;
+    @ApiModelProperty
+    @ManyToOne
+    private Nutzkosten nutzkosten;
 
     @ApiModelProperty
     @Enumerated(EnumType.STRING)
@@ -51,7 +51,7 @@ public class Zauber extends Attribut implements Dauernd, HatProbe, Nutzkosten, H
     public Zauber() {
     }
 
-    public Zauber(int aspKosten,
+    public Zauber(Nutzkosten nutzkosten,
                   Kostentabelle kostentabelle,
                   Probe probe,
                   Reichweite reichweite,
@@ -59,7 +59,7 @@ public class Zauber extends Attribut implements Dauernd, HatProbe, Nutzkosten, H
                   Wirkungsdauer wirkungsdauer,
                   Dauer zauberdauer,
                   List<Zielkategorie> zielkategorien) {
-        this.aspKosten = aspKosten;
+        this.nutzkosten = nutzkosten;
         this.kostentabelle = kostentabelle;
         this.probe = probe;
         this.reichweite = reichweite;
@@ -69,7 +69,7 @@ public class Zauber extends Attribut implements Dauernd, HatProbe, Nutzkosten, H
         this.zielkategorien = zielkategorien;
     }
 
-    public Zauber(int aspKosten,
+    public Zauber(Nutzkosten nutzkosten,
                   Kostentabelle kostentabelle,
                   Probe probe,
                   Reichweite reichweite,
@@ -79,7 +79,7 @@ public class Zauber extends Attribut implements Dauernd, HatProbe, Nutzkosten, H
                   List<Zielkategorie> zielkategorien,
                   String name) {
         super(name);
-        this.aspKosten = aspKosten;
+        this.nutzkosten = nutzkosten;
         this.kostentabelle = kostentabelle;
         this.probe = probe;
         this.reichweite = reichweite;
@@ -95,8 +95,8 @@ public class Zauber extends Attribut implements Dauernd, HatProbe, Nutzkosten, H
     }
 
     @Override
-    public int getNutzkosten() {
-        return aspKosten;
+    public Nutzkosten getNutzkosten() {
+        return nutzkosten;
     }
 
     @Override

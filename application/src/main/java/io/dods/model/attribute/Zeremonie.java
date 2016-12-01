@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Entity
 @DiscriminatorValue("Zeremonie")
-public class Zeremonie extends Attribut implements Dauernd, HatProbe, Nutzkosten, HatReichweite, UsesKostentabelle, Wirkend, Zielend {
+public class Zeremonie extends Attribut implements Dauernd, HatProbe, HatNutzkosten, HatReichweite, UsesKostentabelle, Wirkend, Zielend {
 
     @ApiModelProperty
     @Embedded
@@ -43,19 +43,22 @@ public class Zeremonie extends Attribut implements Dauernd, HatProbe, Nutzkosten
     @ManyToMany
     private List<Zielkategorie> zielkategorien;
 
-    @Column
-    private int kapKosten;
+    @ApiModelProperty
+    @ManyToOne
+    private Nutzkosten nutzkosten;
 
     public Zeremonie() {
     }
 
-    public Zeremonie(Probe probe,
+    public Zeremonie(Nutzkosten nutzkosten,
+                     Probe probe,
                      Reichweite reichweite,
                      Dauer dauer,
                      String wirkung,
                      Wirkungsdauer wirkungsdauer,
                      Kostentabelle kostentabelle,
                      List<Zielkategorie> zielkategorien) {
+        this.nutzkosten = nutzkosten;
         this.probe = probe;
         this.reichweite = reichweite;
         this.dauer = dauer;
@@ -65,7 +68,8 @@ public class Zeremonie extends Attribut implements Dauernd, HatProbe, Nutzkosten
         this.zielkategorien = zielkategorien;
     }
 
-    public Zeremonie(Probe probe,
+    public Zeremonie(Nutzkosten nutzkosten,
+                     Probe probe,
                      Reichweite reichweite,
                      Dauer dauer,
                      String wirkung,
@@ -74,6 +78,7 @@ public class Zeremonie extends Attribut implements Dauernd, HatProbe, Nutzkosten
                      List<Zielkategorie> zielkategorien,
                      String name) {
         super(name);
+        this.nutzkosten = nutzkosten;
         this.probe = probe;
         this.reichweite = reichweite;
         this.dauer = dauer;
@@ -119,7 +124,7 @@ public class Zeremonie extends Attribut implements Dauernd, HatProbe, Nutzkosten
     }
 
     @Override
-    public int getNutzkosten() {
-        return kapKosten;
+    public Nutzkosten getNutzkosten() {
+        return nutzkosten;
     }
 }

@@ -12,11 +12,11 @@ import java.util.List;
  */
 @Entity
 @DiscriminatorValue("Ritual")
-public class Ritual extends Attribut implements Dauernd, HatProbe, HatReichweite, Nutzkosten, UsesKostentabelle, Wirkend, Zielend {
+public class Ritual extends Attribut implements Dauernd, HatProbe, HatReichweite, HatNutzkosten, UsesKostentabelle, Wirkend, Zielend {
 
     @ApiModelProperty(required = true)
-    @Column
-    private int aspKosten;
+    @ManyToOne
+    private Nutzkosten nutzkosten;
 
     @ApiModelProperty
     @ManyToOne
@@ -50,7 +50,7 @@ public class Ritual extends Attribut implements Dauernd, HatProbe, HatReichweite
     public Ritual() {
     }
 
-    public Ritual(int aspKosten,
+    public Ritual(Nutzkosten nutzkosten,
                   Dauer dauer,
                   Kostentabelle kostentabelle,
                   Reichweite reichweite,
@@ -58,7 +58,7 @@ public class Ritual extends Attribut implements Dauernd, HatProbe, HatReichweite
                   String wirkung,
                   Wirkungsdauer wirkungsdauer,
                   List<Zielkategorie> zielkategorien) {
-        this.aspKosten = aspKosten;
+        this.nutzkosten = nutzkosten;
         this.dauer = dauer;
         this.kostentabelle = kostentabelle;
         this.reichweite = reichweite;
@@ -68,7 +68,7 @@ public class Ritual extends Attribut implements Dauernd, HatProbe, HatReichweite
         this.zielkategorien = zielkategorien;
     }
 
-    public Ritual(int aspKosten,
+    public Ritual(Nutzkosten nutzkosten,
                   Dauer dauer,
                   Kostentabelle kostentabelle,
                   Reichweite reichweite,
@@ -78,7 +78,7 @@ public class Ritual extends Attribut implements Dauernd, HatProbe, HatReichweite
                   List<Zielkategorie> zielkategorien,
                   String name) {
         super(name);
-        this.aspKosten = aspKosten;
+        this.nutzkosten = this.nutzkosten;
         this.dauer = dauer;
         this.kostentabelle = kostentabelle;
         this.reichweite = reichweite;
@@ -99,8 +99,8 @@ public class Ritual extends Attribut implements Dauernd, HatProbe, HatReichweite
     }
 
     @Override
-    public int getNutzkosten() {
-        return aspKosten;
+    public Nutzkosten getNutzkosten() {
+        return nutzkosten;
     }
 
     @Override
