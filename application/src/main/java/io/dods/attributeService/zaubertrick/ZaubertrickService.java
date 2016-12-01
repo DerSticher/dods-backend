@@ -5,9 +5,11 @@ import io.dods.attributeService.AbstractAttributRepository;
 import io.dods.attributeService.AbstractAttributService;
 import io.dods.attributeService.dauer.DauerService;
 import io.dods.attributeService.probe.ProbeService;
+import io.dods.attributeService.reichweite.ReichweiteService;
 import io.dods.attributeService.wirkungsdauer.WirkungsdauerService;
 import io.dods.attributeService.zielkategorie.ZielkategorieService;
 import io.dods.model.attribute.Zaubertrick;
+import io.dods.model.attribute.misc.Reichweite;
 import io.dods.model.attribute.misc.Wirkungsdauer;
 import io.dods.model.attribute.misc.Zielkategorie;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,9 @@ public class ZaubertrickService extends AbstractAttributService<Zaubertrick, Cre
     @Autowired
     private ZielkategorieService zielkategorieService;
 
+    @Autowired
+    private ReichweiteService reichweiteService;
+
     @Override
     protected AbstractAttributRepository<Zaubertrick> getRepository() {
         return zauberRepository;
@@ -48,7 +53,7 @@ public class ZaubertrickService extends AbstractAttributService<Zaubertrick, Cre
                 .map(id -> zielkategorieService.findById(id))
                 .collect(Collectors.toList());
 
-        int reichweite = create.getReichweiteInSchritt();
+        Reichweite reichweite = reichweiteService.findById(create.getReichweiteId());
         String wirkung = create.getWirkung();
         Wirkungsdauer wirkungsdauer = wirkungsdauerService.findById(create.getWirkungsdauerId());
         String name = create.getName();

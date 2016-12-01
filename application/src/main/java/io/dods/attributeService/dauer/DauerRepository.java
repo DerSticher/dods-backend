@@ -8,4 +8,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 interface DauerRepository extends CrudRepository<Dauer, Long> {
     Dauer findById(long id);
+
+    Dauer findByName(String name);
 }

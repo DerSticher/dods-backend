@@ -5,6 +5,7 @@ import io.dods.attributeService.AbstractAttributRepository;
 import io.dods.attributeService.AbstractAttributService;
 import io.dods.attributeService.dauer.DauerService;
 import io.dods.attributeService.probe.ProbeService;
+import io.dods.attributeService.reichweite.ReichweiteService;
 import io.dods.attributeService.wirkungsdauer.WirkungsdauerService;
 import io.dods.attributeService.zielkategorie.ZielkategorieService;
 import io.dods.model.attribute.Zauber;
@@ -36,6 +37,9 @@ public class ZauberService extends AbstractAttributService<Zauber, CreateZauber>
     @Autowired
     private ZielkategorieService zielkategorieService;
 
+    @Autowired
+    private ReichweiteService reichweiteService;
+
     @Override
     protected AbstractAttributRepository<Zauber> getRepository() {
         return zauberRepository;
@@ -50,7 +54,7 @@ public class ZauberService extends AbstractAttributService<Zauber, CreateZauber>
         int aspKosten = create.getNutzkosten();
         Kostentabelle kostentabelle = Kostentabelle.findOrThrow(create.getSteigerungsfaktor());
         Probe probe = probeService.create(create);
-        int reichweite = create.getReichweiteInSchritt();
+        Reichweite reichweite = reichweiteService.findById(create.getReichweiteId());
         String wirkung = create.getWirkung();
         Wirkungsdauer wirkungsdauer = wirkungsdauerService.findById(create.getWirkungsdauerId());
         Dauer dauer = dauerService.findById(create.getZauberDauerId());

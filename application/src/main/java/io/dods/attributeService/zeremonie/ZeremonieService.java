@@ -5,6 +5,7 @@ import io.dods.attributeService.AbstractAttributRepository;
 import io.dods.attributeService.AbstractAttributService;
 import io.dods.attributeService.dauer.DauerService;
 import io.dods.attributeService.probe.ProbeService;
+import io.dods.attributeService.reichweite.ReichweiteService;
 import io.dods.attributeService.wirkungsdauer.WirkungsdauerService;
 import io.dods.attributeService.zielkategorie.ZielkategorieService;
 import io.dods.model.attribute.Zeremonie;
@@ -36,6 +37,9 @@ public class ZeremonieService extends AbstractAttributService<Zeremonie, CreateZ
     @Autowired
     private WirkungsdauerService wirkungsdauerService;
 
+    @Autowired
+    private ReichweiteService reichweiteService;
+
     @Override
     protected AbstractAttributRepository<Zeremonie> getRepository() {
         return zeremonieRepository;
@@ -48,7 +52,7 @@ public class ZeremonieService extends AbstractAttributService<Zeremonie, CreateZ
                 .collect(Collectors.toList());
 
         Probe probe = probeService.create(create);
-        int reichweite = create.getReichweiteInSchritt();
+        Reichweite reichweite = reichweiteService.findById(create.getReichweiteId());
         String wirkung = create.getWirkung();
         Dauer dauer = dauerService.findById(create.getDauerId());
         Kostentabelle kostentabelle = Kostentabelle.findOrThrow(create.getSteigerungsfaktor());

@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class CreateSegen {
     @ApiModelProperty(required = true, example = "-3")
-    private int reichweiteInSchritt;
+    private int reichweiteId;
 
     @ApiModelProperty(required = true, example = "1")
     private int wirkungsdauerId;
@@ -29,12 +29,12 @@ public class CreateSegen {
     @ApiModelProperty(required = true)
     private List<Integer> aspektIds;
 
-    public int getReichweiteInSchritt() {
-        return reichweiteInSchritt;
+    public int getReichweiteId() {
+        return reichweiteId;
     }
 
-    public void setReichweiteInSchritt(int reichweiteInSchritt) {
-        this.reichweiteInSchritt = reichweiteInSchritt;
+    public void setReichweiteId(int reichweiteId) {
+        this.reichweiteId = reichweiteId;
     }
 
     public int getWirkungsdauerId() {

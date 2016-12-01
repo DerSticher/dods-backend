@@ -37,6 +37,8 @@ dependencies {
 
     compile "org.jboss.aerogear:aerogear-otp-java:1.0.0"
 
+    compile 'org.jsoup:jsoup:1.9.1'
+
 
 //    ===================
 //    =======TESTS=======

@@ -1,37 +1,43 @@
 package io.dods.model.attribute.misc;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import io.dods.model.Named;
+import org.jetbrains.annotations.NotNull;
+
+import javax.persistence.*;
 
 /**
  * @author Richard Gottschalk
  */
-public interface Reichweite {
+@Entity
+@Table(indexes = {
+        @Index(columnList = "id")
+})
+public class Reichweite implements Named {
 
-    int SELBST = -1;
-    int BERUEHRUNG = -2;
-    int SICHT = -3;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-    @JsonProperty
-    int getReichweiteInSchritt();
+    @Column
+    private String name;
 
-    @JsonIgnore
-    default int[] values() {
-        return new int[] {SELBST, BERUEHRUNG, SICHT};
+    public Reichweite() {
     }
 
-    @JsonProperty
-    default boolean isReichweiteSelbst() {
-        return getReichweiteInSchritt() == SELBST;
+    public Reichweite(String name) {
+        this.name = name;
     }
 
-    @JsonProperty
-    default boolean isReichweiteBeruehrung() {
-        return getReichweiteInSchritt() == BERUEHRUNG;
+    public long getId() {
+        return id;
     }
 
-    @JsonProperty
-    default boolean isReichweiteSicht() {
-        return getReichweiteInSchritt() == SICHT;
+    @Override
+    public @NotNull String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

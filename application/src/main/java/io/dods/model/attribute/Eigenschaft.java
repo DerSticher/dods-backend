@@ -33,7 +33,7 @@ public class Eigenschaft extends Attribut implements UsesKostentabelle {
         this.kostentabelle = kostentabelle;
     }
 
-    public @NotNull Kostentabelle getKostentabelle() {
+    public Kostentabelle getKostentabelle() {
         return kostentabelle;
     }
 

@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Entity
 @DiscriminatorValue("Segen")
-public class Segen extends Attribut implements ApFix, Kategorisiert, Nutzkosten, Reichweite, Wirkend, Zielend {
+public class Segen extends Attribut implements ApFix, Kategorisiert, Nutzkosten, HatReichweite, Wirkend, Zielend {
 
     @ApiModelProperty(required = true)
     @ManyToMany
@@ -24,15 +24,15 @@ public class Segen extends Attribut implements ApFix, Kategorisiert, Nutzkosten,
     private int kapKosten;
 
     @ApiModelProperty(required = true)
-    @Column
-    private int reichweiteInSchritt;
+    @ManyToOne
+    private Reichweite reichweite;
 
     @ApiModelProperty(required = true)
     @Lob
     @Column
     private String wirkung;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty
     @ManyToOne
     private Wirkungsdauer wirkungsdauer;
 
@@ -45,13 +45,13 @@ public class Segen extends Attribut implements ApFix, Kategorisiert, Nutzkosten,
 
     public Segen(List<Aspekt> aspekte,
                  int kapKosten,
-                 int reichweiteInSchritt,
+                 Reichweite reichweite,
                  String wirkung,
                  Wirkungsdauer wirkungsdauer,
                  List<Zielkategorie> zielkategorien) {
         this.aspekte = aspekte;
         this.kapKosten = kapKosten;
-        this.reichweiteInSchritt = reichweiteInSchritt;
+        this.reichweite = reichweite;
         this.wirkung = wirkung;
         this.wirkungsdauer = wirkungsdauer;
         this.zielkategorien = zielkategorien;
@@ -59,7 +59,7 @@ public class Segen extends Attribut implements ApFix, Kategorisiert, Nutzkosten,
 
     public Segen(List<Aspekt> aspekte,
                  int kapKosten,
-                 int reichweiteInSchritt,
+                 Reichweite reichweite,
                  String wirkung,
                  Wirkungsdauer wirkungsdauer,
                  List<Zielkategorie> zielkategorien,
@@ -67,15 +67,15 @@ public class Segen extends Attribut implements ApFix, Kategorisiert, Nutzkosten,
         super(name);
         this.aspekte = aspekte;
         this.kapKosten = kapKosten;
-        this.reichweiteInSchritt = reichweiteInSchritt;
+        this.reichweite = reichweite;
         this.wirkung = wirkung;
         this.wirkungsdauer = wirkungsdauer;
         this.zielkategorien = zielkategorien;
     }
 
     @Override
-    public int getReichweiteInSchritt() {
-        return reichweiteInSchritt;
+    public Reichweite getReichweite() {
+        return reichweite;
     }
 
     @Override
@@ -89,7 +89,7 @@ public class Segen extends Attribut implements ApFix, Kategorisiert, Nutzkosten,
     }
 
     @Override
-    public @NotNull Wirkungsdauer getWirkungsdauer() {
+    public Wirkungsdauer getWirkungsdauer() {
         return wirkungsdauer;
     }
 

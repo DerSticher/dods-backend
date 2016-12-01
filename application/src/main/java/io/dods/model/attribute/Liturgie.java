@@ -12,25 +12,25 @@ import java.util.List;
  */
 @Entity
 @DiscriminatorValue("Liturgie")
-public class Liturgie extends Attribut implements Dauernd, HatProbe, Nutzkosten, Reichweite, UsesKostentabelle, Wirkend, Zielend {
+public class Liturgie extends Attribut implements Dauernd, HatProbe, Nutzkosten, HatReichweite, UsesKostentabelle, Wirkend, Zielend {
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty
     @ManyToOne
     private Dauer dauer;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty
     @Enumerated(EnumType.STRING)
     private Kostentabelle kostentabelle;
 
     @ApiModelProperty(required = true)
-    @Column
-    private int reichweiteInSchritt;
+    @ManyToOne
+    private Reichweite reichweite;
 
     @ApiModelProperty(required = true)
     @Column
     private int kapKosten;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty
     @Embedded
     private Probe probe;
 
@@ -39,7 +39,7 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, Nutzkosten,
     @Column
     private String wirkung;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty
     @ManyToOne
     private Wirkungsdauer wirkungsdauer;
 
@@ -52,7 +52,7 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, Nutzkosten,
 
     public Liturgie(Dauer dauer,
                     Kostentabelle kostentabelle,
-                    int reichweiteInSchritt,
+                    Reichweite reichweite,
                     int kapKosten,
                     Probe probe,
                     String wirkung,
@@ -60,7 +60,7 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, Nutzkosten,
                     List<Zielkategorie> zielkategorien) {
         this.dauer = dauer;
         this.kostentabelle = kostentabelle;
-        this.reichweiteInSchritt = reichweiteInSchritt;
+        this.reichweite = reichweite;
         this.kapKosten = kapKosten;
         this.probe = probe;
         this.wirkung = wirkung;
@@ -70,7 +70,7 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, Nutzkosten,
 
     public Liturgie(Dauer dauer,
                     Kostentabelle kostentabelle,
-                    int reichweiteInSchritt,
+                    Reichweite reichweite,
                     int kapKosten,
                     Probe probe,
                     String wirkung,
@@ -80,7 +80,7 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, Nutzkosten,
         super(name);
         this.dauer = dauer;
         this.kostentabelle = kostentabelle;
-        this.reichweiteInSchritt = reichweiteInSchritt;
+        this.reichweite = reichweite;
         this.kapKosten = kapKosten;
         this.probe = probe;
         this.wirkung = wirkung;
@@ -93,7 +93,7 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, Nutzkosten,
         return dauer;
     }
 
-    public @NotNull Kostentabelle getKostentabelle() {
+    public Kostentabelle getKostentabelle() {
         return kostentabelle;
     }
 
@@ -103,13 +103,13 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, Nutzkosten,
     }
 
     @Override
-    public @NotNull Probe getProbe() {
+    public Probe getProbe() {
         return probe;
     }
 
     @Override
-    public int getReichweiteInSchritt() {
-        return reichweiteInSchritt;
+    public Reichweite getReichweite() {
+        return reichweite;
     }
 
     @Override

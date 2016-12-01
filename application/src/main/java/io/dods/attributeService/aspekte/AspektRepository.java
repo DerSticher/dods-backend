@@ -8,4 +8,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  */
 interface AspektRepository extends PagingAndSortingRepository<Aspekt, Long> {
     Aspekt findById(long id);
+
+    Aspekt findByName(String name);
 }

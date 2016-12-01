@@ -8,4 +8,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 interface ZielkategorieRepository extends CrudRepository<Zielkategorie, Long> {
     Zielkategorie findById(long id);
+
+    Zielkategorie findByName(String name);
 }

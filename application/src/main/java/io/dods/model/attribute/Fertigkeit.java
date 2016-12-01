@@ -5,7 +5,6 @@ import io.dods.model.attribute.misc.Kostentabelle;
 import io.dods.model.attribute.misc.Probe;
 import io.dods.model.attribute.misc.UsesKostentabelle;
 import io.swagger.annotations.ApiModelProperty;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 
@@ -36,7 +35,7 @@ public class Fertigkeit extends Attribut implements HatProbe, UsesKostentabelle 
     @Enumerated(EnumType.STRING)
     private Kostentabelle kostentabelle;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty
     @Embedded
     private Probe probe;
 
@@ -64,7 +63,7 @@ public class Fertigkeit extends Attribut implements HatProbe, UsesKostentabelle 
         return gruppe;
     }
 
-    public @NotNull Kostentabelle getKostentabelle() {
+    public Kostentabelle getKostentabelle() {
         return kostentabelle;
     }
 

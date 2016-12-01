@@ -33,4 +33,15 @@ public class ZielkategorieService {
         ids.forEach(id -> zielkategorien.add(zielkategorieRepository.findById(id)));
         return zielkategorien;
     }
+
+    public Zielkategorie findByNameOrCreate(String name) {
+        Zielkategorie zielkategorie = zielkategorieRepository.findByName(name);
+
+        if (zielkategorie == null) {
+            zielkategorie = new Zielkategorie(name);
+            zielkategorie = zielkategorieRepository.save(zielkategorie);
+        }
+
+        return zielkategorie;
+    }
 }

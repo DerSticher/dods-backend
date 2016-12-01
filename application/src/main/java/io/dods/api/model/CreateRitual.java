@@ -17,7 +17,7 @@ public class CreateRitual implements HatProbeApi {
     private int ritualDauerId;
 
     @ApiModelProperty(required = true, example = "-2")
-    private int reichweiteInSchritt;
+    private int reichweiteId;
 
     @ApiModelProperty(required = true, example = "2")
     private int nutzkosten;
@@ -59,12 +59,12 @@ public class CreateRitual implements HatProbeApi {
         this.ritualDauerId = ritualDauerId;
     }
 
-    public int getReichweiteInSchritt() {
-        return reichweiteInSchritt;
+    public int getReichweiteId() {
+        return reichweiteId;
     }
 
-    public void setReichweiteInSchritt(int reichweiteInSchritt) {
-        this.reichweiteInSchritt = reichweiteInSchritt;
+    public void setReichweiteId(int reichweiteId) {
+        this.reichweiteId = reichweiteId;
     }
 
     public int getNutzkosten() {

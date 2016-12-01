@@ -5,6 +5,7 @@ import io.dods.attributeService.AbstractAttributRepository;
 import io.dods.attributeService.AbstractAttributService;
 import io.dods.attributeService.dauer.DauerService;
 import io.dods.attributeService.probe.ProbeService;
+import io.dods.attributeService.reichweite.ReichweiteService;
 import io.dods.attributeService.wirkungsdauer.WirkungsdauerService;
 import io.dods.attributeService.zielkategorie.ZielkategorieService;
 import io.dods.model.attribute.Liturgie;
@@ -35,6 +36,9 @@ public class LiturgieService extends AbstractAttributService<Liturgie, CreateLit
     @Autowired
     private ZielkategorieService zielkategorieService;
 
+    @Autowired
+    private ReichweiteService reichweiteService;
+
     @Override
     protected AbstractAttributRepository<Liturgie> getRepository() {
         return liturgieRepository;
@@ -51,7 +55,7 @@ public class LiturgieService extends AbstractAttributService<Liturgie, CreateLit
         Kostentabelle kostentabelle = Kostentabelle.findOrThrow(create.getSteigerungsfaktor());
         Wirkungsdauer wirkungsdauer = wirkungsdauerService.findById(create.getWirkungsdauerId());
         int kap = create.getNutzkosten();
-        int reichweite = create.getReichweiteInSchritt();
+        Reichweite reichweite = reichweiteService.findById(create.getReichweiteId());
 
         return new Liturgie(dauer, kostentabelle, reichweite, kap, probe, wirkung, wirkungsdauer, zielkategorien, name);
     }

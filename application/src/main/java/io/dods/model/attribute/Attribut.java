@@ -31,7 +31,9 @@ public abstract class Attribut implements Named, Serializable {
     @Column(name = "typ", insertable = false, updatable = false)
     private String typ;
 
-    public Attribut() {}
+    public Attribut() {
+        this.typ = getClass().getSimpleName();
+    }
 
     public Attribut(String name) {
         this();

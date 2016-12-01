@@ -12,17 +12,17 @@ import java.util.List;
  */
 @Entity
 @DiscriminatorValue("Zaubertrick")
-public class Zaubertrick extends Attribut implements ApFix, Nutzkosten, Reichweite, Wirkend, Zielend {
+public class Zaubertrick extends Attribut implements ApFix, Nutzkosten, HatReichweite, Wirkend, Zielend {
 
     @ApiModelProperty(required = true)
-    @Column
-    private int reichweiteInSchritt;
+    @ManyToOne
+    private Reichweite reichweite;
 
     @ApiModelProperty(required = true)
     @ManyToMany
     private List<Zielkategorie> zielkategorien;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty
     @ManyToOne
     private Wirkungsdauer wirkungsdauer;
 
@@ -34,31 +34,31 @@ public class Zaubertrick extends Attribut implements ApFix, Nutzkosten, Reichwei
     public Zaubertrick() {
     }
 
-    public Zaubertrick(int reichweiteInSchritt,
+    public Zaubertrick(Reichweite reichweite,
                        List<Zielkategorie> zielkategorien,
                        Wirkungsdauer wirkungsdauer,
                        String wirkung) {
-        this.reichweiteInSchritt = reichweiteInSchritt;
+        this.reichweite = reichweite;
         this.zielkategorien = zielkategorien;
         this.wirkungsdauer = wirkungsdauer;
         this.wirkung = wirkung;
     }
 
-    public Zaubertrick(int reichweiteInSchritt,
+    public Zaubertrick(Reichweite reichweite,
                        List<Zielkategorie> zielkategorien,
                        Wirkungsdauer wirkungsdauer,
                        String wirkung,
                        String name) {
         super(name);
-        this.reichweiteInSchritt = reichweiteInSchritt;
+        this.reichweite = reichweite;
         this.zielkategorien = zielkategorien;
         this.wirkungsdauer = wirkungsdauer;
         this.wirkung = wirkung;
     }
 
     @Override
-    public int getReichweiteInSchritt() {
-        return reichweiteInSchritt;
+    public Reichweite getReichweite() {
+        return reichweite;
     }
 
     @Override
@@ -72,7 +72,7 @@ public class Zaubertrick extends Attribut implements ApFix, Nutzkosten, Reichwei
     }
 
     @Override
-    public @NotNull Wirkungsdauer getWirkungsdauer() {
+    public Wirkungsdauer getWirkungsdauer() {
         return wirkungsdauer;
     }
 }

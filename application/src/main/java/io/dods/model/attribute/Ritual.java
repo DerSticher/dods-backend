@@ -12,34 +12,34 @@ import java.util.List;
  */
 @Entity
 @DiscriminatorValue("Ritual")
-public class Ritual extends Attribut implements Dauernd, HatProbe, Reichweite, Nutzkosten, UsesKostentabelle, Wirkend, Zielend {
+public class Ritual extends Attribut implements Dauernd, HatProbe, HatReichweite, Nutzkosten, UsesKostentabelle, Wirkend, Zielend {
 
     @ApiModelProperty(required = true)
     @Column
     private int aspKosten;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty
     @ManyToOne
     private Dauer dauer;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty
     @Enumerated(EnumType.STRING)
     private Kostentabelle kostentabelle;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty
     @Embedded
     private Probe probe;
 
     @ApiModelProperty(required = true)
-    @Column
-    private int reichweiteInSchritt;
+    @ManyToOne
+    private Reichweite reichweite;
 
     @ApiModelProperty(required = true)
     @Lob
     @Column
     private String wirkung;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty
     @ManyToOne
     private Wirkungsdauer wirkungsdauer;
 
@@ -53,7 +53,7 @@ public class Ritual extends Attribut implements Dauernd, HatProbe, Reichweite, N
     public Ritual(int aspKosten,
                   Dauer dauer,
                   Kostentabelle kostentabelle,
-                  int reichweiteInSchritt,
+                  Reichweite reichweite,
                   Probe probe,
                   String wirkung,
                   Wirkungsdauer wirkungsdauer,
@@ -61,7 +61,7 @@ public class Ritual extends Attribut implements Dauernd, HatProbe, Reichweite, N
         this.aspKosten = aspKosten;
         this.dauer = dauer;
         this.kostentabelle = kostentabelle;
-        this.reichweiteInSchritt = reichweiteInSchritt;
+        this.reichweite = reichweite;
         this.probe = probe;
         this.wirkung = wirkung;
         this.wirkungsdauer = wirkungsdauer;
@@ -71,7 +71,7 @@ public class Ritual extends Attribut implements Dauernd, HatProbe, Reichweite, N
     public Ritual(int aspKosten,
                   Dauer dauer,
                   Kostentabelle kostentabelle,
-                  int reichweiteInSchritt,
+                  Reichweite reichweite,
                   Probe probe,
                   String wirkung,
                   Wirkungsdauer wirkungsdauer,
@@ -81,7 +81,7 @@ public class Ritual extends Attribut implements Dauernd, HatProbe, Reichweite, N
         this.aspKosten = aspKosten;
         this.dauer = dauer;
         this.kostentabelle = kostentabelle;
-        this.reichweiteInSchritt = reichweiteInSchritt;
+        this.reichweite = reichweite;
         this.probe = probe;
         this.wirkung = wirkung;
         this.wirkungsdauer = wirkungsdauer;
@@ -89,12 +89,12 @@ public class Ritual extends Attribut implements Dauernd, HatProbe, Reichweite, N
     }
 
     @Override
-    public @NotNull Dauer getDauer() {
+    public Dauer getDauer() {
         return dauer;
     }
 
     @Override
-    public @NotNull Kostentabelle getKostentabelle() {
+    public Kostentabelle getKostentabelle() {
         return kostentabelle;
     }
 
@@ -104,8 +104,8 @@ public class Ritual extends Attribut implements Dauernd, HatProbe, Reichweite, N
     }
 
     @Override
-    public int getReichweiteInSchritt() {
-        return reichweiteInSchritt;
+    public Reichweite getReichweite() {
+        return reichweite;
     }
 
     @Override
@@ -114,7 +114,7 @@ public class Ritual extends Attribut implements Dauernd, HatProbe, Reichweite, N
     }
 
     @Override
-    public @NotNull Wirkungsdauer getWirkungsdauer() {
+    public Wirkungsdauer getWirkungsdauer() {
         return wirkungsdauer;
     }
 
@@ -124,7 +124,7 @@ public class Ritual extends Attribut implements Dauernd, HatProbe, Reichweite, N
     }
 
     @Override
-    public @NotNull Probe getProbe() {
+    public Probe getProbe() {
         return probe;
     }
 }

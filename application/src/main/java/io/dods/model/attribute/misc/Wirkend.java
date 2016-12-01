@@ -2,6 +2,7 @@ package io.dods.model.attribute.misc;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Richard Gottschalk
@@ -11,6 +12,7 @@ public interface Wirkend {
     @NotNull
     String getWirkung();
 
+    @Nullable
     Wirkungsdauer getWirkungsdauer();
 
     @NotNull

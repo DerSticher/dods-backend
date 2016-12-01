@@ -10,7 +10,7 @@ import java.util.List;
 public class CreateZaubertrick {
 
     @ApiModelProperty(required = true, example = "8")
-    private int reichweiteInSchritt;
+    private int reichweiteId;
 
     @ApiModelProperty(required = true)
     private List<Integer> zielkategorienId;
@@ -24,12 +24,12 @@ public class CreateZaubertrick {
     @ApiModelProperty(required = true, example = "Fancy Attribute's Name")
     private String name;
 
-    public int getReichweiteInSchritt() {
-        return reichweiteInSchritt;
+    public int getReichweiteId() {
+        return reichweiteId;
     }
 
-    public void setReichweiteInSchritt(int reichweiteInSchritt) {
-        this.reichweiteInSchritt = reichweiteInSchritt;
+    public void setReichweiteId(int reichweiteId) {
+        this.reichweiteId = reichweiteId;
     }
 
     public List<Integer> getZielkategorienId() {

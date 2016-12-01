@@ -8,4 +8,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 interface WirkungsdauerRepository extends CrudRepository<Wirkungsdauer, Long> {
     Wirkungsdauer findById(long id);
+
+    Wirkungsdauer findByName(String name);
 }

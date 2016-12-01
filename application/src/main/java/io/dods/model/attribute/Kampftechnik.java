@@ -3,7 +3,6 @@ package io.dods.model.attribute;
 import io.dods.model.attribute.misc.Kostentabelle;
 import io.dods.model.attribute.misc.UsesKostentabelle;
 import io.swagger.annotations.ApiModelProperty;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 
@@ -37,7 +36,7 @@ public class Kampftechnik extends Attribut implements UsesKostentabelle {
         return leiteigenschaft;
     }
 
-    public @NotNull Kostentabelle getKostentabelle() {
+    public Kostentabelle getKostentabelle() {
         return kostentabelle;
     }
 

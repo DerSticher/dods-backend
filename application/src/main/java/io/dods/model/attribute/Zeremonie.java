@@ -12,17 +12,17 @@ import java.util.List;
  */
 @Entity
 @DiscriminatorValue("Zeremonie")
-public class Zeremonie extends Attribut implements Dauernd, HatProbe, Nutzkosten, Reichweite, UsesKostentabelle, Wirkend, Zielend {
+public class Zeremonie extends Attribut implements Dauernd, HatProbe, Nutzkosten, HatReichweite, UsesKostentabelle, Wirkend, Zielend {
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty
     @Embedded
     private Probe probe;
 
     @ApiModelProperty(required = true)
-    @Column
-    private int reichweiteInSchritt;
+    @ManyToOne
+    private Reichweite reichweite;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty
     @ManyToOne
     private Dauer dauer;
 
@@ -31,11 +31,11 @@ public class Zeremonie extends Attribut implements Dauernd, HatProbe, Nutzkosten
     @Column
     private String wirkung;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty
     @ManyToOne
     private Wirkungsdauer wirkungsdauer;
 
-    @ApiModelProperty(required = true)
+    @ApiModelProperty
     @Enumerated(EnumType.STRING)
     private Kostentabelle kostentabelle;
 
@@ -50,14 +50,14 @@ public class Zeremonie extends Attribut implements Dauernd, HatProbe, Nutzkosten
     }
 
     public Zeremonie(Probe probe,
-                     int reichweiteInSchritt,
+                     Reichweite reichweite,
                      Dauer dauer,
                      String wirkung,
                      Wirkungsdauer wirkungsdauer,
                      Kostentabelle kostentabelle,
                      List<Zielkategorie> zielkategorien) {
         this.probe = probe;
-        this.reichweiteInSchritt = reichweiteInSchritt;
+        this.reichweite = reichweite;
         this.dauer = dauer;
         this.wirkung = wirkung;
         this.wirkungsdauer = wirkungsdauer;
@@ -66,7 +66,7 @@ public class Zeremonie extends Attribut implements Dauernd, HatProbe, Nutzkosten
     }
 
     public Zeremonie(Probe probe,
-                     int reichweiteInSchritt,
+                     Reichweite reichweite,
                      Dauer dauer,
                      String wirkung,
                      Wirkungsdauer wirkungsdauer,
@@ -75,7 +75,7 @@ public class Zeremonie extends Attribut implements Dauernd, HatProbe, Nutzkosten
                      String name) {
         super(name);
         this.probe = probe;
-        this.reichweiteInSchritt = reichweiteInSchritt;
+        this.reichweite = reichweite;
         this.dauer = dauer;
         this.wirkung = wirkung;
         this.wirkungsdauer = wirkungsdauer;
@@ -84,13 +84,13 @@ public class Zeremonie extends Attribut implements Dauernd, HatProbe, Nutzkosten
     }
 
     @Override
-    public @NotNull Probe getProbe() {
+    public Probe getProbe() {
         return probe;
     }
 
     @Override
-    public int getReichweiteInSchritt() {
-        return reichweiteInSchritt;
+    public Reichweite getReichweite() {
+        return reichweite;
     }
 
     @Override
@@ -109,7 +109,7 @@ public class Zeremonie extends Attribut implements Dauernd, HatProbe, Nutzkosten
     }
 
     @Override
-    public @NotNull Kostentabelle getKostentabelle() {
+    public Kostentabelle getKostentabelle() {
         return kostentabelle;
     }
 

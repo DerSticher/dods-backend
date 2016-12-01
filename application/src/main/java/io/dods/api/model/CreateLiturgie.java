@@ -17,7 +17,7 @@ public class CreateLiturgie implements HatProbeApi {
     private int liturgieDauerId;
 
     @ApiModelProperty(required = true, example = "-1")
-    private int reichweiteInSchritt;
+    private int reichweiteId;
 
     @ApiModelProperty(required = true, example = "2")
     private int nutzkosten;
@@ -49,12 +49,12 @@ public class CreateLiturgie implements HatProbeApi {
     @ApiModelProperty(required = true, example = "8")
     private int teilprobe3Id;
 
-    public int getReichweiteInSchritt() {
-        return reichweiteInSchritt;
+    public int getReichweiteId() {
+        return reichweiteId;
     }
 
-    public void setReichweiteInSchritt(int reichweiteInSchritt) {
-        this.reichweiteInSchritt = reichweiteInSchritt;
+    public void setReichweiteId(int reichweiteId) {
+        this.reichweiteId = reichweiteId;
     }
 
     public int getWirkungsdauerId() {

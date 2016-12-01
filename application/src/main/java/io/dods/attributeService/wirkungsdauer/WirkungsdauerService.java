@@ -24,4 +24,15 @@ public class WirkungsdauerService {
     public Wirkungsdauer findById(long id) {
         return wirkungsdauerRepository.findById(id);
     }
+
+    public Wirkungsdauer findByNameOrCreate(String name) {
+        Wirkungsdauer wirkungsdauer = wirkungsdauerRepository.findByName(name);
+
+        if (wirkungsdauer == null) {
+            wirkungsdauer = new Wirkungsdauer(name);
+            wirkungsdauer = wirkungsdauerRepository.save(wirkungsdauer);
+        }
+
+        return wirkungsdauer;
+    }
 }

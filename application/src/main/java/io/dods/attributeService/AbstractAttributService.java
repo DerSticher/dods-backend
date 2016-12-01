@@ -26,6 +26,10 @@ public abstract class AbstractAttributService<T extends Attribut, C> {
 
     public T save(C create) {
         T parsedValue = parse(create);
+        return save(parsedValue);
+    }
+
+    public T save(T parsedValue) {
         return getRepository().save(parsedValue);
     }
 }

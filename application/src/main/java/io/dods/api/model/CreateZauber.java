@@ -17,7 +17,7 @@ public class CreateZauber implements HatProbeApi {
     private String steigerungsfaktor;
 
     @ApiModelProperty(required = true, example = "10")
-    private int reichweiteInSchritt;
+    private int reichweiteId;
 
     @ApiModelProperty(required = true, example = "Fancy magic stuff is happening")
     private String wirkung;
@@ -51,12 +51,12 @@ public class CreateZauber implements HatProbeApi {
         this.nutzkosten = nutzkosten;
     }
 
-    public int getReichweiteInSchritt() {
-        return reichweiteInSchritt;
+    public int getReichweiteId() {
+        return reichweiteId;
     }
 
-    public void setReichweiteInSchritt(int reichweiteInSchritt) {
-        this.reichweiteInSchritt = reichweiteInSchritt;
+    public void setReichweiteId(int reichweiteId) {
+        this.reichweiteId = reichweiteId;
     }
 
     public String getWirkung() {

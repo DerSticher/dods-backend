@@ -5,6 +5,7 @@ import io.dods.attributeService.AbstractAttributRepository;
 import io.dods.attributeService.AbstractAttributService;
 import io.dods.attributeService.dauer.DauerService;
 import io.dods.attributeService.probe.ProbeService;
+import io.dods.attributeService.reichweite.ReichweiteService;
 import io.dods.attributeService.wirkungsdauer.WirkungsdauerService;
 import io.dods.attributeService.zielkategorie.ZielkategorieService;
 import io.dods.model.attribute.Ritual;
@@ -35,6 +36,9 @@ public class RitualService extends AbstractAttributService<Ritual, CreateRitual>
     @Autowired
     private ZielkategorieService zielkategorieService;
 
+    @Autowired
+    private ReichweiteService reichweiteService;
+
     @Override
     protected AbstractAttributRepository<Ritual> getRepository() {
         return ritualRepository;
@@ -51,7 +55,7 @@ public class RitualService extends AbstractAttributService<Ritual, CreateRitual>
         Kostentabelle kostentabelle = Kostentabelle.findOrThrow(create.getSteigerungsfaktor());
         Wirkungsdauer wirkungsdauer = wirkungsdauerService.findById(create.getWirkungsdauerId());
         int aspKosten = create.getNutzkosten();
-        int reichweite = create.getReichweiteInSchritt();
+        Reichweite reichweite = reichweiteService.findById(create.getReichweiteId());
 
         return new Ritual(aspKosten, dauer, kostentabelle, reichweite, probe, wirkung, wirkungsdauer, zielkategorien, name);
     }

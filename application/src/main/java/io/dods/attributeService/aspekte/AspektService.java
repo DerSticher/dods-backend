@@ -24,4 +24,15 @@ public class AspektService {
     public Aspekt findById(long id) {
         return aspektRepository.findById(id);
     }
+
+    public Aspekt findByNameOrCreate(String name) {
+        Aspekt aspekt = aspektRepository.findByName(name);
+
+        if (aspekt == null) {
+            aspekt = new Aspekt(name);
+            aspekt = aspektRepository.save(aspekt);
+        }
+
+        return aspekt;
+    }
 }
