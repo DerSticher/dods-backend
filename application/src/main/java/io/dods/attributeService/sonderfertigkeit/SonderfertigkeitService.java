@@ -1,6 +1,5 @@
 package io.dods.attributeService.sonderfertigkeit;
 
-import io.dods.api.model.CreateSonderfertigkeit;
 import io.dods.attributeService.AbstractAttributRepository;
 import io.dods.attributeService.AbstractAttributService;
 import io.dods.model.attribute.Sonderfertigkeit;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Service;
  * @author Richard Gottschalk
  */
 @Service
-public class SonderfertigkeitService extends AbstractAttributService<Sonderfertigkeit, CreateSonderfertigkeit> {
+public class SonderfertigkeitService extends AbstractAttributService<Sonderfertigkeit> {
 
     @Autowired
     private SonderfertigkeitRepository sonderfertigkeitRepository;
@@ -21,12 +20,4 @@ public class SonderfertigkeitService extends AbstractAttributService<Sonderferti
         return sonderfertigkeitRepository;
     }
 
-    @Override
-    protected Sonderfertigkeit parse(CreateSonderfertigkeit create) {
-        int ap = create.getAp();
-        boolean isPassive = create.isPassive();
-        String name = create.getName();
-
-        return new Sonderfertigkeit(ap, isPassive, name);
-    }
 }

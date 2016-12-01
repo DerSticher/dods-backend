@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @author Richard Gottschalk
  */
 @RequestMapping("attribute")
-interface AbstractAttributeApi<T extends Attribut, C> {
+interface AbstractAttributeApi<T extends Attribut> {
 
     @ApiOperation(value = "a single value")
     @ApiResponses({
@@ -21,14 +21,6 @@ interface AbstractAttributeApi<T extends Attribut, C> {
     })
     @ResponseStatus(HttpStatus.OK)
     default T get(long id) {
-        throw new ApiNotImplementedException();
-    }
-
-    @ApiResponses(value = {
-            @ApiResponse(code = 404, message = "referenced value not found")
-    })
-    @ResponseStatus(HttpStatus.CREATED)
-    default T create(C create) {
         throw new ApiNotImplementedException();
     }
 

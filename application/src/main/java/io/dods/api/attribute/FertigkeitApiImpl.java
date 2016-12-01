@@ -1,6 +1,5 @@
 package io.dods.api.attribute;
 
-import io.dods.api.model.CreateFertigkeit;
 import io.dods.attributeService.fertigkeit.FertigkeitService;
 import io.dods.model.attribute.Fertigkeit;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,5 +9,5 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class FertigkeitApiImpl
-        extends AbstractAttributeApiImpl<Fertigkeit, CreateFertigkeit, FertigkeitService>
+        extends AbstractAttributeApiImpl<Fertigkeit, FertigkeitService>
         implements FertigkeitApi {}

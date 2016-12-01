@@ -1,6 +1,5 @@
 package io.dods.api.attribute;
 
-import io.dods.api.model.CreateZauber;
 import io.dods.attributeService.zauber.ZauberService;
 import io.dods.model.attribute.Zauber;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,5 +9,5 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class ZauberApiImpl
-        extends AbstractAttributeApiImpl<Zauber, CreateZauber, ZauberService>
+        extends AbstractAttributeApiImpl<Zauber, ZauberService>
         implements ZauberApi {}

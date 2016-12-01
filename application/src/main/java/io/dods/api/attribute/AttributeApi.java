@@ -1,7 +1,7 @@
 package io.dods.api.attribute;
 
 import io.dods.attributeService.attribute.AttributeService;
-import io.dods.model.attribute.*;
+import io.dods.model.attribute.Attribut;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;

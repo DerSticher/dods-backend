@@ -1,6 +1,5 @@
 package io.dods.api.attribute;
 
-import io.dods.api.model.CreateVorteil;
 import io.dods.attributeService.vorteil.VorteilService;
 import io.dods.model.attribute.Vorteil;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,5 +9,5 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class VorteilApiImpl
-        extends AbstractAttributeApiImpl<Vorteil, CreateVorteil, VorteilService>
+        extends AbstractAttributeApiImpl<Vorteil, VorteilService>
         implements VorteilApi {}

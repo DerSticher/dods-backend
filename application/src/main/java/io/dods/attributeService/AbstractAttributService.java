@@ -8,11 +8,9 @@ import org.springframework.stereotype.Service;
  * @author Richard Gottschalk
  */
 @Service
-public abstract class AbstractAttributService<T extends Attribut, C> {
+public abstract class AbstractAttributService<T extends Attribut> {
 
     protected abstract AbstractAttributRepository<T> getRepository();
-
-    protected abstract T parse(C create);
 
     public Iterable<T> findAll() {
         return getRepository().findAll();
@@ -22,11 +20,6 @@ public abstract class AbstractAttributService<T extends Attribut, C> {
         T attribut = getRepository().findById(id);
         if (attribut != null) return attribut;
         throw new ResourceNotFoundException();
-    }
-
-    public T save(C create) {
-        T parsedValue = parse(create);
-        return save(parsedValue);
     }
 
     public T save(T parsedValue) {

@@ -1,6 +1,5 @@
 package io.dods.api.attribute;
 
-import io.dods.api.model.CreateEigenschaft;
 import io.dods.attributeService.eigenschaft.EigenschaftService;
 import io.dods.model.attribute.Eigenschaft;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,5 +9,5 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class EigenschaftApiImpl
-        extends AbstractAttributeApiImpl<Eigenschaft, CreateEigenschaft, EigenschaftService>
+        extends AbstractAttributeApiImpl<Eigenschaft, EigenschaftService>
         implements EigenschaftApi {}

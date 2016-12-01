@@ -1,6 +1,5 @@
 package io.dods.api.attribute;
 
-import io.dods.api.model.CreateKampftechnik;
 import io.dods.attributeService.kampftechnik.KampftechnikService;
 import io.dods.model.attribute.Kampftechnik;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,5 +9,5 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class KampftechnikApiImpl
-        extends AbstractAttributeApiImpl<Kampftechnik, CreateKampftechnik, KampftechnikService>
+        extends AbstractAttributeApiImpl<Kampftechnik, KampftechnikService>
         implements KampftechnikApi {}
