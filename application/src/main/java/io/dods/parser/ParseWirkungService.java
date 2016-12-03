@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 @Service
 class ParseWirkungService {
 
-    private static final Pattern PATTERN_WIRKUNG = Pattern.compile("Wirkung ?: ?(?:<[^>]+>)?(.+?)</p>");
+    private static final Pattern PATTERN_WIRKUNG = Pattern.compile("(?:Wirkung|Regel) ?: ?(?:<[^>]+>)?(.+?)(?:</?p>|</?strong>)");
 
     private static final Pattern PATTERN_WIRKUNGSDAUER = Pattern.compile("Wirkungsdauer: ?(?:<[^>]+>)? ?([^<]+)");
 
@@ -45,7 +45,7 @@ class ParseWirkungService {
             List<TextNode> textNodes = element.textNodes();
             if (textNodes.size() > 0) {
                 TextNode textNode = textNodes.get(0);
-                return textNode.text();
+                return Jsoup.parse(textNode.outerHtml()).text();
             }
         }
 
