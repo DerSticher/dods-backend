@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,6 +38,15 @@ public class ParserApi {
     @RequestMapping(path = "segen", method = RequestMethod.POST)
     public List<Segen> parseSegen() {
         return parseListService.parseSegen("http://www.ulisses-regelwiki.de/index.php/Lit_Segnungen.html");
+    }
+
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @RequestMapping(path = "vorteil", method = RequestMethod.POST)
+    public List<Vorteil> parseVorteil() {
+        List<Vorteil> vorteil = new ArrayList<>();
+        vorteil.addAll(parseListService.parseVorteil("http://www.ulisses-regelwiki.de/index.php/vorteile.html"));
+        vorteil.addAll(parseListService.parseVorteil("http://www.ulisses-regelwiki.de/index.php/nachteile.html"));
+        return vorteil;
     }
 
     @ResponseStatus(HttpStatus.ACCEPTED)

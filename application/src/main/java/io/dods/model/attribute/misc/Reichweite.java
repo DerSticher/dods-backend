@@ -19,6 +19,7 @@ public class Reichweite implements Named {
     private long id;
 
     @Column
+    @Lob
     private String name;
 
     public Reichweite() {

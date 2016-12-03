@@ -9,12 +9,20 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Richard Gottschalk
  */
 @Service
 class ParserService {
+
+    @Autowired
+    private ParseValueLevelService parseValueLevelService;
+
+    @Autowired
+    private ParseApWertService parseApWertService;
 
     @Autowired
     private ParseNameService parseNameService;
@@ -55,6 +63,7 @@ class ParserService {
         value.setReichweite(parseReichweiteService.parseReichweite(document));
         value.setNutzkosten(parseNutzkostenService.parseNutzkosten(document));
 
+        value.setApWert(parseApWertService.parseApWert(document));
         value.setDauer(parseDauerService.parseDauer(document));
         value.setKostentabelle(parseKostentabelleService.parseKostentabelle(document));
         value.setProbe(parseProbeService.parseProbe(document));
@@ -144,6 +153,24 @@ class ParserService {
                 value.getWirkungsdauer(),
                 value.getZielkategorie(),
                 value.getName());
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    public List<Vorteil> parseVorteil(String url) {
+        try {
+            ParsedValue value = parseDetails(url);
+
+            List<ParsedValue> parsedValues = parseValueLevelService.checkForLevels(value);
+
+            return parsedValues.stream()
+                    .map(v -> new Vorteil(
+                            v.getApWert(),
+                            v.getWirkung(),
+                            v.getReichweite(),
+                            v.getName()))
+                    .collect(Collectors.toList());
         } catch (IOException e) {
             return null;
         }

@@ -4,6 +4,7 @@ import io.dods.attributeService.AbstractAttributService;
 import io.dods.attributeService.liturgie.LiturgieService;
 import io.dods.attributeService.ritual.RitualService;
 import io.dods.attributeService.segen.SegenService;
+import io.dods.attributeService.vorteil.VorteilService;
 import io.dods.attributeService.zauber.ZauberService;
 import io.dods.attributeService.zaubertrick.ZaubertrickService;
 import io.dods.attributeService.zeremonie.ZeremonieService;
@@ -38,6 +39,9 @@ public class ParseListService {
 
     @Autowired
     private SegenService segenService;
+
+    @Autowired
+    private VorteilService vorteilService;
 
     @Autowired
     private ZauberService zauberService;
@@ -98,6 +102,14 @@ public class ParseListService {
 
         return parse(segenService, urls.stream()
                 .map(url -> parserService.parseSegen(url)));
+    }
+
+    public List<Vorteil> parseVorteil(String listUrl) {
+        List<String> urls = searchLinks(listUrl);
+
+        return parse(vorteilService, urls.stream()
+                .map(url -> parserService.parseVorteil(url))
+                .flatMap(List::stream));
     }
 
     public List<Zauber> parseZauber(String listUrl) {

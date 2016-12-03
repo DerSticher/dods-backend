@@ -1,13 +1,15 @@
 package io.dods.parser;
 
 import io.dods.model.attribute.misc.*;
+import org.springframework.util.SerializationUtils;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author Richard Gottschalk
  */
-class ParsedValue {
+class ParsedValue implements Serializable {
 
     private String name;
     private String regel;
@@ -21,6 +23,12 @@ class ParsedValue {
     private Wirkungsdauer wirkungsdauer;
     private List<Zielkategorie> zielkategorie;
     private List<Aspekt> aspekt;
+    private int apWert;
+
+    public ParsedValue copy() {
+        byte[] serialize = SerializationUtils.serialize(this);
+        return (ParsedValue) SerializationUtils.deserialize(serialize);
+    }
 
     public String getRegel() {
         return regel;
@@ -108,5 +116,13 @@ class ParsedValue {
 
     public void setNutzkosten(Nutzkosten nutzkosten) {
         this.nutzkosten = nutzkosten;
+    }
+
+    public void setApWert(int apWert) {
+        this.apWert = apWert;
+    }
+
+    public int getApWert() {
+        return apWert;
     }
 }
