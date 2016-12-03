@@ -1,8 +1,17 @@
 --
+-- Delete all old data
+--
+DELETE FROM `fertigkeit`;
+DELETE FROM `eigenschaft`;
+DELETE FROM `attribut`;
+DELETE FROM `zielkategorie`;
+DELETE FROM `wirkungsdauer`;
+DELETE FROM `dauer`;
+DELETE FROM `aspekt`;
+
+--
 -- Daten für Tabelle `aspekt`
 --
-
-DELETE FROM `aspekt`;
 
 INSERT INTO `aspekt` (`id`, `name`) VALUES
 (1, 'allgemein'),
@@ -23,8 +32,6 @@ INSERT INTO `aspekt` (`id`, `name`) VALUES
 -- Daten für Tabelle `dauer`
 --
 
-DELETE FROM `dauer`;
-
 INSERT INTO `dauer` (`id`, `name`) VALUES
 (1, '1 Aktion'),
 (2, '2 Aktionen'),
@@ -39,8 +46,6 @@ INSERT INTO `dauer` (`id`, `name`) VALUES
 --
 -- Daten für Tabelle `wirkungsdauer`
 --
-
-DELETE FROM `wirkungsdauer`;
 
 INSERT INTO `wirkungsdauer` (`id`, `name`) VALUES
 (1, 'sofort'),
@@ -63,8 +68,6 @@ INSERT INTO `wirkungsdauer` (`id`, `name`) VALUES
 --
 -- Daten für Tabelle `zielkategorie`
 --
-
-DELETE FROM `zielkategorie`;
 
 INSERT INTO `zielkategorie` (`id`, `name`) VALUES
 (1, 'Wesen'),
@@ -95,8 +98,6 @@ INSERT INTO `zielkategorie` (`id`, `name`) VALUES
 --
 -- Daten für Tabelle `attribut`
 --
-
-DELETE FROM `attribut`;
 
 INSERT INTO `attribut` (`typ`, `id`, `name`) VALUES
 ('Eigenschaft', 1, 'Mut'),
@@ -175,8 +176,6 @@ INSERT INTO `attribut` (`typ`, `id`, `name`) VALUES
 --
 -- Daten für Tabelle `eigenschaft`
 --
-
-DELETE FROM `eigenschaft`;
 
 INSERT INTO `eigenschaft` (`kostentabelle`, `id`) VALUES
 ('E', 1),
