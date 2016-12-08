@@ -1,4 +1,15 @@
 --
+-- Delete all old data
+--
+DELETE FROM `fertigkeit`;
+DELETE FROM `eigenschaft`;
+DELETE FROM `attribut`;
+DELETE FROM `zielkategorie`;
+DELETE FROM `wirkungsdauer`;
+DELETE FROM `dauer`;
+DELETE FROM `aspekt`;
+
+--
 -- Daten für Tabelle `aspekt`
 --
 
