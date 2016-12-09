@@ -28,7 +28,7 @@ public class AttributeApi {
     @RequestMapping(path = "attribute", method = RequestMethod.GET)
     public Iterable<Attribut> get(@RequestParam(value = "typ", required = false) String typ,
                                   @RequestParam(value = "name", required = false) String name,
-                                  @RequestParam(value = "include subcategories", required = false, defaultValue = "false")
+                                  @RequestParam(value = "includeSubcategories", required = false, defaultValue = "false")
                                               boolean includeSubcategories) {
         if (Objects.equals(typ, ValueConstants.DEFAULT_NONE)) typ = null;
         if (Objects.equals(name, ValueConstants.DEFAULT_NONE)) name = null;
