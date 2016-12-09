@@ -6,6 +6,8 @@ import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author Richard Gottschalk
  */
@@ -18,13 +20,23 @@ public class AttributeService {
     @Autowired
     private DauerService dauerService;
 
-    public Iterable<Attribut> find(@Nullable String typ, @Nullable String name) {
-        if (typ != null && name != null) {
-            return attributeRepository.findByTypAndName(typ, name);
-        } else if (typ != null) {
-            return attributeRepository.findByTyp(typ);
-        } else if (name != null) {
-            return attributeRepository.findByName(name);
+    public Iterable<Attribut> find(@Nullable String typ, @Nullable String name, boolean includeSubcategories) {
+        if (includeSubcategories) {
+            if (typ != null && name != null) {
+                return attributeRepository.findByTypAndName(typ, name);
+            } else if (typ != null) {
+                return attributeRepository.findByTyp(typ);
+            } else if (name != null) {
+                return attributeRepository.findByName(name);
+            }
+        } else {
+            if (typ != null && name != null) {
+                return attributeRepository.findByTypAndNameAndSubcategoryOfIdIsNull(typ, name);
+            } else if (typ != null) {
+                return attributeRepository.findByTypAndSubcategoryOfIdIsNull(typ);
+            } else if (name != null) {
+                return attributeRepository.findByNameAndSubcategoryOfIdIsNull(name);
+            }
         }
         return attributeRepository.findAll();
     }
@@ -35,5 +47,9 @@ public class AttributeService {
 
     public <T extends Attribut> T create(T attribut) {
         return attributeRepository.save(attribut);
+    }
+
+    public List<Attribut> findSubcategoriesById(long id) {
+        return attributeRepository.findBySubcategoryOfId(id);
     }
 }

@@ -22,7 +22,7 @@ public abstract class AbstractAttributService<T extends Attribut> {
         throw new ResourceNotFoundException();
     }
 
-    public T save(T parsedValue) {
-        return getRepository().save(parsedValue);
+    public T save(T attribut) {
+        return getRepository().save(attribut);
     }
 }

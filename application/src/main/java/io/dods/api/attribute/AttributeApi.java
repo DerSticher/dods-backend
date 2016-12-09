@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -26,10 +27,12 @@ public class AttributeApi {
     })
     @RequestMapping(path = "attribute", method = RequestMethod.GET)
     public Iterable<Attribut> get(@RequestParam(value = "typ", required = false) String typ,
-                                  @RequestParam(value = "name", required = false) String name) {
+                                  @RequestParam(value = "name", required = false) String name,
+                                  @RequestParam(value = "include subcategories", required = false, defaultValue = "false")
+                                              boolean includeSubcategories) {
         if (Objects.equals(typ, ValueConstants.DEFAULT_NONE)) typ = null;
         if (Objects.equals(name, ValueConstants.DEFAULT_NONE)) name = null;
-        return attributeService.find(typ, name);
+        return attributeService.find(typ, name, includeSubcategories);
     }
 
     @ApiOperation("a single value")
@@ -40,6 +43,16 @@ public class AttributeApi {
     @RequestMapping(path = "attribut/{id}", method = RequestMethod.GET)
     public Attribut get(@PathVariable("id") String id) {
         return attributeService.findById(Long.parseLong(id));
+    }
+
+    @ApiOperation("a list of subcategories if available. Or an empty list")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "the List", response = Attribut.class, responseContainer = "List")
+    })
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "attribut/{id}/subcategories", method = RequestMethod.GET)
+    public List<Attribut> getSubcategories(@PathVariable("id") String id) {
+        return attributeService.findSubcategoriesById(Long.parseLong(id));
     }
 
 }

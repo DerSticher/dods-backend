@@ -1,6 +1,7 @@
 package io.dods.model.attribute;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.dods.model.Named;
 import io.dods.model.attribute.misc.ApFix;
 import io.dods.model.attribute.misc.ApVar;
@@ -21,7 +22,11 @@ public abstract class Attribut implements Named, Serializable {
     @ApiModelProperty(notes = "will be set by server", readOnly = true)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
+    private long id;
+
+    @JsonIgnore
+    @ManyToOne
+    private Attribut subcategoryOf;
 
     @ApiModelProperty(required = true, example = "Fancy Attribute's Name")
     @Column
@@ -64,6 +69,14 @@ public abstract class Attribut implements Named, Serializable {
 
     public long getId() {
         return id;
+    }
+
+    public Attribut getSubcategoryOf() {
+        return subcategoryOf;
+    }
+
+    public void setSubcategoryOf(Attribut subcategoryOf) {
+        this.subcategoryOf = subcategoryOf;
     }
 
     public String getTyp() {

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Richard Gottschalk
@@ -164,13 +164,25 @@ class ParserService {
 
             List<ParsedValue> parsedValues = parseValueLevelService.checkForLevels(value);
 
-            return parsedValues.stream()
-                    .map(v -> new Vorteil(
-                            v.getApWert(),
-                            v.getWirkung(),
-                            v.getReichweite(),
-                            v.getName()))
-                    .collect(Collectors.toList());
+            List<Vorteil> vorteile = new ArrayList<>();
+
+            for (int i = 0; i < parsedValues.size(); i++) {
+                ParsedValue v = parsedValues.get(i);
+
+                Vorteil vorteil = new Vorteil(
+                        v.getApWert(),
+                        v.getWirkung(),
+                        v.getReichweite(),
+                        v.getName());
+
+                vorteile.add(vorteil);
+
+                if (i > 0) {
+                    vorteil.setSubcategoryOf(vorteile.get(0));
+                }
+            }
+
+            return vorteile;
         } catch (IOException e) {
             return null;
         }

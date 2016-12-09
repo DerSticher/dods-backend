@@ -32,6 +32,9 @@ class ParseValueLevelService {
     private List<ParsedValue> parseLevels(ParsedValue parsedValue) {
         List<ParsedValue> parsedValues = new ArrayList<>();
 
+        // add original value
+        parsedValues.add(parsedValue);
+
         for (int level = 1; level <= getMaxLevel(parsedValue); level++) {
             parsedValues.add(parseLevel(parsedValue, level));
         }
@@ -45,7 +48,7 @@ class ParseValueLevelService {
         Matcher matcher = PATTERN_NAME.matcher(parsedValue.getName());
         if (matcher.find()) {
             String romanLevel = convertToRoman(level);
-            copy.setName(String.format("%s %s", matcher.group(1), romanLevel));
+            copy.setName(romanLevel);
         }
 
         copy.setApWert(level * parsedValue.getApWert());
