@@ -13,9 +13,9 @@ import java.util.regex.Pattern;
 @Service
 class ParseValueLevelService {
 
-    private static final Pattern PATTERN_LEVEL = Pattern.compile("[\\w …]+ I-(.+)");
+    private static final Pattern PATTERN_LEVEL = Pattern.compile(" I-(.+)\\z");
 
-    private static final Pattern PATTERN_NAME = Pattern.compile("(.+?) I-.+");
+    private static final Pattern PATTERN_NAME = Pattern.compile("(.+?) I-(.+)\\z");
 
     public List<ParsedValue> checkForLevels(ParsedValue parsedValue) {
         List<ParsedValue> list = new ArrayList<>();
