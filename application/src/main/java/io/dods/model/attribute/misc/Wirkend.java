@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public interface Wirkend {
 
-    @NotNull
+    @Nullable
     String getWirkung();
 
     @Nullable

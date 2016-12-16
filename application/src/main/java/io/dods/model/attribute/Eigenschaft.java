@@ -3,7 +3,6 @@ package io.dods.model.attribute;
 import io.dods.model.attribute.misc.Kostentabelle;
 import io.dods.model.attribute.misc.UsesKostentabelle;
 import io.swagger.annotations.ApiModelProperty;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -29,7 +28,7 @@ public class Eigenschaft extends Attribut implements UsesKostentabelle {
     }
 
     public Eigenschaft(Kostentabelle kostentabelle, String name) {
-        super(name);
+        super("", name);
         this.kostentabelle = kostentabelle;
     }
 

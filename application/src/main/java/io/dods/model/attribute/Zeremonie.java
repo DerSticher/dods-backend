@@ -68,7 +68,8 @@ public class Zeremonie extends Attribut implements Dauernd, HatProbe, HatNutzkos
         this.zielkategorien = zielkategorien;
     }
 
-    public Zeremonie(Nutzkosten nutzkosten,
+    public Zeremonie(String wikiUrl,
+                     Nutzkosten nutzkosten,
                      Probe probe,
                      Reichweite reichweite,
                      Dauer dauer,
@@ -77,7 +78,7 @@ public class Zeremonie extends Attribut implements Dauernd, HatProbe, HatNutzkos
                      Kostentabelle kostentabelle,
                      List<Zielkategorie> zielkategorien,
                      String name) {
-        super(name);
+        super(wikiUrl, name);
         this.nutzkosten = nutzkosten;
         this.probe = probe;
         this.reichweite = reichweite;

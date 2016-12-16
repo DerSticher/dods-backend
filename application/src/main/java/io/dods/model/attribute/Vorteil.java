@@ -36,8 +36,8 @@ public class Vorteil extends Attribut implements ApFix, HatReichweite {
         this.reichweite = reichweite;
     }
 
-    public Vorteil(int ap, String wirkung, Reichweite reichweite, String name) {
-        super(name);
+    public Vorteil(String wikuUrl, int ap, String wirkung, Reichweite reichweite, String name) {
+        super(wikuUrl, name);
         this.ap = ap;
         this.wirkung = wirkung;
         this.reichweite = reichweite;
@@ -55,5 +55,9 @@ public class Vorteil extends Attribut implements ApFix, HatReichweite {
     @Override
     public Reichweite getReichweite() {
         return reichweite;
+    }
+
+    public void setAp(int ap) {
+        this.ap = ap;
     }
 }

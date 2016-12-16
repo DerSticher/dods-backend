@@ -69,7 +69,8 @@ public class Zauber extends Attribut implements Dauernd, HatProbe, HatNutzkosten
         this.zielkategorien = zielkategorien;
     }
 
-    public Zauber(Nutzkosten nutzkosten,
+    public Zauber(String wikuUrl,
+                  Nutzkosten nutzkosten,
                   Kostentabelle kostentabelle,
                   Probe probe,
                   Reichweite reichweite,
@@ -78,7 +79,7 @@ public class Zauber extends Attribut implements Dauernd, HatProbe, HatNutzkosten
                   Dauer zauberdauer,
                   List<Zielkategorie> zielkategorien,
                   String name) {
-        super(name);
+        super(wikuUrl, name);
         this.nutzkosten = nutzkosten;
         this.kostentabelle = kostentabelle;
         this.probe = probe;

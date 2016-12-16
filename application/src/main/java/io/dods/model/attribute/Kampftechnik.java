@@ -21,13 +21,16 @@ public class Kampftechnik extends Attribut implements UsesKostentabelle {
     @Enumerated(EnumType.STRING)
     private Kostentabelle kostentabelle;
 
+    public Kampftechnik() {
+    }
+
     public Kampftechnik(Eigenschaft leiteigenschaft, Kostentabelle kostentabelle) {
         this.leiteigenschaft = leiteigenschaft;
         this.kostentabelle = kostentabelle;
     }
 
     public Kampftechnik(Eigenschaft leiteigenschaft, Kostentabelle kostentabelle, String name) {
-        super(name);
+        super("", name);
         this.leiteigenschaft = leiteigenschaft;
         this.kostentabelle = kostentabelle;
     }

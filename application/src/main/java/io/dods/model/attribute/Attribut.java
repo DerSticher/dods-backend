@@ -28,6 +28,7 @@ public abstract class Attribut implements Named, Serializable {
     @ManyToOne
     private Attribut subcategoryOf;
 
+    private String wikiUrl;
     @ApiModelProperty(required = true, example = "Fancy Attribute's Name")
     @Column
     private String name;
@@ -40,8 +41,9 @@ public abstract class Attribut implements Named, Serializable {
         this.typ = getClass().getSimpleName();
     }
 
-    public Attribut(String name) {
+    public Attribut(String wikiUrl, String name) {
         this();
+        this.wikiUrl = wikiUrl;
         this.name = name;
     }
 

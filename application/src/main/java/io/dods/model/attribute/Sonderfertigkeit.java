@@ -31,7 +31,7 @@ public class Sonderfertigkeit extends Attribut implements ApFix {
     }
 
     public Sonderfertigkeit(int ap, boolean isPassive, String name) {
-        super(name);
+        super("", name);
         this.ap = ap;
         this.isPassive = isPassive;
     }

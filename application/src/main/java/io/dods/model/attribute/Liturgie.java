@@ -68,7 +68,8 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, HatNutzkost
         this.zielkategorien = zielkategorien;
     }
 
-    public Liturgie(Dauer dauer,
+    public Liturgie(String wikuUrl,
+                    Dauer dauer,
                     Kostentabelle kostentabelle,
                     Reichweite reichweite,
                     Nutzkosten nutzkosten,
@@ -77,7 +78,7 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, HatNutzkost
                     Wirkungsdauer wirkungsdauer,
                     List<Zielkategorie> zielkategorien,
                     String name) {
-        super(name);
+        super(wikuUrl, name);
         this.dauer = dauer;
         this.kostentabelle = kostentabelle;
         this.reichweite = reichweite;
@@ -113,7 +114,7 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, HatNutzkost
     }
 
     @Override
-    public @NotNull String getWirkung() {
+    public String getWirkung() {
         return wirkung;
     }
 

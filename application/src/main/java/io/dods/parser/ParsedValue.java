@@ -11,6 +11,7 @@ import java.util.List;
  */
 class ParsedValue implements Serializable {
 
+    private String wikiUrl;
     private String name;
     private String regel;
     private String wirkung;
@@ -124,5 +125,13 @@ class ParsedValue implements Serializable {
 
     public int getApWert() {
         return apWert;
+    }
+
+    public String getWikiUrl() {
+        return wikiUrl;
+    }
+
+    public void setWikiUrl(String wikiUrl) {
+        this.wikiUrl = wikiUrl;
     }
 }

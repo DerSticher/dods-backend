@@ -59,6 +59,7 @@ class ParserService {
 
         Document document = getDocument(url, "http://www.ulisses-regelwiki.de/");
 
+        value.setWikiUrl(url);
         value.setName(parseNameService.parseName(document));
         value.setReichweite(parseReichweiteService.parseReichweite(document));
         value.setNutzkosten(parseNutzkostenService.parseNutzkosten(document));
@@ -108,6 +109,7 @@ class ParserService {
             ParsedValue value = parseDetails(url);
 
             return new Liturgie(
+                    value.getWikiUrl(),
                     value.getDauer(),
                     value.getKostentabelle(),
                     value.getReichweite(),
@@ -127,6 +129,7 @@ class ParserService {
             ParsedValue value = parseDetails(url);
 
             return new Ritual(
+                    value.getWikiUrl(),
                     value.getNutzkosten(),
                     value.getDauer(),
                     value.getKostentabelle(),
@@ -146,6 +149,7 @@ class ParserService {
             ParsedValue value = parseDetails(url);
 
             return new Segen(
+                value.getWikiUrl(),
                 value.getAspekt(),
                 value.getNutzkosten(),
                 value.getReichweite(),
@@ -170,6 +174,7 @@ class ParserService {
                 ParsedValue v = parsedValues.get(i);
 
                 Vorteil vorteil = new Vorteil(
+                        value.getWikiUrl(),
                         v.getApWert(),
                         v.getWirkung(),
                         v.getReichweite(),
@@ -193,6 +198,7 @@ class ParserService {
             ParsedValue value = parseDetails(url);
 
             return new Zauber(
+                    value.getWikiUrl(),
                     value.getNutzkosten(),
                     value.getKostentabelle(),
                     value.getProbe(),
@@ -212,6 +218,7 @@ class ParserService {
             ParsedValue value = parseDetails(url);
 
             return new Zaubertrick(
+                    value.getWikiUrl(),
                     value.getReichweite(),
                     value.getZielkategorie(),
                     value.getWirkungsdauer(),
@@ -227,6 +234,7 @@ class ParserService {
             ParsedValue value = parseDetails(url);
 
             return new Zeremonie(
+                    value.getWikiUrl(),
                     value.getNutzkosten(),
                     value.getProbe(),
                     value.getReichweite(),

@@ -57,14 +57,15 @@ public class Segen extends Attribut implements ApFix, Kategorisiert, HatNutzkost
         this.zielkategorien = zielkategorien;
     }
 
-    public Segen(List<Aspekt> aspekte,
+    public Segen(String wikuUrl,
+                 List<Aspekt> aspekte,
                  Nutzkosten nutzkosten,
                  Reichweite reichweite,
                  String wirkung,
                  Wirkungsdauer wirkungsdauer,
                  List<Zielkategorie> zielkategorien,
                  String name) {
-        super(name);
+        super(wikuUrl, name);
         this.aspekte = aspekte;
         this.nutzkosten = nutzkosten;
         this.reichweite = reichweite;

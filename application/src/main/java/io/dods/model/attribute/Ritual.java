@@ -68,7 +68,8 @@ public class Ritual extends Attribut implements Dauernd, HatProbe, HatReichweite
         this.zielkategorien = zielkategorien;
     }
 
-    public Ritual(Nutzkosten nutzkosten,
+    public Ritual(String wikuUrl,
+                  Nutzkosten nutzkosten,
                   Dauer dauer,
                   Kostentabelle kostentabelle,
                   Reichweite reichweite,
@@ -77,7 +78,7 @@ public class Ritual extends Attribut implements Dauernd, HatProbe, HatReichweite
                   Wirkungsdauer wirkungsdauer,
                   List<Zielkategorie> zielkategorien,
                   String name) {
-        super(name);
+        super(wikuUrl, name);
         this.nutzkosten = this.nutzkosten;
         this.dauer = dauer;
         this.kostentabelle = kostentabelle;

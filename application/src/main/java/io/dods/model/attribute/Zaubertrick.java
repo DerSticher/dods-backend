@@ -44,12 +44,13 @@ public class Zaubertrick extends Attribut implements ApFix, HatNutzkosten, HatRe
         this.wirkung = wirkung;
     }
 
-    public Zaubertrick(Reichweite reichweite,
+    public Zaubertrick(String wikuUrl,
+                       Reichweite reichweite,
                        List<Zielkategorie> zielkategorien,
                        Wirkungsdauer wirkungsdauer,
                        String wirkung,
                        String name) {
-        super(name);
+        super(wikuUrl, name);
         this.reichweite = reichweite;
         this.zielkategorien = zielkategorien;
         this.wirkungsdauer = wirkungsdauer;
