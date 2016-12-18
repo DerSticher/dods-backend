@@ -78,6 +78,14 @@ public class Abhangigkeit {
         this.effekt = effekt;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public enum Status {
         NOTHING_FULFILLED(true),
         REQUIREMENTS_MET(true),

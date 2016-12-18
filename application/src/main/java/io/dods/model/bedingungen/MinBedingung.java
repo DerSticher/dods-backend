@@ -40,4 +40,12 @@ public class MinBedingung extends Bedingung {
         }
         return false;
     }
+
+    public Attribut getAttribut() {
+        return attribut;
+    }
+
+    public int getLevel() {
+        return level;
+    }
 }
