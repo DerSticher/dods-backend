@@ -31,6 +31,15 @@ DELETE FROM `zauber_zielkategorien`;
 DELETE FROM `zeremonie`;
 DELETE FROM `zeremonie_zielkategorien`;
 
+DELETE FROM `abhangigkeit`;
+DELETE FROM `bedingung_and`;
+DELETE FROM `bedingung_and_bedingungen`;
+DELETE FROM `bedingung_not`;
+DELETE FROM `bedingung_or`;
+DELETE FROM `bedingung_or_bedingungen`;
+DELETE FROM `bedingung_vorhanden`;
+DELETE FROM `effekt`;
+
 SET foreign_key_checks = 1;
 
 --
