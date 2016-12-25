@@ -40,8 +40,6 @@ DELETE FROM `bedingung_or_bedingungen`;
 DELETE FROM `bedingung_vorhanden`;
 DELETE FROM `effekt`;
 
-SET foreign_key_checks = 1;
-
 --
 -- Daten für Tabelle `aspekt`
 --
@@ -3683,3 +3681,6 @@ INSERT INTO `effekt` (`id`, `level`, `attribut_id`) VALUES
 (158, 1, 352),
 (160, 1, 363),
 (162, 1, 364);
+
+-- activate foreign key checks. Keep this in the last line!
+SET foreign_key_checks = 1;
