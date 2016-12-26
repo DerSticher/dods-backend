@@ -1,9 +1,11 @@
 package io.dods.parser;
 
 import io.dods.attributeService.AbstractAttributService;
+import io.dods.attributeService.attribute.AttributeService;
 import io.dods.attributeService.liturgie.LiturgieService;
 import io.dods.attributeService.ritual.RitualService;
 import io.dods.attributeService.segen.SegenService;
+import io.dods.attributeService.sonderfertigkeit.SonderfertigkeitService;
 import io.dods.attributeService.vorteil.VorteilService;
 import io.dods.attributeService.zauber.ZauberService;
 import io.dods.attributeService.zaubertrick.ZaubertrickService;
@@ -32,6 +34,9 @@ public class ParseListService {
     private ParserService parserService;
 
     @Autowired
+    private AttributeService attributeService;
+
+    @Autowired
     private LiturgieService liturgieService;
 
     @Autowired
@@ -54,6 +59,9 @@ public class ParseListService {
 
     @Autowired
     private ZeremonieService zeremonieService;
+
+    @Autowired
+    private VoraussetzungService voraussetzungService;
 
     private List<String> searchLinks(String url) {
         try {
@@ -82,8 +90,24 @@ public class ParseListService {
         return stream
                 .filter(Objects::nonNull)
                 .filter(value -> value.getName().length() > 0)
-                .map(service::save)
+                .filter(value -> service.findByName(value.getName()) == null)
+                .map(value -> checkForUpdateOrPersist(service, value))
                 .collect(Collectors.toList());
+    }
+
+    private <T extends Attribut> T checkForUpdateOrPersist(AbstractAttributService<T> service, T attribut) {
+        T byName = service.findByName(attribut.getName());
+
+        if (byName != null) {
+            byName.setWikiUrl(attribut.getWikiUrl());
+            service.save(byName);
+
+            return byName;
+        } else {
+            service.save(attribut);
+        }
+
+        return attribut;
     }
 
     public List<Liturgie> parseLiturgie(String listUrl) {
@@ -142,6 +166,14 @@ public class ParseListService {
 
         return parse(zeremonieService, urls.stream()
                 .map(url -> parserService.parseZeremonie(url)));
+    }
+
+    public void parseVorraussetzungen() {
+        Iterable<Attribut> attributs = attributeService.find(null, null, false);
+
+        for (Attribut attribut : attributs) {
+            voraussetzungService.parseNewVoraussetzung(attribut);
+        }
     }
 
 }

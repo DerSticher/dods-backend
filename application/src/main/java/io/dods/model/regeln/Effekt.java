@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class Effekt {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private int level;

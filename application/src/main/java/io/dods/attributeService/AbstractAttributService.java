@@ -25,4 +25,8 @@ public abstract class AbstractAttributService<T extends Attribut> {
     public T save(T attribut) {
         return getRepository().save(attribut);
     }
+
+    public T findByName(String name) {
+        return getRepository().findByName(name);
+    }
 }

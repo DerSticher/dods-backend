@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Richard Gottschalk
@@ -21,9 +22,13 @@ public class AbhangigkeitApi {
 
     @ApiOperation(value = "a List containing every Abhangigkeit", response = Abhangigkeit.class, responseContainer = "List")
     @RequestMapping(path = "abhangigkeiten", method = RequestMethod.GET)
-    public Iterable<Abhangigkeit> getAll(@RequestParam(value = "effektAttributId", required = false) Long effektAttributId) {
-        if (Objects.equals(effektAttributId, ValueConstants.DEFAULT_NONE) || effektAttributId == null) effektAttributId = 0L;
-        return abhangigkeitService.find(effektAttributId);
+    public Iterable<Abhangigkeit> find(@RequestParam(value = "effektAttributId", required = false) Long effektAttributId) {
+        if (effektAttributId != null) {
+            List<Abhangigkeit> values = new ArrayList<>();
+            values.add(abhangigkeitService.findByEffektAttribut(effektAttributId));
+            return values;
+        }
+        return abhangigkeitService.findAll();
     }
 
     @ApiOperation(value = "a single Abhangigkeit", response = Abhangigkeit.class)

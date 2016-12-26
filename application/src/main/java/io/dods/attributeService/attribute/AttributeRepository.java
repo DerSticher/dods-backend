@@ -12,6 +12,7 @@ interface AttributeRepository extends PagingAndSortingRepository<Attribut, Long>
     Iterable<Attribut> findByTypAndName(String type, String name);
     Iterable<Attribut> findByTyp(String type);
     Iterable<Attribut> findByName(String name);
+    Attribut findFirstByName(String name);
 
     Iterable<Attribut> findByTypAndNameAndSubcategoryOfIdIsNull(String typ, String name);
     Iterable<Attribut> findByTypAndSubcategoryOfIdIsNull(String typ);

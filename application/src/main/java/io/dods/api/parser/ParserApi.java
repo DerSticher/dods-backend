@@ -96,4 +96,10 @@ public class ParserApi {
     public List<Zeremonie> parseZeremonie() {
         return parseListService.parseZeremonie("http://www.ulisses-regelwiki.de/index.php/lt_zeremonien.html");
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "voraussetzung", method = RequestMethod.POST)
+    public void parseVoraussetzung() {
+        parseListService.parseVorraussetzungen();
+    }
 }

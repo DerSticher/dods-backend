@@ -89,6 +89,10 @@ public abstract class Attribut implements Named, Serializable {
         this.typ = typ;
     }
 
+    public String getWikiUrl() {
+        return wikiUrl;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -102,5 +106,9 @@ public abstract class Attribut implements Named, Serializable {
     @Override
     public int hashCode() {
         return (int) (id ^ (id >>> 32));
+    }
+
+    public void setWikiUrl(String wikiUrl) {
+        this.wikiUrl = wikiUrl;
     }
 }

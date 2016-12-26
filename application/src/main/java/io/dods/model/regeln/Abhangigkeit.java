@@ -17,7 +17,7 @@ import javax.persistence.*;
 public class Abhangigkeit {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne(cascade = CascadeType.ALL)

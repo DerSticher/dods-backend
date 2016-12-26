@@ -10,7 +10,6 @@ import io.dods.model.bedingungen.*;
 import io.dods.model.regeln.Abhangigkeit;
 import io.dods.model.regeln.Effekt;
 import io.dods.regelwerkService.RegelwerkService;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,13 +30,6 @@ public class AbhangigkeitService {
 
     @Autowired
     private RegelwerkService regelwerkService;
-
-    public Iterable<Abhangigkeit> find(@NotNull Long attributId) {
-        if (attributId != 0L) {
-            return findByEffektAttribut(attributId);
-        }
-        return findAll();
-    }
 
     public Abhangigkeit persist(CreateAbhangigkeit createAbhangigkeit) {
         Abhangigkeit abhangigkeit = parse(createAbhangigkeit);
@@ -68,11 +60,11 @@ public class AbhangigkeitService {
         return abhangigkeitRepository.findAll();
     }
 
-    public List<Abhangigkeit> findByEffektAttribut(Attribut attribut) {
+    public Abhangigkeit findByEffektAttribut(Attribut attribut) {
         return findByEffektAttribut(attribut.getId());
     }
 
-    public List<Abhangigkeit> findByEffektAttribut(long attributId) {
+    public Abhangigkeit findByEffektAttribut(long attributId) {
         return abhangigkeitRepository.findByEffektAttributId(attributId);
     }
 

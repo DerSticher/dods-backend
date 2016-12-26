@@ -1,7 +1,9 @@
 package io.dods.api.attribute;
 
+import io.dods.api.exceptions.ResourceNotFoundException;
 import io.dods.attributeService.attribute.AttributeService;
 import io.dods.model.attribute.Attribut;
+import io.dods.model.regeln.Abhangigkeit;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -53,6 +55,20 @@ public class AttributeApi {
     @RequestMapping(path = "attribut/{id}/subcategories", method = RequestMethod.GET)
     public List<Attribut> getSubcategories(@PathVariable("id") String id) {
         return attributeService.findSubcategoriesById(Long.parseLong(id));
+    }
+
+    @ApiOperation("a list of subcategories if available. Or an empty list")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "the List", response = Attribut.class, responseContainer = "List")
+    })
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "attribut/{id}/abhangigkeit", method = RequestMethod.GET)
+    public Abhangigkeit getAbhangigkeit(@PathVariable("id") long id) {
+        Abhangigkeit abhangigkeit = attributeService.findAbhangigkeitByAttributId(id);
+        if (abhangigkeit == null) {
+            throw new ResourceNotFoundException();
+        }
+        return abhangigkeit;
     }
 
 }
