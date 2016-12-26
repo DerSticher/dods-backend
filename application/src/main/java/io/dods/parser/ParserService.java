@@ -1,13 +1,10 @@
 package io.dods.parser;
 
 import io.dods.model.attribute.*;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,10 +51,13 @@ class ParserService {
     @Autowired
     private ParseAspektService parseAspektService;
 
+    @Autowired
+    private DocumentService documentService;
+
     private ParsedValue parseDetails(String url) throws IOException {
         ParsedValue value = new ParsedValue();
 
-        Document document = getDocument(url, "http://www.ulisses-regelwiki.de/");
+        Document document = documentService.getDocument(url, "http://www.ulisses-regelwiki.de/");
 
         value.setWikiUrl(url);
         value.setName(parseNameService.parseName(document));
@@ -74,34 +74,6 @@ class ParserService {
         value.setAspekt(parseAspektService.parseAspekt(document));
 
         return value;
-    }
-
-    private Document getDocument(String url, String baseUrl) throws IOException {
-        String currentFolder = System.getProperty("user.dir");
-        String localFileName = url.replace(":", "").replace("?", "_");
-        if (!localFileName.endsWith(".html")) localFileName += ".html";
-        File bufferedFile = new File(currentFolder + "/_buffer", localFileName);
-
-        if (bufferedFile.exists() && !localFileName.contains("?")) {
-            System.out.println("Parsing local " + url);
-            return Jsoup.parse(bufferedFile, "UTF-8", baseUrl);
-        } else {
-            System.out.println("Parsing remote " + url);
-            Document document = Jsoup.connect(url).get();
-
-            bufferedFile.getParentFile().mkdirs();
-
-            FileWriter fileWriter = new FileWriter(bufferedFile);
-            fileWriter.write(document.toString());
-            fileWriter.close();
-
-            try {
-                // sleeping to reduce traffic and avoid HTTP 429
-                Thread.sleep((long) (Math.random() * 1000 * 20 + 5 * 1000));
-            } catch (InterruptedException ignore) {}
-
-            return document;
-        }
     }
 
     public Liturgie parseLiturgie(String url) {
