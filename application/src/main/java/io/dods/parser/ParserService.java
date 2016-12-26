@@ -116,6 +116,42 @@ class ParserService {
         }
     }
 
+    public List<Sonderfertigkeit> parseSonderfertigkeit(String url, Sonderfertigkeit.Gruppe gruppe) {
+        try {
+            ParsedValue value = parseDetails(url);
+
+            List<ParsedValue> parsedValues = parseValueLevelService.checkForLevels(value);
+
+            List<Sonderfertigkeit> sonderfertigkeiten = new ArrayList<>();
+
+            for (int i = 0; i < parsedValues.size(); i++) {
+                ParsedValue v = parsedValues.get(i);
+
+                Sonderfertigkeit sonderfertigkeit = new Sonderfertigkeit(
+                        v.getWikiUrl(),
+                        v.getApWert(),
+                        gruppe,
+                        v.getDauer(),
+                        v.getNutzkosten(),
+                        v.getProbe(),
+                        v.getReichweite(),
+                        v.getWirkungsdauer(),
+                        v.getKostentabelle(),
+                        v.getName());
+
+                sonderfertigkeiten.add(sonderfertigkeit);
+
+                if (i > 0) {
+                    sonderfertigkeit.setSubcategoryOf(sonderfertigkeiten.get(0));
+                }
+            }
+
+            return sonderfertigkeiten;
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
     public Segen parseSegen(String url) {
         try {
             ParsedValue value = parseDetails(url);

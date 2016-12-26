@@ -35,6 +35,36 @@ public class ParserApi {
     }
 
     @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "sonderfertigkeit", method = RequestMethod.POST)
+    public List<Sonderfertigkeit> parseSonderfertigkeit() {
+        List<Sonderfertigkeit> sonderfertigkeit = new ArrayList<>();
+
+        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/Ahnenzeichen.html"));
+        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.KARMAL, "http://www.ulisses-regelwiki.de/index.php/SF_karmal.html"));
+        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/SF_Magie.html"));
+        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.PROFAN, "http://www.ulisses-regelwiki.de/index.php/sf_allgemeine_sonderfertigkeiten.html"));
+        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/bannundschutz.html"));
+        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.KAMPF, "http://www.ulisses-regelwiki.de/index.php/Befehls_SF.html"));
+        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/drituale.html"));
+
+        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.KAMPF, "http://www.ulisses-regelwiki.de/index.php/SF_Erweitertekampfstilsonderfertigkeiten.html"));
+        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.PROFAN, "http://www.ulisses-regelwiki.de/index.php/ESF_Elfenlieder.html"));
+        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/herituel.html"));
+        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/HSF_Hexenflueche.html"));
+        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.KAMPF, "http://www.ulisses-regelwiki.de/index.php/sf_kampfsonderfertigkeiten.html"));
+        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.KAMPF, "http://www.ulisses-regelwiki.de/index.php/SF_Kampfstilsonderfertigkeiten.html"));
+
+        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.PROFAN, "http://www.ulisses-regelwiki.de/index.php/SF_Pruegelsonderfertigkeiten.html"));
+        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.PROFAN, "http://www.ulisses-regelwiki.de/index.php/SF_Schick.html"));
+        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/SSF_Stabzauber.html"));
+        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.PROFAN, "http://www.ulisses-regelwiki.de/index.php/SF_Tier.html"));
+        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.PROFAN, "http://www.ulisses-regelwiki.de/index.php/VSF_Vertrautentricks.html"));
+        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/verelfenl.html"));
+
+        return sonderfertigkeit;
+    }
+
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "segen", method = RequestMethod.POST)
     public List<Segen> parseSegen() {
         return parseListService.parseSegen("http://www.ulisses-regelwiki.de/index.php/Lit_Segnungen.html");

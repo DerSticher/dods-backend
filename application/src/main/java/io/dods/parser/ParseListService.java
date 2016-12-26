@@ -38,6 +38,9 @@ public class ParseListService {
     private RitualService ritualService;
 
     @Autowired
+    private SonderfertigkeitService sonderfertigkeitService;
+
+    @Autowired
     private SegenService segenService;
 
     @Autowired
@@ -95,6 +98,14 @@ public class ParseListService {
 
         return parse(ritualService, urls.stream()
                 .map(url -> parserService.parseRitual(url)));
+    }
+
+    public List<Sonderfertigkeit> parseSonderfertigkeit(Sonderfertigkeit.Gruppe gruppe, String listUrl) {
+        List<String> urls = searchLinks(listUrl);
+
+        return parse(sonderfertigkeitService, urls.stream()
+                .map(url -> parserService.parseSonderfertigkeit(url, gruppe))
+                .flatMap(List::stream));
     }
 
     public List<Segen> parseSegen(String listUrl) {
