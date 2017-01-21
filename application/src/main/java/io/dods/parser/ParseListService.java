@@ -2,6 +2,7 @@ package io.dods.parser;
 
 import io.dods.attributeService.AbstractAttributService;
 import io.dods.attributeService.attribute.AttributeService;
+import io.dods.attributeService.kampftechnik.KampftechnikService;
 import io.dods.attributeService.liturgie.LiturgieService;
 import io.dods.attributeService.ritual.RitualService;
 import io.dods.attributeService.segen.SegenService;
@@ -35,6 +36,9 @@ public class ParseListService {
 
     @Autowired
     private AttributeService attributeService;
+
+    @Autowired
+    private KampftechnikService kampftechnikService;
 
     @Autowired
     private LiturgieService liturgieService;
@@ -90,7 +94,7 @@ public class ParseListService {
         return stream
                 .filter(Objects::nonNull)
                 .filter(value -> value.getName().length() > 0)
-                .filter(value -> service.findByName(value.getName()) == null)
+                .filter(value -> value.getSubcategoryOf() != null || service.findByName(value.getName()) == null)
                 .map(value -> checkForUpdateOrPersist(service, value))
                 .collect(Collectors.toList());
     }
@@ -108,6 +112,13 @@ public class ParseListService {
         }
 
         return attribut;
+    }
+
+    public List<Kampftechnik> parseKampftechnik(String listUrl, boolean isFernkampf) {
+        List<String> urls = searchLinks(listUrl);
+
+        return parse(kampftechnikService, urls.stream()
+                .map(url -> parserService.parseKampftechnik(url, isFernkampf)));
     }
 
     public List<Liturgie> parseLiturgie(String listUrl) {

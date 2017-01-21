@@ -125,7 +125,10 @@ class VoraussetzungService {
                 not = false;
             } else {
                 Bedingung bedingung = parseSingle(match);
-                if (bedingung != null) bedingungenBuffer.add(bedingung);
+                if (bedingung != null) {
+                    if (not) bedingung = new NotBedingung(bedingung);
+                    bedingungenBuffer.add(bedingung);
+                }
             }
         }
         if (andBedingung.getAnd().size() == 1) {
@@ -163,7 +166,7 @@ class VoraussetzungService {
     }
 
     private Bedingung parseSingle(String text) {
-        text = text.replaceAll("(?:Vorteil|Nachteil) ", "").trim();
+        text = text.replaceAll("(?:Vorteil|Nachteil|Sonderfertigkeit|Kampftechnik) ", "").trim();
 
         String[] split = text.split(" ");
         List<String> strings = Arrays.asList(split);
@@ -186,6 +189,10 @@ class VoraussetzungService {
                         int level = Integer.parseInt(strings.get(strings.size() - 1));
                         return new MinBedingung(attribut, level);
                     } catch (NumberFormatException ignore) {
+                        Attribut subAttribut = findAttribut(text);
+                        if (subAttribut != null) {
+                            return new VorhandenBedingung(subAttribut);
+                        }
                         return new VorhandenBedingung(attribut);
                     }
                 } else {
@@ -259,7 +266,7 @@ class VoraussetzungService {
         if (token.equals("IN")) return attributeService.findByName("Intuition");
         if (token.equals("CH")) return attributeService.findByName("Charisma");
         if (token.equals("FF")) return attributeService.findByName("Fingerfertigkeit");
-        if (token.equals("GE")) return attributeService.findByName("Geschicklichkeit");
+        if (token.equals("GE")) return attributeService.findByName("Gewandtheit");
         if (token.equals("KO")) return attributeService.findByName("Konstitution");
         if (token.equals("KK")) return attributeService.findByName("Körperkraft");
 

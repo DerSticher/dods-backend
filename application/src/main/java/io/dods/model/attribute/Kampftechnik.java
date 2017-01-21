@@ -21,18 +21,17 @@ public class Kampftechnik extends Attribut implements UsesKostentabelle {
     @Enumerated(EnumType.STRING)
     private Kostentabelle kostentabelle;
 
+    @Column
+    private boolean isFernkampf;
+
     public Kampftechnik() {
     }
 
-    public Kampftechnik(Eigenschaft leiteigenschaft, Kostentabelle kostentabelle) {
+    public Kampftechnik(String wikiUrl, Eigenschaft leiteigenschaft, Kostentabelle kostentabelle, String name, boolean isFernkampf) {
+        super(wikiUrl, name);
         this.leiteigenschaft = leiteigenschaft;
         this.kostentabelle = kostentabelle;
-    }
-
-    public Kampftechnik(Eigenschaft leiteigenschaft, Kostentabelle kostentabelle, String name) {
-        super("", name);
-        this.leiteigenschaft = leiteigenschaft;
-        this.kostentabelle = kostentabelle;
+        this.isFernkampf = isFernkampf;
     }
 
     public Eigenschaft getLeiteigenschaft() {
@@ -43,4 +42,7 @@ public class Kampftechnik extends Attribut implements UsesKostentabelle {
         return kostentabelle;
     }
 
+    public boolean isFernkampf() {
+        return isFernkampf;
+    }
 }

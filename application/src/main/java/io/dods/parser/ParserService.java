@@ -19,6 +19,9 @@ class ParserService {
     private ParseValueLevelService parseValueLevelService;
 
     @Autowired
+    private ParseReferenceService parseReferenceService;
+
+    @Autowired
     private ParseApWertService parseApWertService;
 
     @Autowired
@@ -54,6 +57,9 @@ class ParserService {
     @Autowired
     private DocumentService documentService;
 
+    @Autowired
+    private ParseLeiteigenschaftService parseLeiteigenschaftService;
+
     private ParsedValue parseDetails(String url) throws IOException {
         ParsedValue value = new ParsedValue();
 
@@ -72,8 +78,24 @@ class ParserService {
         value.setWirkungsdauer(parseWirkungService.parseWirkungsdauer(document));
         value.setZielkategorie(parseZielkategorieService.parseZielkategorie(document));
         value.setAspekt(parseAspektService.parseAspekt(document));
+        value.setLeiteigenschaft(parseLeiteigenschaftService.parseLeiteigenschaft(document));
 
         return value;
+    }
+
+    public Kampftechnik parseKampftechnik(String url, boolean isFernkampf) {
+        try {
+            ParsedValue value = parseDetails(url);
+
+            return new Kampftechnik(
+                    value.getWikiUrl(),
+                    value.getLeiteigenschaft(),
+                    value.getKostentabelle(),
+                    value.getName(),
+                    isFernkampf);
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     public Liturgie parseLiturgie(String url) {
@@ -120,7 +142,9 @@ class ParserService {
         try {
             ParsedValue value = parseDetails(url);
 
-            List<ParsedValue> parsedValues = parseValueLevelService.checkForLevels(value);
+            List<ParsedValue> parsedValues = new ArrayList<>();
+            parsedValues.addAll(parseValueLevelService.checkForLevels(value));
+            parsedValues.addAll(parseReferenceService.checkForSubcategories(value));
 
             List<Sonderfertigkeit> sonderfertigkeiten = new ArrayList<>();
 
@@ -174,7 +198,9 @@ class ParserService {
         try {
             ParsedValue value = parseDetails(url);
 
-            List<ParsedValue> parsedValues = parseValueLevelService.checkForLevels(value);
+            List<ParsedValue> parsedValues = new ArrayList<>();
+            parsedValues.addAll(parseValueLevelService.checkForLevels(value));
+            parsedValues.addAll(parseReferenceService.checkForSubcategories(value));
 
             List<Vorteil> vorteile = new ArrayList<>();
 

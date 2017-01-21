@@ -27,6 +27,6 @@ public abstract class AbstractAttributService<T extends Attribut> {
     }
 
     public T findByName(String name) {
-        return getRepository().findByName(name);
+        return getRepository().findByNameAndSubcategoryOfIdIsNull(name);
     }
 }

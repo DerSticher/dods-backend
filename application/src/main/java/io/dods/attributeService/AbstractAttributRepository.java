@@ -8,6 +8,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface AbstractAttributRepository<T extends Attribut> extends CrudRepository<T, Long> {
     T findById(long id);
-    T findByName(String name);
+    T findByNameAndSubcategoryOfIdIsNull(String name);
     T findByTyp(String typ);
 }

@@ -25,7 +25,7 @@ public abstract class Attribut implements Named, Serializable {
     private long id;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Attribut subcategoryOf;
 
     private String wikiUrl;
