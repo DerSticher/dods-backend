@@ -4,6 +4,7 @@ import io.dods.model.attribute.misc.HatProbe;
 import io.dods.model.attribute.misc.Kostentabelle;
 import io.dods.model.attribute.misc.Probe;
 import io.dods.model.attribute.misc.UsesKostentabelle;
+import io.dods.model.exceptions.HasNoDefaultLevelException;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
@@ -12,8 +13,10 @@ import javax.persistence.*;
  * @author Richard Gottschalk
  */
 @Entity
-@DiscriminatorValue("Fertigkeit")
+@DiscriminatorValue(Fertigkeit.NAME)
 public class Fertigkeit extends Attribut implements HatProbe, UsesKostentabelle {
+
+    public static final String NAME = "Fertigkeit";
 
     public enum Gruppe {
         KOERPER,
@@ -72,4 +75,13 @@ public class Fertigkeit extends Attribut implements HatProbe, UsesKostentabelle 
         return probe;
     }
 
+    @Override
+    public int getAp(int level) {
+        return UsesKostentabelle.super.getAp(level) - UsesKostentabelle.super.getAp(getDefaultLevel());
+    }
+
+    @Override
+    public int getDefaultLevel() throws HasNoDefaultLevelException {
+        return 0;
+    }
 }

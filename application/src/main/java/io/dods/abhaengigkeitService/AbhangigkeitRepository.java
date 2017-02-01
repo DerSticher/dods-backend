@@ -1,13 +1,11 @@
 package io.dods.abhaengigkeitService;
 
+import io.dods.interfaces.repositories.DodsRepository;
 import io.dods.model.regeln.Abhangigkeit;
-import org.springframework.data.repository.CrudRepository;
 
 /**
  * @author Richard Gottschalk
  */
-interface AbhangigkeitRepository extends CrudRepository<Abhangigkeit, Long> {
+interface AbhangigkeitRepository extends DodsRepository<Abhangigkeit, Long> {
     Abhangigkeit findByEffektAttributId(long id);
-
-    Abhangigkeit findById(long id);
 }

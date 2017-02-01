@@ -1,5 +1,6 @@
 package io.dods.attributeService.wirkungsdauer;
 
+import io.dods.interfaces.services.NamedDodsDatabaseService;
 import io.dods.model.attribute.misc.Wirkungsdauer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,25 +9,18 @@ import org.springframework.stereotype.Service;
  * @author Richard Gottschalk
  */
 @Service
-public class WirkungsdauerService {
+public class WirkungsdauerService implements NamedDodsDatabaseService<Long, Wirkungsdauer, WirkungsdauerRepository> {
 
     @Autowired
     private WirkungsdauerRepository wirkungsdauerRepository;
 
-    public Iterable<Wirkungsdauer> findAll() {
-        return wirkungsdauerRepository.findAll();
-    }
-
-    public Wirkungsdauer persist(Wirkungsdauer wirkungsdauer) {
-        return wirkungsdauerRepository.save(wirkungsdauer);
-    }
-
-    public Wirkungsdauer findById(long id) {
-        return wirkungsdauerRepository.findById(id);
+    @Override
+    public WirkungsdauerRepository getRepository() {
+        return wirkungsdauerRepository;
     }
 
     public Wirkungsdauer findByNameOrCreate(String name) {
-        Wirkungsdauer wirkungsdauer = wirkungsdauerRepository.findByName(name);
+        Wirkungsdauer wirkungsdauer = findFirstByName(name);
 
         if (wirkungsdauer == null) {
             wirkungsdauer = new Wirkungsdauer(name);

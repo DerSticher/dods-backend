@@ -1,5 +1,6 @@
 package io.dods.model.attribute.misc;
 
+import io.dods.model.exceptions.HasNoDefaultLevelException;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -17,6 +18,10 @@ public interface UsesKostentabelle extends ApVar {
         if (kostentabelle != null) {
             return kostentabelle.getAp(level);
         }
+        return 0;
+    }
+
+    default int getDefaultLevel() throws HasNoDefaultLevelException {
         return 0;
     }
 

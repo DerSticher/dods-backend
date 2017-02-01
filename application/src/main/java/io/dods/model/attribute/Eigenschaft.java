@@ -13,8 +13,10 @@ import javax.persistence.Enumerated;
  * @author Richard Gottschalk
  */
 @Entity
-@DiscriminatorValue("Eigenschaft")
+@DiscriminatorValue(Eigenschaft.NAME)
 public class Eigenschaft extends Attribut implements UsesKostentabelle {
+
+    public static final String NAME = "Eigenschaft";
 
     @ApiModelProperty(hidden = true)
     @Enumerated(EnumType.STRING)
@@ -36,4 +38,13 @@ public class Eigenschaft extends Attribut implements UsesKostentabelle {
         return kostentabelle;
     }
 
+    @Override
+    public int getAp(int level) {
+        return UsesKostentabelle.super.getAp(level) - UsesKostentabelle.super.getAp(getDefaultLevel());
+    }
+
+    @Override
+    public int getDefaultLevel() {
+        return 8;
+    }
 }

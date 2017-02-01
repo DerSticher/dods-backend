@@ -1,24 +1,20 @@
 package io.dods.attributeService.attribute;
 
+import io.dods.interfaces.repositories.NamedDodsRepository;
 import io.dods.model.attribute.Attribut;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
 
 /**
  * @author Richard Gottschalk
  */
-interface AttributeRepository extends PagingAndSortingRepository<Attribut, Long> {
-    Iterable<Attribut> findByTypAndName(String type, String name);
-    Iterable<Attribut> findByTyp(String type);
-    Iterable<Attribut> findByName(String name);
-    Attribut findFirstByName(String name);
+interface AttributeRepository extends NamedDodsRepository<Attribut, Long> {
+    List<Attribut> findByTypAndName(String type, String name);
+    List<Attribut> findByTyp(String type);
 
-    Iterable<Attribut> findByTypAndNameAndSubcategoryOfIdIsNull(String typ, String name);
-    Iterable<Attribut> findByTypAndSubcategoryOfIdIsNull(String typ);
-    Iterable<Attribut> findByNameAndSubcategoryOfIdIsNull(String name);
-
-    Attribut findById(long id);
+    List<Attribut> findByTypAndNameAndSubcategoryOfIdIsNull(String typ, String name);
+    List<Attribut> findByTypAndSubcategoryOfIdIsNull(String typ);
+    List<Attribut> findByNameAndSubcategoryOfIdIsNull(String name);
 
     List<Attribut> findBySubcategoryOfId(long id);
 }

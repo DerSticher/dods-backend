@@ -1,5 +1,6 @@
 package io.dods.attributeService.dauer;
 
+import io.dods.interfaces.services.NamedDodsDatabaseService;
 import io.dods.model.attribute.misc.Dauer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,25 +9,18 @@ import org.springframework.stereotype.Service;
  * @author Richard Gottschalk
  */
 @Service
-public class DauerService {
+public class DauerService implements NamedDodsDatabaseService<Long, Dauer, DauerRepository> {
 
     @Autowired
     private DauerRepository dauerRepository;
 
-    public Iterable<Dauer> findAll() {
-        return dauerRepository.findAll();
-    }
-
-    public Dauer persist(Dauer dauer) {
-        return dauerRepository.save(dauer);
-    }
-
-    public Dauer findById(long id) {
-        return dauerRepository.findById(id);
+    @Override
+    public DauerRepository getRepository() {
+        return dauerRepository;
     }
 
     public Dauer findByNameOrCreate(String name) {
-        Dauer dauer = dauerRepository.findByName(name);
+        Dauer dauer = findFirstByName(name);
         if (dauer == null) {
             dauer = new Dauer(name);
             dauer = dauerRepository.save(dauer);

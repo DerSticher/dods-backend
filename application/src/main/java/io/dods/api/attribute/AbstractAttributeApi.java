@@ -1,6 +1,5 @@
 package io.dods.api.attribute;
 
-import io.dods.api.exceptions.ApiNotImplementedException;
 import io.dods.model.attribute.Attribut;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -20,8 +19,6 @@ interface AbstractAttributeApi<T extends Attribut> {
             @ApiResponse(code = 404, message = "Attribut with given ID is another type")
     })
     @ResponseStatus(HttpStatus.OK)
-    default T get(long id) {
-        throw new ApiNotImplementedException();
-    }
+    T get(long id);
 
 }

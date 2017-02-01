@@ -5,6 +5,7 @@ import io.dods.api.abhangigkeit.model.CreateBedingung;
 import io.dods.api.abhangigkeit.model.CreateEffekt;
 import io.dods.api.exceptions.ResourceNotFoundException;
 import io.dods.attributeService.attribute.AttributeService;
+import io.dods.interfaces.services.DodsDatabaseService;
 import io.dods.model.attribute.Attribut;
 import io.dods.model.bedingungen.*;
 import io.dods.model.regeln.Abhangigkeit;
@@ -20,7 +21,7 @@ import java.util.List;
  * @author Richard Gottschalk
  */
 @Service
-public class AbhangigkeitService {
+public class AbhangigkeitService implements DodsDatabaseService<Long, Abhangigkeit, AbhangigkeitRepository> {
 
     @Autowired
     private AbhangigkeitRepository abhangigkeitRepository;
@@ -33,31 +34,11 @@ public class AbhangigkeitService {
 
     public Abhangigkeit persist(CreateAbhangigkeit createAbhangigkeit) {
         Abhangigkeit abhangigkeit = parse(createAbhangigkeit);
-        return persist(abhangigkeit);
+        return save(abhangigkeit);
     }
 
-    public Abhangigkeit persist(Abhangigkeit abhangigkeit) {
-        return abhangigkeitRepository.save(abhangigkeit);
-    }
-
-    public void deleteById(long id) {
-        abhangigkeitRepository.delete(id);
-    }
-
-    public void update(long id, Abhangigkeit abhangigkeit) {
-        boolean exists = abhangigkeitRepository.exists(id);
-        if (!exists) throw new ResourceNotFoundException();
-
-        abhangigkeit.setId(id);
-        abhangigkeitRepository.save(abhangigkeit);
-    }
-
-    public Abhangigkeit findById(long id) {
-        return abhangigkeitRepository.findById(id);
-    }
-
-    public Iterable<Abhangigkeit> findAll() {
-        return abhangigkeitRepository.findAll();
+    public AbhangigkeitRepository getRepository() {
+        return abhangigkeitRepository;
     }
 
     public Abhangigkeit findByEffektAttribut(Attribut attribut) {
@@ -65,7 +46,9 @@ public class AbhangigkeitService {
     }
 
     public Abhangigkeit findByEffektAttribut(long attributId) {
-        return abhangigkeitRepository.findByEffektAttributId(attributId);
+        Abhangigkeit abhangigkeit = abhangigkeitRepository.findByEffektAttributId(attributId);
+        if (abhangigkeit == null) throw new ResourceNotFoundException();
+        return abhangigkeit;
     }
 
     private Abhangigkeit parse(CreateAbhangigkeit createAbhangigkeit) {

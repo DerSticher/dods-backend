@@ -22,7 +22,7 @@ public class AbhangigkeitApi {
 
     @ApiOperation(value = "a List containing every Abhangigkeit", response = Abhangigkeit.class, responseContainer = "List")
     @RequestMapping(path = "abhangigkeiten", method = RequestMethod.GET)
-    public Iterable<Abhangigkeit> find(@RequestParam(value = "effektAttributId", required = false) Long effektAttributId) {
+    public List<Abhangigkeit> find(@RequestParam(value = "effektAttributId", required = false) Long effektAttributId) {
         if (effektAttributId != null) {
             List<Abhangigkeit> values = new ArrayList<>();
             values.add(abhangigkeitService.findByEffektAttribut(effektAttributId));
@@ -37,14 +37,14 @@ public class AbhangigkeitApi {
         return abhangigkeitService.findById(id);
     }
 
-    @ApiOperation(value = "update a single Abhangigkeit", response = Abhangigkeit.class)
+    @ApiOperation(value = "update a single Abhangigkeit")
     @RequestMapping(path = "abhangigkeit/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void put(@PathVariable long id, @RequestBody Abhangigkeit abhangigkeit) {
         abhangigkeitService.update(id, abhangigkeit);
     }
 
-    @ApiOperation(value = "create a single Abhangigkeit", response = Abhangigkeit.class)
+    @ApiOperation(value = "deletes a single Abhangigkeit")
     @RequestMapping(path = "abhangigkeit/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable long id) {

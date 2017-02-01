@@ -10,8 +10,10 @@ import javax.persistence.*;
  * @author Richard Gottschalk
  */
 @Entity
-@DiscriminatorValue("Kampftechnik")
+@DiscriminatorValue(Kampftechnik.NAME)
 public class Kampftechnik extends Attribut implements UsesKostentabelle {
+
+    public static final String NAME = "Kampftechnik";
 
     @ApiModelProperty(required = true)
     @OneToOne
@@ -44,5 +46,15 @@ public class Kampftechnik extends Attribut implements UsesKostentabelle {
 
     public boolean isFernkampf() {
         return isFernkampf;
+    }
+
+    @Override
+    public int getAp(int level) {
+        return UsesKostentabelle.super.getAp(level) - UsesKostentabelle.super.getAp(getDefaultLevel());
+    }
+
+    @Override
+    public int getDefaultLevel() {
+        return 6;
     }
 }

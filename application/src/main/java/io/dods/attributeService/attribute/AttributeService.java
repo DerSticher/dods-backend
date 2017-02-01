@@ -1,8 +1,7 @@
 package io.dods.attributeService.attribute;
 
-import io.dods.abhaengigkeitService.AbhangigkeitService;
+import io.dods.interfaces.services.NamedDodsDatabaseService;
 import io.dods.model.attribute.Attribut;
-import io.dods.model.regeln.Abhangigkeit;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,15 +12,17 @@ import java.util.List;
  * @author Richard Gottschalk
  */
 @Service
-public class AttributeService {
+public class AttributeService implements NamedDodsDatabaseService<Long, Attribut, AttributeRepository> {
 
     @Autowired
     private AttributeRepository attributeRepository;
 
-    @Autowired
-    private AbhangigkeitService abhangigkeitService;
+    @Override
+    public AttributeRepository getRepository() {
+        return attributeRepository;
+    }
 
-    public Iterable<Attribut> find(@Nullable String typ, @Nullable String name, boolean includeSubcategories) {
+    public List<Attribut> find(@Nullable String typ, @Nullable String name, boolean includeSubcategories) {
         if (includeSubcategories) {
             if (typ != null && name != null) {
                 return attributeRepository.findByTypAndName(typ, name);
@@ -42,27 +43,8 @@ public class AttributeService {
         return attributeRepository.findAll();
     }
 
-    public Attribut findById(long id) {
-        return attributeRepository.findById(id);
-    }
-
-    public Attribut findByName(String name) {
-        return attributeRepository.findFirstByName(name);
-    }
-
-    public <T extends Attribut> T create(T attribut) {
-        return attributeRepository.save(attribut);
-    }
-
     public List<Attribut> findSubcategoriesById(long id) {
         return attributeRepository.findBySubcategoryOfId(id);
     }
 
-    public void update(Attribut attribut) {
-        attributeRepository.save(attribut);
-    }
-
-    public Abhangigkeit findAbhangigkeitByAttributId(long id) {
-        return abhangigkeitService.findByEffektAttribut(id);
-    }
 }

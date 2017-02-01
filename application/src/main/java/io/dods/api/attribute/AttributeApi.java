@@ -1,6 +1,6 @@
 package io.dods.api.attribute;
 
-import io.dods.api.exceptions.ResourceNotFoundException;
+import io.dods.abhaengigkeitService.AbhangigkeitService;
 import io.dods.attributeService.attribute.AttributeService;
 import io.dods.model.attribute.Attribut;
 import io.dods.model.regeln.Abhangigkeit;
@@ -17,18 +17,22 @@ import java.util.Objects;
 /**
  * @author Richard Gottschalk
  */
+@CrossOrigin(origins = "http://localhost:80")
 @RestController
 public class AttributeApi {
 
     @Autowired
     private AttributeService attributeService;
 
+    @Autowired
+    private AbhangigkeitService abhangigkeitService;
+
     @ApiOperation("a list of all available values")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "the list of values")
     })
     @RequestMapping(path = "attribute", method = RequestMethod.GET)
-    public Iterable<Attribut> get(@RequestParam(value = "typ", required = false) String typ,
+    public List<Attribut> get(@RequestParam(value = "typ", required = false) String typ,
                                   @RequestParam(value = "name", required = false) String name,
                                   @RequestParam(value = "includeSubcategories", required = false, defaultValue = "false")
                                               boolean includeSubcategories) {
@@ -64,11 +68,7 @@ public class AttributeApi {
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "attribut/{id}/abhangigkeit", method = RequestMethod.GET)
     public Abhangigkeit getAbhangigkeit(@PathVariable("id") long id) {
-        Abhangigkeit abhangigkeit = attributeService.findAbhangigkeitByAttributId(id);
-        if (abhangigkeit == null) {
-            throw new ResourceNotFoundException();
-        }
-        return abhangigkeit;
+        return abhangigkeitService.findByEffektAttribut(id);
     }
 
 }

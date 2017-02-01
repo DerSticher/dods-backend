@@ -1,7 +1,8 @@
 package io.dods.model.regeln;
 
-import io.dods.model.helden.Held;
+import io.dods.interfaces.HasId;
 import io.dods.model.bedingungen.Bedingung;
+import io.dods.model.helden.Held;
 import org.jetbrains.annotations.Contract;
 
 import javax.persistence.*;
@@ -14,11 +15,11 @@ import javax.persistence.*;
  * @author Richard Gottschalk
  */
 @Entity
-public class Abhangigkeit {
+public class Abhangigkeit implements HasId<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Regelwerk regelwerk;
@@ -78,11 +79,11 @@ public class Abhangigkeit {
         this.effekt = effekt;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

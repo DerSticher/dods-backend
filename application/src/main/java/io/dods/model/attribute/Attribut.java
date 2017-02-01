@@ -2,10 +2,12 @@ package io.dods.model.attribute;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.dods.interfaces.HasId;
 import io.dods.model.Named;
 import io.dods.model.attribute.misc.ApFix;
 import io.dods.model.attribute.misc.ApVar;
 import io.dods.model.attribute.misc.UsesKostentabelle;
+import io.dods.model.exceptions.HasNoDefaultLevelException;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
@@ -17,18 +19,19 @@ import java.io.Serializable;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "typ", discriminatorType = DiscriminatorType.STRING)
-public abstract class Attribut implements Named, Serializable {
+public abstract class Attribut implements HasId<Long>, Named, Serializable{
 
     @ApiModelProperty(notes = "will be set by server", readOnly = true)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @JsonIgnore
     @ManyToOne(cascade=CascadeType.ALL)
     private Attribut subcategoryOf;
 
     private String wikiUrl;
+
     @ApiModelProperty(required = true, example = "Fancy Attribute's Name")
     @Column
     private String name;
@@ -69,8 +72,13 @@ public abstract class Attribut implements Named, Serializable {
         return name;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Attribut getSubcategoryOf() {
@@ -110,5 +118,20 @@ public abstract class Attribut implements Named, Serializable {
 
     public void setWikiUrl(String wikiUrl) {
         this.wikiUrl = wikiUrl;
+    }
+
+    @JsonIgnore
+    public boolean hasDefaultLevel() {
+        try {
+            getDefaultLevel();
+            return true;
+        } catch (HasNoDefaultLevelException ignore) {
+            return false;
+        }
+    }
+
+    @JsonIgnore
+    public int getDefaultLevel() throws HasNoDefaultLevelException {
+        throw new HasNoDefaultLevelException();
     }
 }

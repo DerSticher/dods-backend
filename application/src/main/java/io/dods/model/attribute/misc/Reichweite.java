@@ -1,5 +1,6 @@
 package io.dods.model.attribute.misc;
 
+import io.dods.interfaces.HasId;
 import io.dods.model.Named;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,11 +13,11 @@ import javax.persistence.*;
 @Table(indexes = {
         @Index(columnList = "id")
 })
-public class Reichweite implements Named {
+public class Reichweite implements HasId<Long>, Named {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column
     @Lob
@@ -36,5 +37,15 @@ public class Reichweite implements Named {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
     }
 }

@@ -1,14 +1,9 @@
 package io.dods.attributeService.reichweite;
 
+import io.dods.interfaces.repositories.NamedDodsRepository;
 import io.dods.model.attribute.misc.Reichweite;
-import org.springframework.data.repository.CrudRepository;
 
 /**
  * @author Richard Gottschalk
  */
-interface ReichweiteRepository extends CrudRepository<Reichweite, Long> {
-
-    Reichweite findByName(String name);
-
-    Reichweite findById(int id);
-}
+interface ReichweiteRepository extends NamedDodsRepository<Reichweite, Long> {}

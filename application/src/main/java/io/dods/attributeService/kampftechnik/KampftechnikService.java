@@ -16,9 +16,6 @@ public class KampftechnikService extends AbstractAttributService<Kampftechnik> {
     @Autowired
     private KampftechnikRepository liturgieRepository;
 
-    @Autowired
-    private EigenschaftService eigenschaftService;
-
     @Override
     protected AbstractAttributRepository<Kampftechnik> getRepository() {
         return liturgieRepository;

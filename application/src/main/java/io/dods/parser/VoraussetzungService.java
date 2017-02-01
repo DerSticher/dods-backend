@@ -53,7 +53,7 @@ class VoraussetzungService {
             if (voraussetzung == null || voraussetzung.length() == 0) return;
 
             Abhangigkeit abhangigkeit = createAbhangigkeit(attribut, voraussetzung);
-            if (abhangigkeit != null) abhangigkeitService.persist(abhangigkeit);
+            if (abhangigkeit != null) abhangigkeitService.save(abhangigkeit);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -261,14 +261,14 @@ class VoraussetzungService {
 
     @Nullable
     private Attribut identifyAttribut(String token) {
-        if (token.equals("MU")) return attributeService.findByName("Mut");
-        if (token.equals("KL")) return attributeService.findByName("Klugheit");
-        if (token.equals("IN")) return attributeService.findByName("Intuition");
-        if (token.equals("CH")) return attributeService.findByName("Charisma");
-        if (token.equals("FF")) return attributeService.findByName("Fingerfertigkeit");
-        if (token.equals("GE")) return attributeService.findByName("Gewandtheit");
-        if (token.equals("KO")) return attributeService.findByName("Konstitution");
-        if (token.equals("KK")) return attributeService.findByName("Körperkraft");
+        if (token.equals("MU")) return attributeService.findFirstByName("Mut");
+        if (token.equals("KL")) return attributeService.findFirstByName("Klugheit");
+        if (token.equals("IN")) return attributeService.findFirstByName("Intuition");
+        if (token.equals("CH")) return attributeService.findFirstByName("Charisma");
+        if (token.equals("FF")) return attributeService.findFirstByName("Fingerfertigkeit");
+        if (token.equals("GE")) return attributeService.findFirstByName("Gewandtheit");
+        if (token.equals("KO")) return attributeService.findFirstByName("Konstitution");
+        if (token.equals("KK")) return attributeService.findFirstByName("Körperkraft");
 
         Iterable<Attribut> attributs = attributeService.find(null, token, false);
 

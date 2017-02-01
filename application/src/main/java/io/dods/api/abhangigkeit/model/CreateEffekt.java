@@ -4,10 +4,10 @@ package io.dods.api.abhangigkeit.model;
  * @author Richard Gottschalk
  */
 public class CreateEffekt {
-    private int attributId;
+    private long attributId;
     private int level;
 
-    public int getAttributId() {
+    public long getAttributId() {
         return attributId;
     }
 

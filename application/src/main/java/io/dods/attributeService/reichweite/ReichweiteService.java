@@ -1,8 +1,8 @@
 package io.dods.attributeService.reichweite;
 
+import io.dods.interfaces.services.NamedDodsDatabaseService;
 import io.dods.model.attribute.misc.Reichweite;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,28 +10,23 @@ import org.springframework.stereotype.Service;
  * @author Richard Gottschalk
  */
 @Service
-public class ReichweiteService {
+public class ReichweiteService implements NamedDodsDatabaseService<Long, Reichweite, ReichweiteRepository> {
 
     @Autowired
     private ReichweiteRepository reichweiteRepository;
 
-    @Nullable
-    public Reichweite findByName(String name) {
-        return reichweiteRepository.findByName(name);
+    @Override
+    public ReichweiteRepository getRepository() {
+        return reichweiteRepository;
     }
 
     @NotNull
     public Reichweite findByNameOrCreate(String name) {
-        Reichweite reichweite = findByName(name);
+        Reichweite reichweite = findFirstByName(name);
         if (reichweite == null) {
             reichweite = new Reichweite(name);
             reichweite = reichweiteRepository.save(reichweite);
         }
         return reichweite;
-    }
-
-
-    public Reichweite findById(int id) {
-        return reichweiteRepository.findById(id);
     }
 }

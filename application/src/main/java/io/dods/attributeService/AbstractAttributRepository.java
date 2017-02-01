@@ -1,13 +1,12 @@
 package io.dods.attributeService;
 
+import io.dods.interfaces.repositories.DodsRepository;
 import io.dods.model.attribute.Attribut;
-import org.springframework.data.repository.CrudRepository;
 
 /**
  * @author Richard Gottschalk
  */
-public interface AbstractAttributRepository<T extends Attribut> extends CrudRepository<T, Long> {
-    T findById(long id);
+public interface AbstractAttributRepository<T extends Attribut> extends DodsRepository<T, Long> {
     T findByNameAndSubcategoryOfIdIsNull(String name);
     T findByTyp(String typ);
 }
