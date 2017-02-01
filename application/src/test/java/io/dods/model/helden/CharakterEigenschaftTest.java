@@ -11,15 +11,4 @@ import static org.junit.Assert.*;
  */
 public class CharakterEigenschaftTest {
 
-    @Test
-    public void testEigenschaftActivatedByDefault() {
-        CharakterEigenschaft eigenschaft = new CharakterEigenschaft();
-        Attribut attribut = new Vorteil(5, "CharakterEigenschaftTest Attribut1");
-        eigenschaft.setAttribut(attribut);
-        eigenschaft.setLevel(0);
-
-        assertTrue(String.format("%s should be activated by default", CharakterEigenschaft.class.getSimpleName()),
-                eigenschaft.isActivated());
-    }
-
 }
