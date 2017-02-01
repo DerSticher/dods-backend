@@ -5,45 +5,36 @@ apply plugin: 'spring-boot'
 
 dependencies {
 //    Spring Boot
-    compile "org.springframework.boot:spring-boot-starter:1.4.0.RELEASE"
-    compile "org.springframework.boot:spring-boot-starter-web:1.4.0.RELEASE"
-    compile "org.springframework.boot:spring-boot-starter-data-jpa:1.4.0.RELEASE"
-    compile "org.springframework.boot:spring-boot-configuration-processor:1.4.0.RELEASE"
-
-//    Spring Web
-    compile "org.springframework:spring-web:4.3.2.RELEASE"
+    compile "org.springframework.boot:spring-boot-starter:1.5.1.RELEASE"
+    compile "org.springframework.boot:spring-boot-starter-web:1.5.1.RELEASE"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa:1.5.1.RELEASE"
+    compile "org.springframework.boot:spring-boot-configuration-processor:1.5.1.RELEASE"
 
 //    Json Parser
-    compile "com.fasterxml.jackson.core:jackson-databind:2.8.2"
-    compile "com.google.code.gson:gson:2.7"
+    compile "com.fasterxml.jackson.core:jackson-databind:2.8.6"
+    compile "com.google.code.gson:gson:2.8.0"
 
 //    Annotation support
     compile "org.jetbrains:annotations:15.0"
 
-//    DB Stuff
-    compile "org.springframework.data:spring-data-jpa:1.10.2.RELEASE"
-//    hibernate
-    compile "org.hibernate:hibernate-core:5.1.1.Final"
-    compile "org.hibernate:hibernate-entitymanager:5.1.1.Final"
-    compile "com.enigmabridge:hibernate4-sqlite-dialect:0.1.2"
 //    JDBC
-    compile "org.xerial:sqlite-jdbc:3.8.11.2"
-    compile "mysql:mysql-connector-java:5.1.6"
+    compile "mysql:mysql-connector-java:+"
 
-    compile "org.apache.httpcomponents:httpcore:+"
-    compile "org.apache.httpcomponents:httpclient:+"
+    compile "org.apache.httpcomponents:httpclient:4.5.3"
 
-    compile 'org.jsoup:jsoup:1.8.1'
+    compile 'org.jsoup:jsoup:1.10.2'
 
     compile "org.jboss.aerogear:aerogear-otp-java:1.0.0"
-
-    compile 'org.jsoup:jsoup:1.9.1'
 
 
 //    ===================
 //    =======TESTS=======
 //    ===================
     testCompile 'junit:junit:4.12'
+
+//    Spring
+    testCompile "org.springframework.boot:spring-boot-starter-test:1.5.1.RELEASE"
+//    testCompile "org.springframework:spring-test:+"
 
 //    ===================
 //    ======SWAGGER======
