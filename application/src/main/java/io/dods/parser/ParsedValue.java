@@ -1,5 +1,6 @@
 package io.dods.parser;
 
+import io.dods.model.attribute.Eigenschaft;
 import io.dods.model.attribute.misc.*;
 import org.springframework.util.SerializationUtils;
 
@@ -25,6 +26,7 @@ class ParsedValue implements Serializable {
     private List<Zielkategorie> zielkategorie;
     private List<Aspekt> aspekt;
     private int apWert;
+    private Eigenschaft leiteigenschaft;
 
     public ParsedValue copy() {
         byte[] serialize = SerializationUtils.serialize(this);
@@ -133,5 +135,13 @@ class ParsedValue implements Serializable {
 
     public void setWikiUrl(String wikiUrl) {
         this.wikiUrl = wikiUrl;
+    }
+
+    public void setLeiteigenschaft(Eigenschaft leiteigenschaft) {
+        this.leiteigenschaft = leiteigenschaft;
+    }
+
+    public Eigenschaft getLeiteigenschaft() {
+        return leiteigenschaft;
     }
 }
