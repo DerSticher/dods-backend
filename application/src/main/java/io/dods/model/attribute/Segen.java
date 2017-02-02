@@ -27,11 +27,6 @@ public class Segen extends Attribut implements ApFix, Kategorisiert, HatNutzkost
     @ManyToOne
     private Reichweite reichweite;
 
-    @ApiModelProperty(required = true)
-    @Lob
-    @Column
-    private String wirkung;
-
     @ApiModelProperty
     @ManyToOne
     private Wirkungsdauer wirkungsdauer;
@@ -46,13 +41,11 @@ public class Segen extends Attribut implements ApFix, Kategorisiert, HatNutzkost
     public Segen(List<Aspekt> aspekte,
                  Nutzkosten nutzkosten,
                  Reichweite reichweite,
-                 String wirkung,
                  Wirkungsdauer wirkungsdauer,
                  List<Zielkategorie> zielkategorien) {
         this.aspekte = aspekte;
         this.nutzkosten = nutzkosten;
         this.reichweite = reichweite;
-        this.wirkung = wirkung;
         this.wirkungsdauer = wirkungsdauer;
         this.zielkategorien = zielkategorien;
     }
@@ -61,7 +54,6 @@ public class Segen extends Attribut implements ApFix, Kategorisiert, HatNutzkost
                  List<Aspekt> aspekte,
                  Nutzkosten nutzkosten,
                  Reichweite reichweite,
-                 String wirkung,
                  Wirkungsdauer wirkungsdauer,
                  List<Zielkategorie> zielkategorien,
                  String name) {
@@ -69,7 +61,6 @@ public class Segen extends Attribut implements ApFix, Kategorisiert, HatNutzkost
         this.aspekte = aspekte;
         this.nutzkosten = nutzkosten;
         this.reichweite = reichweite;
-        this.wirkung = wirkung;
         this.wirkungsdauer = wirkungsdauer;
         this.zielkategorien = zielkategorien;
     }
@@ -82,11 +73,6 @@ public class Segen extends Attribut implements ApFix, Kategorisiert, HatNutzkost
     @Override
     public Nutzkosten getNutzkosten() {
         return nutzkosten;
-    }
-
-    @Override
-    public @NotNull String getWirkung() {
-        return wirkung;
     }
 
     @Override

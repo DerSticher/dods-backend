@@ -102,12 +102,16 @@ public class Sonderfertigkeit extends Attribut implements ApFix, Dauernd, HatPro
     }
 
     @Override
-    public @Nullable String getWirkung() {
-        return null;
+    public @Nullable Wirkungsdauer getWirkungsdauer() {
+        return wirkungsdauer;
     }
 
     @Override
-    public @Nullable Wirkungsdauer getWirkungsdauer() {
-        return wirkungsdauer;
+    public @Nullable Nutzkosten getNutzkosten() {
+        return nutzkosten;
+    }
+
+    public Gruppe getGruppe() {
+        return gruppe;
     }
 }

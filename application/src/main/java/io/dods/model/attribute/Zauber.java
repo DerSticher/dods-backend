@@ -31,11 +31,6 @@ public class Zauber extends Attribut implements Dauernd, HatProbe, HatNutzkosten
     @ManyToOne
     private Reichweite reichweite;
 
-    @ApiModelProperty(required = true)
-    @Lob
-    @Column
-    private String wirkung;
-
     @ApiModelProperty
     @ManyToOne
     private Wirkungsdauer wirkungsdauer;
@@ -63,7 +58,6 @@ public class Zauber extends Attribut implements Dauernd, HatProbe, HatNutzkosten
         this.kostentabelle = kostentabelle;
         this.probe = probe;
         this.reichweite = reichweite;
-        this.wirkung = wirkung;
         this.wirkungsdauer = wirkungsdauer;
         this.zauberdauer = zauberdauer;
         this.zielkategorien = zielkategorien;
@@ -74,7 +68,6 @@ public class Zauber extends Attribut implements Dauernd, HatProbe, HatNutzkosten
                   Kostentabelle kostentabelle,
                   Probe probe,
                   Reichweite reichweite,
-                  String wirkung,
                   Wirkungsdauer wirkungsdauer,
                   Dauer zauberdauer,
                   List<Zielkategorie> zielkategorien,
@@ -84,7 +77,6 @@ public class Zauber extends Attribut implements Dauernd, HatProbe, HatNutzkosten
         this.kostentabelle = kostentabelle;
         this.probe = probe;
         this.reichweite = reichweite;
-        this.wirkung = wirkung;
         this.wirkungsdauer = wirkungsdauer;
         this.zauberdauer = zauberdauer;
         this.zielkategorien = zielkategorien;
@@ -113,11 +105,6 @@ public class Zauber extends Attribut implements Dauernd, HatProbe, HatNutzkosten
     @Override
     public Dauer getDauer() {
         return zauberdauer;
-    }
-
-    @Override
-    public @NotNull String getWirkung() {
-        return wirkung;
     }
 
     @Override

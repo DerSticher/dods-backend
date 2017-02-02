@@ -26,11 +26,6 @@ public class Zeremonie extends Attribut implements Dauernd, HatProbe, HatNutzkos
     @ManyToOne
     private Dauer dauer;
 
-    @ApiModelProperty(required = true)
-    @Lob
-    @Column
-    private String wirkung;
-
     @ApiModelProperty
     @ManyToOne
     private Wirkungsdauer wirkungsdauer;
@@ -54,7 +49,6 @@ public class Zeremonie extends Attribut implements Dauernd, HatProbe, HatNutzkos
                      Probe probe,
                      Reichweite reichweite,
                      Dauer dauer,
-                     String wirkung,
                      Wirkungsdauer wirkungsdauer,
                      Kostentabelle kostentabelle,
                      List<Zielkategorie> zielkategorien) {
@@ -62,7 +56,6 @@ public class Zeremonie extends Attribut implements Dauernd, HatProbe, HatNutzkos
         this.probe = probe;
         this.reichweite = reichweite;
         this.dauer = dauer;
-        this.wirkung = wirkung;
         this.wirkungsdauer = wirkungsdauer;
         this.kostentabelle = kostentabelle;
         this.zielkategorien = zielkategorien;
@@ -73,7 +66,6 @@ public class Zeremonie extends Attribut implements Dauernd, HatProbe, HatNutzkos
                      Probe probe,
                      Reichweite reichweite,
                      Dauer dauer,
-                     String wirkung,
                      Wirkungsdauer wirkungsdauer,
                      Kostentabelle kostentabelle,
                      List<Zielkategorie> zielkategorien,
@@ -83,7 +75,6 @@ public class Zeremonie extends Attribut implements Dauernd, HatProbe, HatNutzkos
         this.probe = probe;
         this.reichweite = reichweite;
         this.dauer = dauer;
-        this.wirkung = wirkung;
         this.wirkungsdauer = wirkungsdauer;
         this.kostentabelle = kostentabelle;
         this.zielkategorien = zielkategorien;
@@ -102,11 +93,6 @@ public class Zeremonie extends Attribut implements Dauernd, HatProbe, HatNutzkos
     @Override
     public Dauer getDauer() {
         return dauer;
-    }
-
-    @Override
-    public @NotNull String getWirkung() {
-        return wirkung;
     }
 
     @Override

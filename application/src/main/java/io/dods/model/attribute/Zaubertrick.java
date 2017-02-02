@@ -26,35 +26,26 @@ public class Zaubertrick extends Attribut implements ApFix, HatNutzkosten, HatRe
     @ManyToOne
     private Wirkungsdauer wirkungsdauer;
 
-    @ApiModelProperty(required = true)
-    @Lob
-    @Column
-    private String wirkung;
-
     public Zaubertrick() {
     }
 
     public Zaubertrick(Reichweite reichweite,
                        List<Zielkategorie> zielkategorien,
-                       Wirkungsdauer wirkungsdauer,
-                       String wirkung) {
+                       Wirkungsdauer wirkungsdauer) {
         this.reichweite = reichweite;
         this.zielkategorien = zielkategorien;
         this.wirkungsdauer = wirkungsdauer;
-        this.wirkung = wirkung;
     }
 
     public Zaubertrick(String wikuUrl,
                        Reichweite reichweite,
                        List<Zielkategorie> zielkategorien,
                        Wirkungsdauer wirkungsdauer,
-                       String wirkung,
                        String name) {
         super(wikuUrl, name);
         this.reichweite = reichweite;
         this.zielkategorien = zielkategorien;
         this.wirkungsdauer = wirkungsdauer;
-        this.wirkung = wirkung;
     }
 
     @Override
@@ -65,11 +56,6 @@ public class Zaubertrick extends Attribut implements ApFix, HatNutzkosten, HatRe
     @Override
     public @NotNull List<Zielkategorie> getZielkategorien() {
         return zielkategorien;
-    }
-
-    @Override
-    public @NotNull String getWirkung() {
-        return wirkung;
     }
 
     @Override

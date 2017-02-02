@@ -34,11 +34,6 @@ public class Ritual extends Attribut implements Dauernd, HatProbe, HatReichweite
     @ManyToOne
     private Reichweite reichweite;
 
-    @ApiModelProperty(required = true)
-    @Lob
-    @Column
-    private String wirkung;
-
     @ApiModelProperty
     @ManyToOne
     private Wirkungsdauer wirkungsdauer;
@@ -55,7 +50,6 @@ public class Ritual extends Attribut implements Dauernd, HatProbe, HatReichweite
                   Kostentabelle kostentabelle,
                   Reichweite reichweite,
                   Probe probe,
-                  String wirkung,
                   Wirkungsdauer wirkungsdauer,
                   List<Zielkategorie> zielkategorien) {
         this.nutzkosten = nutzkosten;
@@ -63,7 +57,6 @@ public class Ritual extends Attribut implements Dauernd, HatProbe, HatReichweite
         this.kostentabelle = kostentabelle;
         this.reichweite = reichweite;
         this.probe = probe;
-        this.wirkung = wirkung;
         this.wirkungsdauer = wirkungsdauer;
         this.zielkategorien = zielkategorien;
     }
@@ -74,17 +67,15 @@ public class Ritual extends Attribut implements Dauernd, HatProbe, HatReichweite
                   Kostentabelle kostentabelle,
                   Reichweite reichweite,
                   Probe probe,
-                  String wirkung,
                   Wirkungsdauer wirkungsdauer,
                   List<Zielkategorie> zielkategorien,
                   String name) {
         super(wikuUrl, name);
-        this.nutzkosten = this.nutzkosten;
+        this.nutzkosten = nutzkosten;
         this.dauer = dauer;
         this.kostentabelle = kostentabelle;
         this.reichweite = reichweite;
         this.probe = probe;
-        this.wirkung = wirkung;
         this.wirkungsdauer = wirkungsdauer;
         this.zielkategorien = zielkategorien;
     }
@@ -107,11 +98,6 @@ public class Ritual extends Attribut implements Dauernd, HatProbe, HatReichweite
     @Override
     public Reichweite getReichweite() {
         return reichweite;
-    }
-
-    @Override
-    public @NotNull String getWirkung() {
-        return wirkung;
     }
 
     @Override

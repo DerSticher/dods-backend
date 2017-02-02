@@ -34,11 +34,6 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, HatNutzkost
     @Embedded
     private Probe probe;
 
-    @ApiModelProperty(required = true)
-    @Lob
-    @Column
-    private String wirkung;
-
     @ApiModelProperty
     @ManyToOne
     private Wirkungsdauer wirkungsdauer;
@@ -55,7 +50,6 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, HatNutzkost
                     Reichweite reichweite,
                     Nutzkosten nutzkosten,
                     Probe probe,
-                    String wirkung,
                     Wirkungsdauer wirkungsdauer,
                     List<Zielkategorie> zielkategorien) {
         this.dauer = dauer;
@@ -63,7 +57,6 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, HatNutzkost
         this.reichweite = reichweite;
         this.nutzkosten = nutzkosten;
         this.probe = probe;
-        this.wirkung = wirkung;
         this.wirkungsdauer = wirkungsdauer;
         this.zielkategorien = zielkategorien;
     }
@@ -74,7 +67,6 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, HatNutzkost
                     Reichweite reichweite,
                     Nutzkosten nutzkosten,
                     Probe probe,
-                    String wirkung,
                     Wirkungsdauer wirkungsdauer,
                     List<Zielkategorie> zielkategorien,
                     String name) {
@@ -84,7 +76,6 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, HatNutzkost
         this.reichweite = reichweite;
         this.nutzkosten = nutzkosten;
         this.probe = probe;
-        this.wirkung = wirkung;
         this.wirkungsdauer = wirkungsdauer;
         this.zielkategorien = zielkategorien;
     }
@@ -111,11 +102,6 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, HatNutzkost
     @Override
     public Reichweite getReichweite() {
         return reichweite;
-    }
-
-    @Override
-    public String getWirkung() {
-        return wirkung;
     }
 
     @Override

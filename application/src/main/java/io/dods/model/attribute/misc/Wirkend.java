@@ -10,9 +10,6 @@ import org.jetbrains.annotations.Nullable;
 public interface Wirkend {
 
     @Nullable
-    String getWirkung();
-
-    @Nullable
     Wirkungsdauer getWirkungsdauer();
 
     @NotNull
