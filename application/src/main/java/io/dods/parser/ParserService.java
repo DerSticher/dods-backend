@@ -74,7 +74,6 @@ class ParserService {
         value.setDauer(parseDauerService.parseDauer(document));
         value.setKostentabelle(parseKostentabelleService.parseKostentabelle(document));
         value.setProbe(parseProbeService.parseProbe(document));
-        value.setWirkung(parseWirkungService.parseWirkung(document));
         value.setWirkungsdauer(parseWirkungService.parseWirkungsdauer(document));
         value.setZielkategorie(parseZielkategorieService.parseZielkategorie(document));
         value.setAspekt(parseAspektService.parseAspekt(document));
@@ -109,7 +108,6 @@ class ParserService {
                     value.getReichweite(),
                     value.getNutzkosten(),
                     value.getProbe(),
-                    value.getWirkung(),
                     value.getWirkungsdauer(),
                     value.getZielkategorie(),
                     value.getName());
@@ -129,7 +127,6 @@ class ParserService {
                     value.getKostentabelle(),
                     value.getReichweite(),
                     value.getProbe(),
-                    value.getWirkung(),
                     value.getWirkungsdauer(),
                     value.getZielkategorie(),
                     value.getName());
@@ -185,7 +182,6 @@ class ParserService {
                 value.getAspekt(),
                 value.getNutzkosten(),
                 value.getReichweite(),
-                value.getWirkung(),
                 value.getWirkungsdauer(),
                 value.getZielkategorie(),
                 value.getName());
@@ -210,7 +206,6 @@ class ParserService {
                 Vorteil vorteil = new Vorteil(
                         value.getWikiUrl(),
                         v.getApWert(),
-                        v.getWirkung(),
                         v.getReichweite(),
                         v.getName());
 
@@ -237,7 +232,6 @@ class ParserService {
                     value.getKostentabelle(),
                     value.getProbe(),
                     value.getReichweite(),
-                    value.getWirkung(),
                     value.getWirkungsdauer(),
                     value.getDauer(),
                     value.getZielkategorie(),
@@ -256,7 +250,6 @@ class ParserService {
                     value.getReichweite(),
                     value.getZielkategorie(),
                     value.getWirkungsdauer(),
-                    value.getWirkung(),
                     value.getName());
         } catch (IOException e) {
             return null;
@@ -273,7 +266,6 @@ class ParserService {
                     value.getProbe(),
                     value.getReichweite(),
                     value.getDauer(),
-                    value.getWirkung(),
                     value.getWirkungsdauer(),
                     value.getKostentabelle(),
                     value.getZielkategorie(),
