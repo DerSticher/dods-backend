@@ -3,7 +3,7 @@ package io.dods.model.helden;
 import io.dods.model.attribute.Attribut;
 import io.dods.model.attribute.misc.ApFix;
 import io.dods.model.attribute.misc.ApVar;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 
@@ -23,19 +23,20 @@ public class CharakterEigenschaft {
     @Column
     private int level;
 
-    @Column
-    private boolean isActivated = true;
-
     public CharakterEigenschaft() {
         // default constructor for ORM
     }
 
-    @Nullable
+    public CharakterEigenschaft(@NotNull Attribut attribut, int level) {
+        this.setAttribut(attribut);
+        this.setLevel(level);
+    }
+
     public Attribut getAttribut() {
         return attribut;
     }
 
-    public void setAttribut(Attribut attribut) {
+    public void setAttribut(@NotNull Attribut attribut) {
         this.attribut = attribut;
     }
 
@@ -54,8 +55,6 @@ public class CharakterEigenschaft {
     }
 
     public int getAp() {
-        if (!isActivated()) return 0;
-
         if (attribut instanceof ApFix) {
             return ((ApFix) attribut).getAp();
 
@@ -67,14 +66,6 @@ public class CharakterEigenschaft {
                 attribut.getClass().getSimpleName(),
                 ApFix.class.getSimpleName(),
                 ApVar.class.getSimpleName()));
-    }
-
-    public boolean isActivated() {
-        return isActivated;
-    }
-
-    public void setActivated(boolean activated) {
-        isActivated = activated;
     }
 
 }

@@ -31,8 +31,7 @@ public class VorhandenBedingung extends Bedingung {
     @Override
     public boolean isFulfilled(Held held) {
         @Nullable CharakterEigenschaft eigenschaft = held.getEigenschaft(attribut);
-        if (eigenschaft == null) return false;
-        return eigenschaft.isActivated();
+        return eigenschaft != null;
     }
 
 }
