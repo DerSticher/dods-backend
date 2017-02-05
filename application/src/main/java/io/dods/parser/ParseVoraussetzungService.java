@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
  * @author Richard Gottschalk
  */
 @Service
-class ParseVoraussetzung {
+class ParseVoraussetzungService {
 
     private static final Pattern PATTERN = Pattern.compile("Voraussetzung(?:en)?: ?(?:<[^>]+>)? ?([^<]+)");
 
