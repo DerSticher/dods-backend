@@ -31,7 +31,7 @@ class VoraussetzungService {
     private AttributeService attributeService;
 
     @Autowired
-    private ParseVoraussetzung parseVoraussetzung;
+    private ParseVoraussetzungService parseVoraussetzungService;
 
     @Autowired
     private DocumentService documentService;
@@ -49,7 +49,7 @@ class VoraussetzungService {
             }
             Document document = documentService.getDocument(wikiUrl, "http://www.ulisses-regelwiki.de/");
 
-            String voraussetzung = parseVoraussetzung.parseVoraussetzung(document);
+            String voraussetzung = parseVoraussetzungService.parseVoraussetzung(document);
             if (voraussetzung == null || voraussetzung.length() == 0) return;
 
             Abhangigkeit abhangigkeit = createAbhangigkeit(attribut, voraussetzung);

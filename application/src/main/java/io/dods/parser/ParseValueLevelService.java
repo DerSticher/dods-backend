@@ -26,6 +26,8 @@ class ParseValueLevelService {
             list.add(parsedValue);
         }
 
+        parsedValue.setName(getOriginalName(parsedValue));
+
         return list;
     }
 
@@ -40,6 +42,14 @@ class ParseValueLevelService {
         }
 
         return parsedValues;
+    }
+
+    private String getOriginalName(ParsedValue parsedValue) {
+        Matcher matcher = PATTERN_NAME.matcher(parsedValue.getName());
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+        return parsedValue.getName();
     }
 
     private ParsedValue parseLevel(ParsedValue parsedValue, int level) {
@@ -70,7 +80,7 @@ class ParseValueLevelService {
         return 0;
     }
 
-    private static int decodeSingle(char letter) {
+    static int decodeSingle(char letter) {
         switch (letter) {
             case 'M':
                 return 1000;
@@ -87,11 +97,11 @@ class ParseValueLevelService {
             case 'I':
                 return 1;
             default:
-                return 0;
+                throw new IllegalArgumentException("character '" + letter + "' is not mapped to a value");
         }
     }
 
-    public static int decode(String roman) {
+    static int decode(String roman) {
         int result = 0;
         String uRoman = roman.toUpperCase(); //case-insensitive
         for (int i = 0; i < uRoman.length() - 1; i++) {//loop over all but the last character

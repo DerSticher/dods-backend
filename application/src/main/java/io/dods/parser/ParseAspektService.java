@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 @Service
 class ParseAspektService {
 
-    private static final Pattern PATTERN = Pattern.compile("Aspekt:<[^>]+> ([^<]+)");
+    private static final Pattern PATTERN = Pattern.compile("Aspekt ?(?:<[^>]*>\\:|\\: ?<[^>]*>|\\:) ?([^<]+)");
 
     @Autowired
     private AspektService aspektService;

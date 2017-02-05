@@ -11,8 +11,7 @@ import java.util.regex.Pattern;
  */
 @Service
 class ParseApWertService {
-
-    private static final Pattern PATTERN = Pattern.compile("AP\\-Wert(?:<[^>]+>)?:[^\\d–-]+([–-]?\\d+)");
+    private static final Pattern PATTERN = Pattern.compile("AP\\-Wert ?(?:<[^>]*>\\:|\\: ?<[^>]*>|\\:) ?([\\–\\-]?\\d+)");
 
     public int parseApWert(Document document) {
         Matcher matcher = PATTERN.matcher(document.html());

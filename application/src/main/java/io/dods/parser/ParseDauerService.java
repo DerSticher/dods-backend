@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 @Service
 class ParseDauerService {
 
-    private static final Pattern PATTERN = Pattern.compile(">(?:Liturgiedauer|Ritualdauer|Zauberdauer|Zeremoniedauer)[^:]*: ?(?:<[^>]+>)?([^<]+)");
+    private static final Pattern PATTERN = Pattern.compile("(?:Liturgiedauer|Ritualdauer|Zauberdauer|Zeremoniedauer) ?(?:<[^>]*>\\:|\\: ?<[^>]*>|\\:) ?([^<\\n]+)");
 
     @Autowired
     private DauerService dauerService;

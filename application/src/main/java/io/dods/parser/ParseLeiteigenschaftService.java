@@ -16,13 +16,13 @@ import java.util.regex.Pattern;
 @Service
 class ParseLeiteigenschaftService {
 
-    private static final Pattern PATTERN_WIRKUNG = Pattern.compile("Leiteigenschaft ?: ?(?:<[^>]+>)?(.+?)(?:</?p>|</?strong>)");
+    private static final Pattern PATTERN = Pattern.compile("Leiteigenschaft ?(?:<[^>]*>\\:|\\: ?<[^>]*>|\\:) ?([^<]*)");
 
     @Autowired
     private EigenschaftService eigenschaftService;
 
     public Eigenschaft parseLeiteigenschaft(Document document) {
-        Matcher matcher = PATTERN_WIRKUNG.matcher(document.html());
+        Matcher matcher = PATTERN.matcher(document.html());
 
         if (matcher.find()) {
             String leiteigenschaft = matcher.group(1).trim();

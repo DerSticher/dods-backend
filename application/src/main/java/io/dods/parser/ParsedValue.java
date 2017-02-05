@@ -41,14 +41,6 @@ class ParsedValue implements Serializable {
         this.regel = regel;
     }
 
-    public String getWirkung() {
-        return wirkung;
-    }
-
-    public void setWirkung(String wirkung) {
-        this.wirkung = wirkung;
-    }
-
     public Dauer getDauer() {
         return dauer;
     }

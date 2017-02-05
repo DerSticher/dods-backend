@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 @Service
 class ParseZielkategorieService {
 
-    private static final Pattern PATTERN = Pattern.compile("Zielkategorie:<[^>]+>([^<]+)");
+    private static final Pattern PATTERN = Pattern.compile("Zielkategorie ?(?:<[^>]*>\\:|\\: ?<[^>]*>|\\:) ?([^<]+)");
 
     @Autowired
     private ZielkategorieService zielkategorieService;

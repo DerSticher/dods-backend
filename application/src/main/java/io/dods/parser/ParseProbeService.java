@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 @Service
 class ParseProbeService {
 
-    private static final Pattern PATTERN = Pattern.compile("Probe: ?(?:</strong>)? ?(..)/(..)/(..)");
+    private static final Pattern PATTERN = Pattern.compile("Probe ?(?:<[^>]*>\\:|\\: ?<[^>]*>|\\:) ?(..)/(..)/(..)");
 
     private final Map<String, Integer> idMap = new HashMap<>();
 

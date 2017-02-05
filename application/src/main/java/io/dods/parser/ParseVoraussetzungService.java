@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 @Service
 class ParseVoraussetzungService {
 
-    private static final Pattern PATTERN = Pattern.compile("Voraussetzung(?:en)?: ?(?:<[^>]+>)? ?([^<]+)");
+    private static final Pattern PATTERN = Pattern.compile("Voraussetzung(?:en)? ?(?:<[^>]*>\\:|\\: ?<[^>]*>|\\:) ?([^\\n<]+)");
 
     public String parseVoraussetzung(Document document) {
         Matcher matcher = PATTERN.matcher(document.html());

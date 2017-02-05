@@ -46,9 +46,6 @@ class ParserService {
     private ParseWirkungService parseWirkungService;
 
     @Autowired
-    private ParseKapKostenService parseKapKostenService;
-
-    @Autowired
     private ParseNutzkostenService parseNutzkostenService;
 
     @Autowired

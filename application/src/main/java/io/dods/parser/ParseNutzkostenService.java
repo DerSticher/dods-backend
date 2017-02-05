@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 @Service
 class ParseNutzkostenService {
 
-    private static final Pattern PATTERN = Pattern.compile("(?:AsP|KaP)\\-Kosten: ?(?:<[^>]+>)? ?([^<]+)");
+    private static final Pattern PATTERN = Pattern.compile("(?:AsP|KaP)\\-Kosten ?(?:<[^>]*>\\:|\\: ?<[^>]*>|\\:) ?([^<\\n]+)");
 
     @Autowired
     private NutzkostenService nutzkostenService;
