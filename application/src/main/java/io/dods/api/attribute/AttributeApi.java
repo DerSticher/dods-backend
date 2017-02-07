@@ -17,7 +17,6 @@ import java.util.Objects;
 /**
  * @author Richard Gottschalk
  */
-@CrossOrigin(origins = "http://localhost:80")
 @RestController
 public class AttributeApi {
 
