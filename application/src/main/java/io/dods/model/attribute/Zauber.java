@@ -1,6 +1,7 @@
 package io.dods.model.attribute;
 
 import io.dods.model.attribute.misc.*;
+import io.dods.model.publikation.Publikation;
 import io.swagger.annotations.ApiModelProperty;
 import org.jetbrains.annotations.NotNull;
 
@@ -46,24 +47,8 @@ public class Zauber extends Attribut implements Dauernd, HatProbe, HatNutzkosten
     public Zauber() {
     }
 
-    public Zauber(Nutzkosten nutzkosten,
-                  Kostentabelle kostentabelle,
-                  Probe probe,
-                  Reichweite reichweite,
-                  String wirkung,
-                  Wirkungsdauer wirkungsdauer,
-                  Dauer zauberdauer,
-                  List<Zielkategorie> zielkategorien) {
-        this.nutzkosten = nutzkosten;
-        this.kostentabelle = kostentabelle;
-        this.probe = probe;
-        this.reichweite = reichweite;
-        this.wirkungsdauer = wirkungsdauer;
-        this.zauberdauer = zauberdauer;
-        this.zielkategorien = zielkategorien;
-    }
-
     public Zauber(String wikuUrl,
+                  List<Publikation> publikation,
                   Nutzkosten nutzkosten,
                   Kostentabelle kostentabelle,
                   Probe probe,
@@ -72,7 +57,7 @@ public class Zauber extends Attribut implements Dauernd, HatProbe, HatNutzkosten
                   Dauer zauberdauer,
                   List<Zielkategorie> zielkategorien,
                   String name) {
-        super(wikuUrl, name);
+        super(wikuUrl, name, publikation);
         this.nutzkosten = nutzkosten;
         this.kostentabelle = kostentabelle;
         this.probe = probe;

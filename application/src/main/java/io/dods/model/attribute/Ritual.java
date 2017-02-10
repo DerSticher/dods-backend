@@ -1,6 +1,7 @@
 package io.dods.model.attribute;
 
 import io.dods.model.attribute.misc.*;
+import io.dods.model.publikation.Publikation;
 import io.swagger.annotations.ApiModelProperty;
 import org.jetbrains.annotations.NotNull;
 
@@ -45,23 +46,8 @@ public class Ritual extends Attribut implements Dauernd, HatProbe, HatReichweite
     public Ritual() {
     }
 
-    public Ritual(Nutzkosten nutzkosten,
-                  Dauer dauer,
-                  Kostentabelle kostentabelle,
-                  Reichweite reichweite,
-                  Probe probe,
-                  Wirkungsdauer wirkungsdauer,
-                  List<Zielkategorie> zielkategorien) {
-        this.nutzkosten = nutzkosten;
-        this.dauer = dauer;
-        this.kostentabelle = kostentabelle;
-        this.reichweite = reichweite;
-        this.probe = probe;
-        this.wirkungsdauer = wirkungsdauer;
-        this.zielkategorien = zielkategorien;
-    }
-
     public Ritual(String wikuUrl,
+                  List<Publikation> publikation,
                   Nutzkosten nutzkosten,
                   Dauer dauer,
                   Kostentabelle kostentabelle,
@@ -70,7 +56,7 @@ public class Ritual extends Attribut implements Dauernd, HatProbe, HatReichweite
                   Wirkungsdauer wirkungsdauer,
                   List<Zielkategorie> zielkategorien,
                   String name) {
-        super(wikuUrl, name);
+        super(wikuUrl, name, publikation);
         this.nutzkosten = nutzkosten;
         this.dauer = dauer;
         this.kostentabelle = kostentabelle;

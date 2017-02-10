@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URLDecoder;
 
 /**
  * @author Richard Gottschalk
@@ -26,7 +27,8 @@ public class DocumentService {
             return Jsoup.parse(bufferedFile, "UTF-8", baseUrl);
         } else {
             System.out.println("Parsing remote " + url);
-            Document document = Jsoup.connect(url).get();
+            String decode = URLDecoder.decode(url, "UTF-8");
+            Document document = Jsoup.connect(decode).get();
 
             bufferedFile.getParentFile().mkdirs();
 
@@ -36,11 +38,15 @@ public class DocumentService {
 
             try {
                 // sleeping to reduce traffic and avoid HTTP 429
-                Thread.sleep((long) (Math.random() * 1000 * 20 + 5 * 1000));
+                Thread.sleep(getSleep());
             } catch (InterruptedException ignore) {}
 
             return document;
         }
+    }
+
+    public long getSleep() {
+        return (long) (Math.random() * 1000 * 20 + 5 * 1000);
     }
 
 }

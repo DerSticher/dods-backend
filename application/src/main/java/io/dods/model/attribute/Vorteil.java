@@ -3,10 +3,14 @@ package io.dods.model.attribute;
 import io.dods.model.attribute.misc.ApFix;
 import io.dods.model.attribute.misc.HatReichweite;
 import io.dods.model.attribute.misc.Reichweite;
-import io.dods.model.attribute.misc.Wirkend;
+import io.dods.model.publikation.Publikation;
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import java.util.List;
 
 /**
  * @author Richard Gottschalk
@@ -26,13 +30,8 @@ public class Vorteil extends Attribut implements ApFix, HatReichweite {
     public Vorteil() {
     }
 
-    public Vorteil(int ap, Reichweite reichweite) {
-        this.ap = ap;
-        this.reichweite = reichweite;
-    }
-
-    public Vorteil(String wikuUrl, int ap, Reichweite reichweite, String name) {
-        super(wikuUrl, name);
+    public Vorteil(String wikuUrl, List<Publikation> publikation, int ap, Reichweite reichweite, String name) {
+        super(wikuUrl, name, publikation);
         this.ap = ap;
         this.reichweite = reichweite;
     }

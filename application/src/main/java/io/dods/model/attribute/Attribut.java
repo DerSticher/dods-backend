@@ -8,10 +8,12 @@ import io.dods.model.attribute.misc.ApFix;
 import io.dods.model.attribute.misc.ApVar;
 import io.dods.model.attribute.misc.UsesKostentabelle;
 import io.dods.model.exceptions.HasNoDefaultLevelException;
+import io.dods.model.publikation.Publikation;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Richard Gottschalk
@@ -40,14 +42,18 @@ public abstract class Attribut implements HasId<Long>, Named, Serializable{
     @Column(name = "typ", insertable = false, updatable = false)
     private String typ;
 
+    @ManyToMany
+    private List<Publikation> publikation;
+
     public Attribut() {
         this.typ = getClass().getSimpleName();
     }
 
-    public Attribut(String wikiUrl, String name) {
+    public Attribut(String wikiUrl, String name, List<Publikation> publikations) {
         this();
         this.wikiUrl = wikiUrl;
         this.name = name;
+        this.publikation = publikations;
     }
 
     public int calculateAp(int level) {
@@ -133,5 +139,9 @@ public abstract class Attribut implements HasId<Long>, Named, Serializable{
     @JsonIgnore
     public int getDefaultLevel() throws HasNoDefaultLevelException {
         throw new HasNoDefaultLevelException();
+    }
+
+    public List<Publikation> getPublikations() {
+        return publikation;
     }
 }

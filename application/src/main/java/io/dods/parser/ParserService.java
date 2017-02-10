@@ -57,6 +57,9 @@ class ParserService {
     @Autowired
     private ParseLeiteigenschaftService parseLeiteigenschaftService;
 
+    @Autowired
+    private ParsePublikationService parsePublikationServiceService;
+
     private ParsedValue parseDetails(String url) throws IOException {
         ParsedValue value = new ParsedValue();
 
@@ -75,6 +78,7 @@ class ParserService {
         value.setZielkategorie(parseZielkategorieService.parseZielkategorie(document));
         value.setAspekt(parseAspektService.parseAspekt(document));
         value.setLeiteigenschaft(parseLeiteigenschaftService.parseLeiteigenschaft(document));
+        value.setPublikations(parsePublikationServiceService.parsePublikations(document));
 
         return value;
     }
@@ -85,6 +89,7 @@ class ParserService {
 
             return new Kampftechnik(
                     value.getWikiUrl(),
+                    value.getPublikations(),
                     value.getLeiteigenschaft(),
                     value.getKostentabelle(),
                     value.getName(),
@@ -100,6 +105,7 @@ class ParserService {
 
             return new Liturgie(
                     value.getWikiUrl(),
+                    value.getPublikations(),
                     value.getDauer(),
                     value.getKostentabelle(),
                     value.getReichweite(),
@@ -119,6 +125,7 @@ class ParserService {
 
             return new Ritual(
                     value.getWikiUrl(),
+                    value.getPublikations(),
                     value.getNutzkosten(),
                     value.getDauer(),
                     value.getKostentabelle(),
@@ -147,6 +154,7 @@ class ParserService {
 
                 Sonderfertigkeit sonderfertigkeit = new Sonderfertigkeit(
                         v.getWikiUrl(),
+                        value.getPublikations(),
                         v.getApWert(),
                         gruppe,
                         v.getDauer(),
@@ -176,6 +184,7 @@ class ParserService {
 
             return new Segen(
                 value.getWikiUrl(),
+                value.getPublikations(),
                 value.getAspekt(),
                 value.getNutzkosten(),
                 value.getReichweite(),
@@ -202,6 +211,7 @@ class ParserService {
 
                 Vorteil vorteil = new Vorteil(
                         value.getWikiUrl(),
+                        value.getPublikations(),
                         v.getApWert(),
                         v.getReichweite(),
                         v.getName());
@@ -225,6 +235,7 @@ class ParserService {
 
             return new Zauber(
                     value.getWikiUrl(),
+                    value.getPublikations(),
                     value.getNutzkosten(),
                     value.getKostentabelle(),
                     value.getProbe(),
@@ -244,6 +255,7 @@ class ParserService {
 
             return new Zaubertrick(
                     value.getWikiUrl(),
+                    value.getPublikations(),
                     value.getReichweite(),
                     value.getZielkategorie(),
                     value.getWirkungsdauer(),
@@ -259,6 +271,7 @@ class ParserService {
 
             return new Zeremonie(
                     value.getWikiUrl(),
+                    value.getPublikations(),
                     value.getNutzkosten(),
                     value.getProbe(),
                     value.getReichweite(),

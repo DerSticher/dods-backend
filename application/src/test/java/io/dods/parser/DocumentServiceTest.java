@@ -5,6 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -13,9 +14,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.io.File;
 import java.io.IOException;
 
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.*;
+import static org.mockito.Matchers.anyString;
 
 /**
  * @author Richard Gottschalk
@@ -27,6 +27,8 @@ public class DocumentServiceTest {
 
     @Autowired
     DocumentService service;
+
+    DocumentService mockedService = Mockito.mock(DocumentService.class);
 
     @Before
     public void setUp() throws Exception {
@@ -40,6 +42,9 @@ public class DocumentServiceTest {
 
     @Test
     public void parseTest() throws IOException {
+        Mockito.when(mockedService.getDocument(anyString(), anyString())).thenCallRealMethod();
+        Mockito.when(mockedService.getSleep()).thenReturn(10L);
+
         String currentFolder = System.getProperty("user.dir");
         String localFileName = "http://www.ulisses-regelwiki.de/".replace(":", "");
         if (!localFileName.endsWith(".html")) localFileName += ".html";
@@ -47,13 +52,18 @@ public class DocumentServiceTest {
 
         assertFalse(file.exists());
 
-        Document remoteFile = service.getDocument("http://www.ulisses-regelwiki.de/", "http://www.ulisses-regelwiki.de/");
+        Document remoteFile = mockedService.getDocument("http://www.ulisses-regelwiki.de/", "http://www.ulisses-regelwiki.de/");
         assertNotNull(remoteFile);
 
         assertTrue(file.exists());
 
-        Document localFile = service.getDocument("http://www.ulisses-regelwiki.de/", "http://www.ulisses-regelwiki.de/");
+        Document localFile = mockedService.getDocument("http://www.ulisses-regelwiki.de/", "http://www.ulisses-regelwiki.de/");
         assertNotNull(localFile);
+    }
+
+    @Test
+    public void getSleepTest() {
+        assertTrue(service.getSleep() >= 5000L);
     }
 
     private File getFile() {

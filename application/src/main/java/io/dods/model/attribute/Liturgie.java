@@ -1,6 +1,7 @@
 package io.dods.model.attribute;
 
 import io.dods.model.attribute.misc.*;
+import io.dods.model.publikation.Publikation;
 import io.swagger.annotations.ApiModelProperty;
 import org.jetbrains.annotations.NotNull;
 
@@ -45,23 +46,8 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, HatNutzkost
     public Liturgie() {
     }
 
-    public Liturgie(Dauer dauer,
-                    Kostentabelle kostentabelle,
-                    Reichweite reichweite,
-                    Nutzkosten nutzkosten,
-                    Probe probe,
-                    Wirkungsdauer wirkungsdauer,
-                    List<Zielkategorie> zielkategorien) {
-        this.dauer = dauer;
-        this.kostentabelle = kostentabelle;
-        this.reichweite = reichweite;
-        this.nutzkosten = nutzkosten;
-        this.probe = probe;
-        this.wirkungsdauer = wirkungsdauer;
-        this.zielkategorien = zielkategorien;
-    }
-
     public Liturgie(String wikuUrl,
+                    List<Publikation> publikation,
                     Dauer dauer,
                     Kostentabelle kostentabelle,
                     Reichweite reichweite,
@@ -70,7 +56,7 @@ public class Liturgie extends Attribut implements Dauernd, HatProbe, HatNutzkost
                     Wirkungsdauer wirkungsdauer,
                     List<Zielkategorie> zielkategorien,
                     String name) {
-        super(wikuUrl, name);
+        super(wikuUrl, name, publikation);
         this.dauer = dauer;
         this.kostentabelle = kostentabelle;
         this.reichweite = reichweite;

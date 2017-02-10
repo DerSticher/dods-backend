@@ -2,9 +2,11 @@ package io.dods.model.attribute;
 
 import io.dods.model.attribute.misc.Kostentabelle;
 import io.dods.model.attribute.misc.UsesKostentabelle;
+import io.dods.model.publikation.Publikation;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @author Richard Gottschalk
@@ -29,8 +31,8 @@ public class Kampftechnik extends Attribut implements UsesKostentabelle {
     public Kampftechnik() {
     }
 
-    public Kampftechnik(String wikiUrl, Eigenschaft leiteigenschaft, Kostentabelle kostentabelle, String name, boolean isFernkampf) {
-        super(wikiUrl, name);
+    public Kampftechnik(String wikiUrl, List<Publikation> publikation, Eigenschaft leiteigenschaft, Kostentabelle kostentabelle, String name, boolean isFernkampf) {
+        super(wikiUrl, name, publikation);
         this.leiteigenschaft = leiteigenschaft;
         this.kostentabelle = kostentabelle;
         this.isFernkampf = isFernkampf;

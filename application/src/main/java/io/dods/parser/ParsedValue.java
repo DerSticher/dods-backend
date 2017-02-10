@@ -2,6 +2,7 @@ package io.dods.parser;
 
 import io.dods.model.attribute.Eigenschaft;
 import io.dods.model.attribute.misc.*;
+import io.dods.model.publikation.Publikation;
 import org.springframework.util.SerializationUtils;
 
 import java.io.Serializable;
@@ -27,6 +28,7 @@ class ParsedValue implements Serializable {
     private List<Aspekt> aspekt;
     private int apWert;
     private Eigenschaft leiteigenschaft;
+    private List<Publikation> publikations;
 
     public ParsedValue copy() {
         byte[] serialize = SerializationUtils.serialize(this);
@@ -135,5 +137,13 @@ class ParsedValue implements Serializable {
 
     public Eigenschaft getLeiteigenschaft() {
         return leiteigenschaft;
+    }
+
+    public void setPublikations(List<Publikation> publikations) {
+        this.publikations = publikations;
+    }
+
+    public List<Publikation> getPublikations() {
+        return publikations;
     }
 }

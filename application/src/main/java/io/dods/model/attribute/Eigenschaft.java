@@ -30,7 +30,7 @@ public class Eigenschaft extends Attribut implements UsesKostentabelle {
     }
 
     public Eigenschaft(Kostentabelle kostentabelle, String name) {
-        super("", name);
+        super("", name, null);
         this.kostentabelle = kostentabelle;
     }
 

@@ -1,10 +1,14 @@
 package io.dods.model.attribute;
 
 import io.dods.model.attribute.misc.*;
+import io.dods.model.publikation.Publikation;
 import io.swagger.annotations.ApiModelProperty;
 import org.jetbrains.annotations.NotNull;
 
-import javax.persistence.*;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import java.util.List;
 
 /**
@@ -29,20 +33,13 @@ public class Zaubertrick extends Attribut implements ApFix, HatNutzkosten, HatRe
     public Zaubertrick() {
     }
 
-    public Zaubertrick(Reichweite reichweite,
-                       List<Zielkategorie> zielkategorien,
-                       Wirkungsdauer wirkungsdauer) {
-        this.reichweite = reichweite;
-        this.zielkategorien = zielkategorien;
-        this.wirkungsdauer = wirkungsdauer;
-    }
-
     public Zaubertrick(String wikuUrl,
+                       List<Publikation> publikation,
                        Reichweite reichweite,
                        List<Zielkategorie> zielkategorien,
                        Wirkungsdauer wirkungsdauer,
                        String name) {
-        super(wikuUrl, name);
+        super(wikuUrl, name, publikation);
         this.reichweite = reichweite;
         this.zielkategorien = zielkategorien;
         this.wirkungsdauer = wirkungsdauer;

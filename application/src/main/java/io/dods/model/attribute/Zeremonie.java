@@ -1,6 +1,7 @@
 package io.dods.model.attribute;
 
 import io.dods.model.attribute.misc.*;
+import io.dods.model.publikation.Publikation;
 import io.swagger.annotations.ApiModelProperty;
 import org.jetbrains.annotations.NotNull;
 
@@ -45,23 +46,8 @@ public class Zeremonie extends Attribut implements Dauernd, HatProbe, HatNutzkos
     public Zeremonie() {
     }
 
-    public Zeremonie(Nutzkosten nutzkosten,
-                     Probe probe,
-                     Reichweite reichweite,
-                     Dauer dauer,
-                     Wirkungsdauer wirkungsdauer,
-                     Kostentabelle kostentabelle,
-                     List<Zielkategorie> zielkategorien) {
-        this.nutzkosten = nutzkosten;
-        this.probe = probe;
-        this.reichweite = reichweite;
-        this.dauer = dauer;
-        this.wirkungsdauer = wirkungsdauer;
-        this.kostentabelle = kostentabelle;
-        this.zielkategorien = zielkategorien;
-    }
-
     public Zeremonie(String wikiUrl,
+                     List<Publikation> publikation,
                      Nutzkosten nutzkosten,
                      Probe probe,
                      Reichweite reichweite,
@@ -70,7 +56,7 @@ public class Zeremonie extends Attribut implements Dauernd, HatProbe, HatNutzkos
                      Kostentabelle kostentabelle,
                      List<Zielkategorie> zielkategorien,
                      String name) {
-        super(wikiUrl, name);
+        super(wikiUrl, name, publikation);
         this.nutzkosten = nutzkosten;
         this.probe = probe;
         this.reichweite = reichweite;

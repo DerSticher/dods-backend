@@ -49,14 +49,8 @@ public class Fertigkeit extends Attribut implements HatProbe, UsesKostentabelle 
     public Fertigkeit() {
     }
 
-    public Fertigkeit(Kostentabelle kostentabelle, Probe probe, Gruppe gruppe) {
-        this.kostentabelle = kostentabelle;
-        this.probe = probe;
-        this.gruppe = gruppe;
-    }
-
     public Fertigkeit(Kostentabelle kostentabelle, Probe probe, Gruppe gruppe, String name) {
-        super("", name);
+        super("", name, null);
         this.kostentabelle = kostentabelle;
         this.probe = probe;
         this.gruppe = gruppe;

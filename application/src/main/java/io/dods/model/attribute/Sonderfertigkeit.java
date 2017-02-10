@@ -1,10 +1,12 @@
 package io.dods.model.attribute;
 
 import io.dods.model.attribute.misc.*;
+import io.dods.model.publikation.Publikation;
 import io.swagger.annotations.ApiModelProperty;
 import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @author Richard Gottschalk
@@ -56,6 +58,7 @@ public class Sonderfertigkeit extends Attribut implements ApFix, Dauernd, HatPro
     }
 
     public Sonderfertigkeit(String wikiUrl,
+                            List<Publikation> publikation,
                             int ap,
                             Gruppe gruppe,
                             Dauer dauer,
@@ -65,7 +68,7 @@ public class Sonderfertigkeit extends Attribut implements ApFix, Dauernd, HatPro
                             Wirkungsdauer wirkungsdauer,
                             Kostentabelle kostentabelle,
                             String name) {
-        super(wikiUrl, name);
+        super(wikiUrl, name, publikation);
         this.ap = ap;
         this.gruppe = gruppe;
         this.dauer = dauer;

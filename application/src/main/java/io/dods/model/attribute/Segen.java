@@ -1,10 +1,14 @@
 package io.dods.model.attribute;
 
 import io.dods.model.attribute.misc.*;
+import io.dods.model.publikation.Publikation;
 import io.swagger.annotations.ApiModelProperty;
 import org.jetbrains.annotations.NotNull;
 
-import javax.persistence.*;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,26 +42,15 @@ public class Segen extends Attribut implements ApFix, Kategorisiert, HatNutzkost
     public Segen() {
     }
 
-    public Segen(List<Aspekt> aspekte,
-                 Nutzkosten nutzkosten,
-                 Reichweite reichweite,
-                 Wirkungsdauer wirkungsdauer,
-                 List<Zielkategorie> zielkategorien) {
-        this.aspekte = aspekte;
-        this.nutzkosten = nutzkosten;
-        this.reichweite = reichweite;
-        this.wirkungsdauer = wirkungsdauer;
-        this.zielkategorien = zielkategorien;
-    }
-
     public Segen(String wikuUrl,
+                 List<Publikation> publikation,
                  List<Aspekt> aspekte,
                  Nutzkosten nutzkosten,
                  Reichweite reichweite,
                  Wirkungsdauer wirkungsdauer,
                  List<Zielkategorie> zielkategorien,
                  String name) {
-        super(wikuUrl, name);
+        super(wikuUrl, name, publikation);
         this.aspekte = aspekte;
         this.nutzkosten = nutzkosten;
         this.reichweite = reichweite;
