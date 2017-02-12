@@ -42,7 +42,7 @@ public abstract class Attribut implements HasId<Long>, Named, Serializable{
     @Column(name = "typ", insertable = false, updatable = false)
     private String typ;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Publikation> publikation;
 
     public Attribut() {
@@ -119,7 +119,7 @@ public abstract class Attribut implements HasId<Long>, Named, Serializable{
 
     @Override
     public int hashCode() {
-        return (int) (id ^ (id >>> 32));
+        return id != null ? id.hashCode() : super.hashCode();
     }
 
     public void setWikiUrl(String wikiUrl) {
@@ -144,4 +144,20 @@ public abstract class Attribut implements HasId<Long>, Named, Serializable{
     public List<Publikation> getPublikations() {
         return publikation;
     }
+    public void setPublications(List<Publikation> publikation) {
+        this.publikation = publikation;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "{" +
+                "id=" + id +
+                ", subcategoryOf=" + subcategoryOf +
+                ", wikiUrl='" + wikiUrl + '\'' +
+                ", name='" + name + '\'' +
+                ", typ='" + typ + '\'' +
+                ", publikation=" + publikation +
+                '}';
+    }
+
 }

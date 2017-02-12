@@ -5,12 +5,13 @@ import io.dods.model.Named;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author Richard Gottschalk
  */
 @Entity
-public class Nutzkosten implements HasId<Long>, Named {
+public class Nutzkosten implements HasId<Long>, Named, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

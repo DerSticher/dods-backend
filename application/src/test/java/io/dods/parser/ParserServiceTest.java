@@ -4,6 +4,7 @@ import io.dods.model.attribute.*;
 import io.dods.model.attribute.misc.Kostentabelle;
 import io.dods.model.attribute.misc.Zielkategorie;
 import io.dods.model.publikation.Publikation;
+import io.dods.parser.model.ParsedData;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,162 +29,209 @@ public class ParserServiceTest {
 
     @Test
     public void parseKampftechnikTest() throws Exception {
-        Kampftechnik value = service.parseKampftechnik("http://www.ulisses-regelwiki.de/index.php/kt_schwerter.html", false);
+        ParsedData<Kampftechnik> value = service.parseKampftechnik("http://www.ulisses-regelwiki.de/index.php/kt_schwerter.html", false);
+
+        assertEquals(0, value.getChildren().size());
+        assertNotNull(value.getAttribut());
 
         assertNotNull(value);
-        assertTrue("Schwerter".equals(value.getName()));
-        assertTrue("http://www.ulisses-regelwiki.de/index.php/kt_schwerter.html".equals(value.getWikiUrl()));
+        assertTrue("Schwerter".equals(value.getAttribut().getName()));
+        assertTrue("http://www.ulisses-regelwiki.de/index.php/kt_schwerter.html".equals(value.getAttribut().getWikiUrl()));
     }
 
     @Test
     public void parseLiturgieTest() throws Exception {
-        Liturgie value = service.parseLiturgie("http://www.ulisses-regelwiki.de/index.php/Lit_Lautlos.html");
+        ParsedData<Liturgie> value = service.parseLiturgie("http://www.ulisses-regelwiki.de/index.php/Lit_Lautlos.html");
+
+        assertEquals(0, value.getChildren().size());
+        assertNotNull(value.getAttribut());
 
         assertNotNull(value);
-        assertTrue("Lautlos".equals(value.getName()));
-        assertTrue("http://www.ulisses-regelwiki.de/index.php/Lit_Lautlos.html".equals(value.getWikiUrl()));
+        assertTrue("Lautlos".equals(value.getAttribut().getName()));
+        assertTrue("http://www.ulisses-regelwiki.de/index.php/Lit_Lautlos.html".equals(value.getAttribut().getWikiUrl()));
     }
 
     @Test
     public void parseRitualTest() throws Exception {
-        Ritual value = service.parseRitual("http://www.ulisses-regelwiki.de/index.php/Rit_MagischerRaub.html");
+        ParsedData<Ritual> value = service.parseRitual("http://www.ulisses-regelwiki.de/index.php/Rit_MagischerRaub.html");
 
         assertNotNull(value);
-        assertTrue("Magischer Raub".equals(value.getName()));
-        assertTrue("http://www.ulisses-regelwiki.de/index.php/Rit_MagischerRaub.html".equals(value.getWikiUrl()));
+        assertEquals(0, value.getChildren().size());
+        assertNotNull(value.getAttribut());
+
+        assertTrue("Magischer Raub".equals(value.getAttribut().getName()));
+        assertTrue("http://www.ulisses-regelwiki.de/index.php/Rit_MagischerRaub.html".equals(value.getAttribut().getWikiUrl()));
     }
 
     @Test
     public void parseSonderfertigkeitTest() throws Exception {
-        List<Sonderfertigkeit> sonderfertigkeiten = service.parseSonderfertigkeit("http://www.ulisses-regelwiki.de/index.php/SF_Deichbauer.html", Sonderfertigkeit.Gruppe.PROFAN);
-
-        assertEquals(1, sonderfertigkeiten.size());
-
-        Sonderfertigkeit value = sonderfertigkeiten.get(0);
+        ParsedData<Sonderfertigkeit> value = service.parseSonderfertigkeit("http://www.ulisses-regelwiki.de/index.php/SF_Deichbauer.html", Sonderfertigkeit.Gruppe.PROFAN);
 
         assertNotNull(value);
-        assertTrue("Deichbauer".equals(value.getName()));
-        assertTrue("http://www.ulisses-regelwiki.de/index.php/SF_Deichbauer.html".equals(value.getWikiUrl()));
+        assertEquals(0, value.getChildren().size());
+        assertNotNull(value.getAttribut());
+
+        assertTrue("Deichbauer".equals(value.getAttribut().getName()));
+        assertTrue("http://www.ulisses-regelwiki.de/index.php/SF_Deichbauer.html".equals(value.getAttribut().getWikiUrl()));
     }
 
     @Test
     public void parseSegenTest() throws Exception {
-        Segen value = service.parseSegen("http://www.ulisses-regelwiki.de/index.php/Seg_Eidsegen.html");
+        ParsedData<Segen> value = service.parseSegen("http://www.ulisses-regelwiki.de/index.php/Seg_Eidsegen.html");
 
         assertNotNull(value);
-        assertTrue("Eidsegen".equals(value.getName()));
-        assertTrue("http://www.ulisses-regelwiki.de/index.php/Seg_Eidsegen.html".equals(value.getWikiUrl()));
+        assertEquals(0, value.getChildren().size());
+        assertNotNull(value.getAttribut());
+
+        assertNotNull(value);
+        assertTrue("Eidsegen".equals(value.getAttribut().getName()));
+        assertTrue("http://www.ulisses-regelwiki.de/index.php/Seg_Eidsegen.html".equals(value.getAttribut().getWikiUrl()));
     }
 
     @Test
     public void parseVorteilTest() throws Exception {
-        Segen value = service.parseSegen("http://www.ulisses-regelwiki.de/index.php/V_Richtungssinn.html");
+        ParsedData<Vorteil> value = service.parseVorteil("http://www.ulisses-regelwiki.de/index.php/V_Richtungssinn.html");
 
         assertNotNull(value);
-        assertTrue("Richtungssinn".equals(value.getName()));
-        assertTrue("http://www.ulisses-regelwiki.de/index.php/V_Richtungssinn.html".equals(value.getWikiUrl()));
+        assertEquals(0, value.getChildren().size());
+        assertNotNull(value.getAttribut());
+
+        assertNotNull(value);
+        assertTrue("Richtungssinn".equals(value.getAttribut().getName()));
+        assertTrue("http://www.ulisses-regelwiki.de/index.php/V_Richtungssinn.html".equals(value.getAttribut().getWikiUrl()));
     }
 
     @Test
     public void parseZauberTest() throws Exception {
-        Segen value = service.parseSegen("http://www.ulisses-regelwiki.de/index.php/ZS_Ablativum.html");
+        ParsedData<Zauber> value = service.parseZauber("http://www.ulisses-regelwiki.de/index.php/ZS_Ablativum.html");
 
         assertNotNull(value);
-        assertTrue("Ablativum".equals(value.getName()));
-        assertTrue("http://www.ulisses-regelwiki.de/index.php/ZS_Ablativum.html".equals(value.getWikiUrl()));
+        assertEquals(0, value.getChildren().size());
+        assertNotNull(value.getAttribut());
+
+        assertNotNull(value);
+        assertTrue("Ablativum".equals(value.getAttribut().getName()));
+        assertTrue("http://www.ulisses-regelwiki.de/index.php/ZS_Ablativum.html".equals(value.getAttribut().getWikiUrl()));
     }
 
     @Test
     public void parseZaubertrickTest() throws Exception {
-        Zaubertrick value = service.parseZaubertrick("http://www.ulisses-regelwiki.de/index.php/ZT_Abk%C3%BChlung.html");
+        ParsedData<Zaubertrick> value = service.parseZaubertrick("http://www.ulisses-regelwiki.de/index.php/ZT_Abk%C3%BChlung.html");
 
         assertNotNull(value);
-        assertTrue("Abkühlung".equals(value.getName()));
-        assertTrue("http://www.ulisses-regelwiki.de/index.php/ZT_Abk%C3%BChlung.html".equals(value.getWikiUrl()));
+        assertEquals(0, value.getChildren().size());
+        assertNotNull(value.getAttribut());
+
+        assertNotNull(value);
+        assertTrue("Abkühlung".equals(value.getAttribut().getName()));
+        assertTrue("http://www.ulisses-regelwiki.de/index.php/ZT_Abk%C3%BChlung.html".equals(value.getAttribut().getWikiUrl()));
     }
 
     @Test
     public void parseZeremonieTest() throws Exception {
-        Segen value = service.parseSegen("http://www.ulisses-regelwiki.de/index.php/Zer_Objektweihe.html");
+        ParsedData<Zeremonie> value = service.parseZeremonie("http://www.ulisses-regelwiki.de/index.php/Zer_Objektweihe.html");
 
         assertNotNull(value);
-        assertTrue("Objektweihe".equals(value.getName()));
-        assertTrue("http://www.ulisses-regelwiki.de/index.php/Zer_Objektweihe.html".equals(value.getWikiUrl()));
+        assertEquals(0, value.getChildren().size());
+        assertNotNull(value.getAttribut());
+
+        assertNotNull(value);
+        assertTrue("Objektweihe".equals(value.getAttribut().getName()));
+        assertTrue("http://www.ulisses-regelwiki.de/index.php/Zer_Objektweihe.html".equals(value.getAttribut().getWikiUrl()));
     }
 
     // =============================
 
     @Test
     public void testKostentabelle() {
-        Liturgie value = service.parseLiturgie("http://www.ulisses-regelwiki.de/index.php/Lit_Lautlos.html");
+        ParsedData<Liturgie> value = service.parseLiturgie("http://www.ulisses-regelwiki.de/index.php/Lit_Lautlos.html");
 
         assertNotNull(value);
-        assertEquals(Kostentabelle.B, value.getKostentabelle());
+        assertEquals(0, value.getChildren().size());
+        assertNotNull(value.getAttribut());
+
+        assertNotNull(value);
+        assertEquals(Kostentabelle.B, value.getAttribut().getKostentabelle());
     }
 
     @Test
     public void testDauer() {
-        Ritual value = service.parseRitual("http://www.ulisses-regelwiki.de/index.php/Rit_MagischerRaub.html");
+        ParsedData<Ritual> value = service.parseRitual("http://www.ulisses-regelwiki.de/index.php/Rit_MagischerRaub.html");
+
+        assertEquals(0, value.getChildren().size());
+        assertNotNull(value.getAttribut());
 
         assertNotNull(value);
-        assertTrue("30 Minuten".equals(value.getDauer().getName()));
+        assertTrue(String.format("expected \"30 Minuten\" but actually was \"%s\"", value.getAttribut().getDauer().getName()),
+                "30 Minuten".equals(value.getAttribut().getDauer().getName()));
     }
 
     @Test
     public void testNutzkosten() {
-        Ritual value = service.parseRitual("http://www.ulisses-regelwiki.de/index.php/Rit_MagischerRaub.html");
+        ParsedData<Ritual> value = service.parseRitual("http://www.ulisses-regelwiki.de/index.php/Rit_MagischerRaub.html");
+
+        assertEquals(0, value.getChildren().size());
+        assertNotNull(value.getAttribut());
 
         assertNotNull(value);
-        assertTrue("4 AsP (Kosten nicht modifizierbar)".equals(value.getNutzkosten().getName()));
+        assertTrue("4 AsP (Kosten nicht modifizierbar)".equals(value.getAttribut().getNutzkosten().getName()));
     }
 
     @Test
     public void testReichweite() {
-        Ritual value = service.parseRitual("http://www.ulisses-regelwiki.de/index.php/Rit_MagischerRaub.html");
+        ParsedData<Ritual> value = service.parseRitual("http://www.ulisses-regelwiki.de/index.php/Rit_MagischerRaub.html");
+
+        assertEquals(0, value.getChildren().size());
+        assertNotNull(value.getAttribut());
 
         assertNotNull(value);
-        assertTrue("Berührung".equals(value.getReichweite().getName()));
+        assertTrue("Berührung".equals(value.getAttribut().getReichweite().getName()));
     }
 
     @Test
     public void testWirkungsdauer() {
-        Liturgie value = service.parseLiturgie("http://www.ulisses-regelwiki.de/index.php/Lit_Lautlos.html");
+        ParsedData<Liturgie> value = service.parseLiturgie("http://www.ulisses-regelwiki.de/index.php/Lit_Lautlos.html");
 
-        assertTrue("aufrechterhaltend".equals(value.getWirkungsdauer().getName()));
+        assertEquals(0, value.getChildren().size());
+        assertNotNull(value.getAttribut());
+
+        assertTrue("aufrechterhaltend".equals(value.getAttribut().getWirkungsdauer().getName()));
     }
 
     @Test
     public void testZielkategorie() {
-        Ritual value = service.parseRitual("http://www.ulisses-regelwiki.de/index.php/Rit_MagischerRaub.html");
+        ParsedData<Ritual> value = service.parseRitual("http://www.ulisses-regelwiki.de/index.php/Rit_MagischerRaub.html");
+
+        assertEquals(0, value.getChildren().size());
+        assertNotNull(value.getAttribut());
 
         assertNotNull(value);
 
-        List<Zielkategorie> zielkategorien = value.getZielkategorien();
+        List<Zielkategorie> zielkategorien = value.getAttribut().getZielkategorien();
         assertEquals(1, zielkategorien.size());
         assertTrue("Kulturschaffende".equals(zielkategorien.get(0).getName()));
     }
 
     @Test
     public void testPublikation() {
-        List<Sonderfertigkeit> sonderfertigkeiten = service.parseSonderfertigkeit("http://www.ulisses-regelwiki.de/index.php/SF_Deichbauer.html", Sonderfertigkeit.Gruppe.PROFAN);
-
-        assertEquals(1, sonderfertigkeiten.size());
-
-        Sonderfertigkeit value = sonderfertigkeiten.get(0);
+        ParsedData<Sonderfertigkeit> value = service.parseSonderfertigkeit("http://www.ulisses-regelwiki.de/index.php/SF_Deichbauer.html", Sonderfertigkeit.Gruppe.PROFAN);
 
         assertNotNull(value);
+        assertEquals(0, value.getChildren().size());
+        assertNotNull(value.getAttribut());
 
-        List<Publikation> publikations = value.getPublikations();
+
+        List<Publikation> publikations = value.getAttribut().getPublikations();
 
         assertNotNull(publikations);
         assertEquals(2, publikations.size());
 
         Publikation p1 = publikations.get(0);
         assertTrue("Die Streitenden Königreiche".equals(p1.getWerk().getName()));
-        assertTrue("156".equals(p1.getDetails()));
+        assertEquals(156, p1.getPage());
 
         Publikation p2 = publikations.get(1);
         assertTrue("Deicherbe".equals(p2.getWerk().getName()));
-        assertTrue("7".equals(p2.getDetails()));
+        assertEquals(7, p2.getPage());
     }
 }

@@ -1,8 +1,11 @@
 package io.dods.attributeService;
 
+import io.dods.api.exceptions.ConflictException;
 import io.dods.api.exceptions.ResourceNotFoundException;
 import io.dods.model.attribute.Attribut;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author Richard Gottschalk
@@ -12,7 +15,7 @@ public abstract class AbstractAttributService<T extends Attribut> {
 
     protected abstract AbstractAttributRepository<T> getRepository();
 
-    public Iterable<T> findAll() {
+    public List<T> findAll() {
         return getRepository().findAll();
     }
 
@@ -23,10 +26,17 @@ public abstract class AbstractAttributService<T extends Attribut> {
     }
 
     public T save(T attribut) {
+        T byName = findByName(attribut.getName());
+        if (byName != null) throw new ConflictException(String.format("Value %s is not unique", attribut.getName()));
+
         return getRepository().save(attribut);
     }
 
     public T findByName(String name) {
         return getRepository().findByNameAndSubcategoryOfIdIsNull(name);
+    }
+
+    public T findByNameAndSubcategoryOf(String name, T attribut) {
+        return getRepository().findFirstByNameAndSubcategoryOf(name, attribut);
     }
 }

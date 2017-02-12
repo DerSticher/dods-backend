@@ -47,4 +47,8 @@ public class AttributeService implements NamedDodsDatabaseService<Long, Attribut
         return attributeRepository.findBySubcategoryOfId(id);
     }
 
+    @Override
+    public Attribut findByNameOrCreate(String name) {
+        throw new IllegalStateException("Please add new Attributes with the corresponding Services");
+    }
 }

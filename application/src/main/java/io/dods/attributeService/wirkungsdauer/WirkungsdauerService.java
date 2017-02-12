@@ -19,6 +19,7 @@ public class WirkungsdauerService implements NamedDodsDatabaseService<Long, Wirk
         return wirkungsdauerRepository;
     }
 
+    @Override
     public Wirkungsdauer findByNameOrCreate(String name) {
         Wirkungsdauer wirkungsdauer = findFirstByName(name);
 

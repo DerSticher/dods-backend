@@ -2,6 +2,8 @@ package io.dods.api.parser;
 
 import io.dods.model.attribute.*;
 import io.dods.parser.ParseListService;
+import io.dods.services.misc.LoggerService;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,23 +21,38 @@ import java.util.List;
 @RequestMapping("parse")
 public class ParserApi {
 
+    private final ParseListService parseListService;
+
+    @Nullable
+    private final LoggerService loggerService;
+
     @Autowired
-    private ParseListService parseListService;
+    public ParserApi(ParseListService parseListService, @Nullable LoggerService loggerService) {
+        this.parseListService = parseListService;
+        this.loggerService = loggerService;
+    }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST)
     public void parseAll() {
+        long timer = System.currentTimeMillis();
+
         parseKampftechnik();
         parseLiturgie();
         parseRitual();
         parseSonderfertigkeit();
         parseSegen();
-        parseVorteil();
         parseZauber();
         parseZaubertrick();
         parseZeremonie();
 
+        // keep parsing Vorteile after all other Attributes
+        parseVorteil();
+
+        // and keep the dependencies in the last spot
         parseVoraussetzung();
+
+        if (loggerService != null) loggerService.info(getClass(), String.format("Parsing done. Time: %d ms", System.currentTimeMillis() - timer));
     }
 
     @ResponseStatus(HttpStatus.OK)

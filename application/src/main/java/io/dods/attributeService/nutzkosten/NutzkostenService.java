@@ -23,6 +23,7 @@ public class NutzkostenService implements NamedDodsDatabaseService<Long, Nutzkos
         return nutzkostenRepository.findById(id);
     }
 
+    @Override
     public Nutzkosten findByNameOrCreate(String name) {
         Nutzkosten aspekt = findFirstByName(name);
 

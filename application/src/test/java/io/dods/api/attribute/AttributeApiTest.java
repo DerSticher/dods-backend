@@ -5,6 +5,7 @@ import io.dods.model.attribute.Attribut;
 import io.dods.model.attribute.Eigenschaft;
 import io.dods.model.attribute.Fertigkeit;
 import io.dods.model.regeln.Abhangigkeit;
+import org.junit.Assume;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,19 +61,31 @@ public class AttributeApiTest {
 
     @Test
     public void getSubcategoriesOfVorteil() {
-        List<Attribut> subcategories = attributeApi.getSubcategories("133"); // ID 133 is "Adel"
+        List<Attribut> attributs = attributeApi.get("Vorteil", "Adel", false);
+        Assume.assumeTrue("ignore if Adel was not found! Probably it is not parsed, yet", attributs.size() > 0);
+
+        Attribut adel = attributs.get(0);
+
+        List<Attribut> subcategories = attributeApi.getSubcategories(String.valueOf(adel.getId()));
         assertTrue("Adel should have 3 subcategories", subcategories.size() == 3);
     }
 
     @Test(expected = ResourceNotFoundException.class)
     public void getAbhaengigkeitOfEigenschaftTest() {
-        // ID 1 is "Mut" - this should not have any sort of Abhaengigkeit!
-        attributeApi.getAbhangigkeit(1);
+        // "Mut" should not have any sort of Abhaengigkeit!
+        List<Attribut> attributs = attributeApi.get("Eigenschaft", "Mut", false);
+        Attribut mut = attributs.get(0);
+
+        attributeApi.getAbhangigkeit(mut.getId());
     }
 
     @Test
     public void getAbhaengigkeitOfVorteilTest() {
-        Abhangigkeit abhangigkeit = attributeApi.getAbhangigkeit(209); // ID 209 is "Reich"
+        List<Attribut> attributs = attributeApi.get("Vorteil", "Reich", false);
+        Assume.assumeTrue("ignore if Reich was not found! Probably it is not parsed, yet", attributs.size() > 0);
+        Attribut reich = attributs.get(0);
+
+        Abhangigkeit abhangigkeit = attributeApi.getAbhangigkeit(reich.getId()); // ID 209 is "Reich"
         assertNotNull("Reich should have some sort of Abhangigkeit!", abhangigkeit);
     }
 

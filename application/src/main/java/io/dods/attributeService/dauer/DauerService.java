@@ -19,6 +19,7 @@ public class DauerService implements NamedDodsDatabaseService<Long, Dauer, Dauer
         return dauerRepository;
     }
 
+    @Override
     public Dauer findByNameOrCreate(String name) {
         Dauer dauer = findFirstByName(name);
         if (dauer == null) {

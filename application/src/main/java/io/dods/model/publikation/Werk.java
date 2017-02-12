@@ -4,12 +4,13 @@ import io.dods.interfaces.HasId;
 import io.dods.model.Named;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author Richard Gottschalk
  */
 @Entity
-public class Werk implements HasId<Long>, Named {
+public class Werk implements HasId<Long>, Named, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +18,9 @@ public class Werk implements HasId<Long>, Named {
 
     @Column
     private String name;
+
+    @Column
+    private String shop;
 
     public Werk() {
     }
@@ -41,5 +45,14 @@ public class Werk implements HasId<Long>, Named {
     @Override
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Werk{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", shop='" + shop + '\'' +
+                '}';
     }
 }

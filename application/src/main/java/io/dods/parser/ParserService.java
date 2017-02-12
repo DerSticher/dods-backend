@@ -1,6 +1,12 @@
 package io.dods.parser;
 
 import io.dods.model.attribute.*;
+import io.dods.parser.misc.DocumentService;
+import io.dods.parser.model.ParsedData;
+import io.dods.parser.model.ParsedValue;
+import io.dods.parser.references.ParseReferenceService;
+import io.dods.parser.references.ParseValueLevelService;
+import io.dods.parser.valueParser.*;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Richard Gottschalk
@@ -15,50 +22,54 @@ import java.util.List;
 @Service
 class ParserService {
 
-    @Autowired
-    private ParseValueLevelService parseValueLevelService;
+    private final ParseValueLevelService parseValueLevelService;
+
+    private final ParseReferenceService parseReferenceService;
+
+    private final ParseApWertService parseApWertService;
+
+    private final ParseNameService parseNameService;
+
+    private final ParseDauerService parseDauerService;
+
+    private final ParseKostentabelleService parseKostentabelleService;
+
+    private final ParseProbeService parseProbeService;
+
+    private final ParseReichweiteService parseReichweiteService;
+
+    private final ParseZielkategorieService parseZielkategorieService;
+
+    private final ParseWirkungService parseWirkungService;
+
+    private final ParseNutzkostenService parseNutzkostenService;
+
+    private final ParseAspektService parseAspektService;
+
+    private final DocumentService documentService;
+
+    private final ParseLeiteigenschaftService parseLeiteigenschaftService;
+
+    private final ParsePublikationService parsePublikationServiceService;
 
     @Autowired
-    private ParseReferenceService parseReferenceService;
-
-    @Autowired
-    private ParseApWertService parseApWertService;
-
-    @Autowired
-    private ParseNameService parseNameService;
-
-    @Autowired
-    private ParseDauerService parseDauerService;
-
-    @Autowired
-    private ParseKostentabelleService parseKostentabelleService;
-
-    @Autowired
-    private ParseProbeService parseProbeService;
-
-    @Autowired
-    private ParseReichweiteService parseReichweiteService;
-
-    @Autowired
-    private ParseZielkategorieService parseZielkategorieService;
-
-    @Autowired
-    private ParseWirkungService parseWirkungService;
-
-    @Autowired
-    private ParseNutzkostenService parseNutzkostenService;
-
-    @Autowired
-    private ParseAspektService parseAspektService;
-
-    @Autowired
-    private DocumentService documentService;
-
-    @Autowired
-    private ParseLeiteigenschaftService parseLeiteigenschaftService;
-
-    @Autowired
-    private ParsePublikationService parsePublikationServiceService;
+    public ParserService(ParseDauerService parseDauerService, ParseValueLevelService parseValueLevelService, ParseReferenceService parseReferenceService, ParseLeiteigenschaftService parseLeiteigenschaftService, ParseApWertService parseApWertService, ParseNameService parseNameService, ParseKostentabelleService parseKostentabelleService, ParseProbeService parseProbeService, ParseReichweiteService parseReichweiteService, DocumentService documentService, ParseAspektService parseAspektService, ParseZielkategorieService parseZielkategorieService, ParseWirkungService parseWirkungService, ParseNutzkostenService parseNutzkostenService, ParsePublikationService parsePublikationServiceService) {
+        this.parseDauerService = parseDauerService;
+        this.parseValueLevelService = parseValueLevelService;
+        this.parseReferenceService = parseReferenceService;
+        this.parseLeiteigenschaftService = parseLeiteigenschaftService;
+        this.parseApWertService = parseApWertService;
+        this.parseNameService = parseNameService;
+        this.parseKostentabelleService = parseKostentabelleService;
+        this.parseProbeService = parseProbeService;
+        this.parseReichweiteService = parseReichweiteService;
+        this.documentService = documentService;
+        this.parseAspektService = parseAspektService;
+        this.parseZielkategorieService = parseZielkategorieService;
+        this.parseWirkungService = parseWirkungService;
+        this.parseNutzkostenService = parseNutzkostenService;
+        this.parsePublikationServiceService = parsePublikationServiceService;
+    }
 
     private ParsedValue parseDetails(String url) throws IOException {
         ParsedValue value = new ParsedValue();
@@ -83,27 +94,23 @@ class ParserService {
         return value;
     }
 
-    public Kampftechnik parseKampftechnik(String url, boolean isFernkampf) {
+    public ParsedData<Kampftechnik> parseKampftechnik(String url, boolean isFernkampf) {
         try {
-            ParsedValue value = parseDetails(url);
-
-            return new Kampftechnik(
+            return parseSimple(url, value -> new Kampftechnik(
                     value.getWikiUrl(),
                     value.getPublikations(),
                     value.getLeiteigenschaft(),
                     value.getKostentabelle(),
                     value.getName(),
-                    isFernkampf);
+                    isFernkampf));
         } catch (IOException e) {
             return null;
         }
     }
 
-    public Liturgie parseLiturgie(String url) {
+    public ParsedData<Liturgie> parseLiturgie(String url) {
         try {
-            ParsedValue value = parseDetails(url);
-
-            return new Liturgie(
+            return parseSimple(url, value -> new Liturgie(
                     value.getWikiUrl(),
                     value.getPublikations(),
                     value.getDauer(),
@@ -113,17 +120,15 @@ class ParserService {
                     value.getProbe(),
                     value.getWirkungsdauer(),
                     value.getZielkategorie(),
-                    value.getName());
+                    value.getName()));
         } catch (IOException e) {
             return null;
         }
     }
 
-    public Ritual parseRitual(String url) {
+    public ParsedData<Ritual> parseRitual(String url) {
         try {
-            ParsedValue value = parseDetails(url);
-
-            return new Ritual(
+            return parseSimple(url, value -> new Ritual(
                     value.getWikiUrl(),
                     value.getPublikations(),
                     value.getNutzkosten(),
@@ -133,56 +138,34 @@ class ParserService {
                     value.getProbe(),
                     value.getWirkungsdauer(),
                     value.getZielkategorie(),
-                    value.getName());
+                    value.getName()));
         } catch (IOException e) {
             return null;
         }
     }
 
-    public List<Sonderfertigkeit> parseSonderfertigkeit(String url, Sonderfertigkeit.Gruppe gruppe) {
+    public ParsedData<Sonderfertigkeit> parseSonderfertigkeit(String url, Sonderfertigkeit.Gruppe gruppe) {
         try {
-            ParsedValue value = parseDetails(url);
-
-            List<ParsedValue> parsedValues = new ArrayList<>();
-            parsedValues.addAll(parseValueLevelService.checkForLevels(value));
-            parsedValues.addAll(parseReferenceService.checkForSubcategories(value));
-
-            List<Sonderfertigkeit> sonderfertigkeiten = new ArrayList<>();
-
-            for (int i = 0; i < parsedValues.size(); i++) {
-                ParsedValue v = parsedValues.get(i);
-
-                Sonderfertigkeit sonderfertigkeit = new Sonderfertigkeit(
-                        v.getWikiUrl(),
+            return parseSimple(url, value -> new Sonderfertigkeit(
+                        value.getWikiUrl(),
                         value.getPublikations(),
-                        v.getApWert(),
+                        value.getApWert(),
                         gruppe,
-                        v.getDauer(),
-                        v.getNutzkosten(),
-                        v.getProbe(),
-                        v.getReichweite(),
-                        v.getWirkungsdauer(),
-                        v.getKostentabelle(),
-                        v.getName());
-
-                sonderfertigkeiten.add(sonderfertigkeit);
-
-                if (i > 0) {
-                    sonderfertigkeit.setSubcategoryOf(sonderfertigkeiten.get(0));
-                }
-            }
-
-            return sonderfertigkeiten;
+                        value.getDauer(),
+                        value.getNutzkosten(),
+                        value.getProbe(),
+                        value.getReichweite(),
+                        value.getWirkungsdauer(),
+                        value.getKostentabelle(),
+                        value.getName()));
         } catch (IOException e) {
             return null;
         }
     }
 
-    public Segen parseSegen(String url) {
+    public ParsedData<Segen> parseSegen(String url) {
         try {
-            ParsedValue value = parseDetails(url);
-
-            return new Segen(
+            return parseSimple(url, value -> new Segen(
                 value.getWikiUrl(),
                 value.getPublikations(),
                 value.getAspekt(),
@@ -190,50 +173,28 @@ class ParserService {
                 value.getReichweite(),
                 value.getWirkungsdauer(),
                 value.getZielkategorie(),
-                value.getName());
+                value.getName()));
         } catch (IOException e) {
             return null;
         }
     }
 
-    public List<Vorteil> parseVorteil(String url) {
+    public ParsedData<Vorteil> parseVorteil(String url) {
         try {
-            ParsedValue value = parseDetails(url);
-
-            List<ParsedValue> parsedValues = new ArrayList<>();
-            parsedValues.addAll(parseValueLevelService.checkForLevels(value));
-            parsedValues.addAll(parseReferenceService.checkForSubcategories(value));
-
-            List<Vorteil> vorteile = new ArrayList<>();
-
-            for (int i = 0; i < parsedValues.size(); i++) {
-                ParsedValue v = parsedValues.get(i);
-
-                Vorteil vorteil = new Vorteil(
+            return parseSimple(url, value -> new Vorteil(
                         value.getWikiUrl(),
                         value.getPublikations(),
-                        v.getApWert(),
-                        v.getReichweite(),
-                        v.getName());
-
-                vorteile.add(vorteil);
-
-                if (i > 0) {
-                    vorteil.setSubcategoryOf(vorteile.get(0));
-                }
-            }
-
-            return vorteile;
+                        value.getApWert(),
+                        value.getReichweite(),
+                        value.getName()));
         } catch (IOException e) {
             return null;
         }
     }
 
-    public Zauber parseZauber(String url) {
+    public ParsedData<Zauber> parseZauber(String url) {
         try {
-            ParsedValue value = parseDetails(url);
-
-            return new Zauber(
+            return parseSimple(url, value -> new Zauber(
                     value.getWikiUrl(),
                     value.getPublikations(),
                     value.getNutzkosten(),
@@ -243,33 +204,29 @@ class ParserService {
                     value.getWirkungsdauer(),
                     value.getDauer(),
                     value.getZielkategorie(),
-                    value.getName());
+                    value.getName()));
         } catch (IOException e) {
             return null;
         }
     }
 
-    public Zaubertrick parseZaubertrick(String url) {
+    public ParsedData<Zaubertrick> parseZaubertrick(String url) {
         try {
-            ParsedValue value = parseDetails(url);
-
-            return new Zaubertrick(
+            return parseSimple(url, value -> new Zaubertrick(
                     value.getWikiUrl(),
                     value.getPublikations(),
                     value.getReichweite(),
                     value.getZielkategorie(),
                     value.getWirkungsdauer(),
-                    value.getName());
+                    value.getName()));
         } catch (IOException e) {
             return null;
         }
     }
 
-    public Zeremonie parseZeremonie(String url) {
+    public ParsedData<Zeremonie> parseZeremonie(String url) {
         try {
-            ParsedValue value = parseDetails(url);
-
-            return new Zeremonie(
+            return parseSimple(url, value -> new Zeremonie(
                     value.getWikiUrl(),
                     value.getPublikations(),
                     value.getNutzkosten(),
@@ -279,9 +236,31 @@ class ParserService {
                     value.getWirkungsdauer(),
                     value.getKostentabelle(),
                     value.getZielkategorie(),
-                    value.getName());
+                    value.getName()));
         } catch (IOException e) {
             return null;
         }
+    }
+
+    private interface ParseCallback<T extends Attribut> {
+        T parse(ParsedValue parsedValue);
+    }
+
+    public <T extends Attribut> ParsedData<T> parseSimple(String url, ParseCallback<T> parseCallback) throws IOException {
+        ParsedValue parsedValue = parseDetails(url);
+
+        List<ParsedValue> parsedValues = new ArrayList<>();
+        parsedValues.addAll(parseValueLevelService.checkForLevels(parsedValue));
+        parsedValues.addAll(parseReferenceService.checkForSubcategories(parsedValue));
+
+        List<T> collect = parsedValues.stream()
+                .map(parseCallback::parse)
+                .collect(Collectors.toList());
+
+        parseValueLevelService.setRealName(parsedValue);
+
+        T data = parseCallback.parse(parsedValue);
+
+        return new ParsedData<>(data, collect);
     }
 }

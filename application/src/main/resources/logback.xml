@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<configuration>
+    <property resource="application.properties" />
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>log/application.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %5.5level %5.5relative --- [%15.15thread] %-35.35logger{35} : %msg %n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logging.path}/history/application.%d{yyyy-MM-dd}.log</FileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="PARSER-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>log/parser.log</File>
+        <append>true</append>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %5.5level : %msg %n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logging.path}/history/parser.%d{yyyy-MM-dd}.log</FileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="API-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>log/api.log</File>
+        <append>true</append>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %5.5level : %msg %n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logging.path}/history/api.%d{yyyy-MM-dd}.log</FileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %green(%5.5level) %magenta(%5.5relative) --- [%15.15thread] %cyan(%-35.35logger{35}) : %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="parser" level="DEBUG" additivity="false">
+        <appender-ref ref="PARSER-FILE"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="api" level="DEBUG" additivity="false">
+        <appender-ref ref="API-FILE"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <root>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

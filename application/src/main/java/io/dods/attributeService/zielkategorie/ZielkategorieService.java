@@ -19,6 +19,7 @@ public class ZielkategorieService implements NamedDodsDatabaseService<Long, Ziel
         return zielkategorieRepository;
     }
 
+    @Override
     public Zielkategorie findByNameOrCreate(String name) {
         Zielkategorie zielkategorie = findFirstByName(name);
 

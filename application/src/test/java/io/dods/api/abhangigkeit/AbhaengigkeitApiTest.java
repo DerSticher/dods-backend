@@ -3,9 +3,12 @@ package io.dods.api.abhangigkeit;
 import io.dods.api.abhangigkeit.model.CreateAbhangigkeit;
 import io.dods.api.abhangigkeit.model.CreateBedingung;
 import io.dods.api.abhangigkeit.model.CreateEffekt;
+import io.dods.api.attribute.AttributeApi;
 import io.dods.api.exceptions.ResourceNotFoundException;
+import io.dods.model.attribute.Attribut;
 import io.dods.model.bedingungen.Bedingung;
 import io.dods.model.regeln.Abhangigkeit;
+import org.junit.Assume;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,9 @@ public class AbhaengigkeitApiTest {
     @Autowired
     private AbhangigkeitApi api;
 
+    @Autowired
+    private AttributeApi attributeApi;
+
     @Test
     public void getAbhaengigkeitByIdTest() {
         Abhangigkeit abhangigkeit = api.get(1);
@@ -47,7 +53,11 @@ public class AbhaengigkeitApiTest {
 
     @Test
     public void findOneTest() {
-        List<Abhangigkeit> abhangigkeits = api.find(209L);// 209 is "Reich"
+        List<Attribut> attributs = attributeApi.get("Vorteil", "Reich", false);
+        Assume.assumeTrue("ignore if Reich was not found! Probably it is not parsed, yet", attributs.size() > 0);
+        Attribut reich = attributs.get(0);
+
+        List<Abhangigkeit> abhangigkeits = api.find(reich.getId());
         assertEquals("There should be only one child", 1, abhangigkeits.size());
     }
 
@@ -58,7 +68,11 @@ public class AbhaengigkeitApiTest {
 
     @Test
     public void putTest() {
-        List<Abhangigkeit> abhangigkeiten = api.find(209L);// 209 is "Reich"
+        List<Attribut> attributs = attributeApi.get("Vorteil", "Reich", false);
+        Assume.assumeTrue("ignore if Reich was not found! Probably it is not parsed, yet", attributs.size() > 0);
+        Attribut reich = attributs.get(0);
+
+        List<Abhangigkeit> abhangigkeiten = api.find(reich.getId());
         Abhangigkeit abhangigkeit = abhangigkeiten.get(0);
 
         assertNotNull("Bedingung should not be null", abhangigkeit.getBedingung());
@@ -67,7 +81,7 @@ public class AbhaengigkeitApiTest {
         api.put(abhangigkeit.getId(), abhangigkeit);
 
         // check for deleted value
-        List<Abhangigkeit> valuesWithoutEffekt = api.find(209L);// 209 is "Reich"
+        List<Abhangigkeit> valuesWithoutEffekt = api.find(reich.getId());
         Abhangigkeit valueWithoutEffekt = valuesWithoutEffekt.get(0);
         assertNull("Bedingung should be null", valueWithoutEffekt.getBedingung());
 
@@ -76,7 +90,7 @@ public class AbhaengigkeitApiTest {
         api.put(abhangigkeit.getId(), abhangigkeit);
 
         // check for inserted value
-        List<Abhangigkeit> valuesWithEffekt = api.find(209L);// 209 is "Reich"
+        List<Abhangigkeit> valuesWithEffekt = api.find(reich.getId());
         Abhangigkeit valueWithEffekt = valuesWithEffekt.get(0);
         assertNotNull("Bedingung should now be set again", valueWithEffekt.getBedingung());
     }

@@ -23,4 +23,6 @@ public interface NamedDodsDatabaseService<
         return getRepository().findFirstByName(name);
     }
 
+    DATA findByNameOrCreate(String name);
+
 }

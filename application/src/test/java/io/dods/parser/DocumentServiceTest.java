@@ -1,5 +1,6 @@
 package io.dods.parser;
 
+import io.dods.parser.misc.DocumentService;
 import org.jsoup.nodes.Document;
 import org.junit.After;
 import org.junit.Before;

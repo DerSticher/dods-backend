@@ -2,8 +2,7 @@ package io.dods.model.publikation;
 
 import org.junit.Test;
 
-import static junit.framework.TestCase.assertNull;
-import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.*;
 
 /**
  * @author Richard Gottschalk
@@ -14,10 +13,10 @@ public class PublikationTest {
     public void testConstructor() {
         Werk werk = new Werk("TestWerk");
 
-        Publikation publikation = new Publikation(werk, "siehe Daichbauer");
+        Publikation publikation = new Publikation(werk, 1337);
 
         assertTrue("TestWerk".equals(publikation.getWerk().getName()));
-        assertTrue("siehe Daichbauer".equals(publikation.getDetails()));
+        assertEquals(1337, publikation.getPage());
     }
 
     @Test
@@ -47,9 +46,9 @@ public class PublikationTest {
         Publikation publikation = new Publikation();
 
         assertNull(publikation.getWerk());
-        publikation.setDetails("TestDetails");
+        publikation.setPage(137);
 
-        assertTrue("TestDetails".equals(publikation.getDetails()));
+        assertEquals(137, publikation.getPage());
     }
 
 

@@ -19,6 +19,7 @@ public class AspektService implements NamedDodsDatabaseService<Long, Aspekt, Asp
         return aspektRepository;
     }
 
+    @Override
     public Aspekt findByNameOrCreate(String name) {
         Aspekt aspekt = findFirstByName(name);
 

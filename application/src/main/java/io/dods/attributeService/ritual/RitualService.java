@@ -20,21 +20,6 @@ public class RitualService extends AbstractAttributService<Ritual> {
     @Autowired
     private RitualRepository ritualRepository;
 
-    @Autowired
-    private DauerService dauerService;
-
-    @Autowired
-    private WirkungsdauerService wirkungsdauerService;
-
-    @Autowired
-    private ProbeService probeService;
-
-    @Autowired
-    private ZielkategorieService zielkategorieService;
-
-    @Autowired
-    private ReichweiteService reichweiteService;
-
     @Override
     protected AbstractAttributRepository<Ritual> getRepository() {
         return ritualRepository;
