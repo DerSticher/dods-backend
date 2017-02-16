@@ -1,6 +1,6 @@
 package io.dods.api.attribute;
 
-import io.dods.attributeService.zaubertrick.ZaubertrickService;
+import io.dods.services.attribute.zaubertrick.ZaubertrickService;
 import io.dods.model.attribute.Zaubertrick;
 import org.springframework.web.bind.annotation.RestController;
 

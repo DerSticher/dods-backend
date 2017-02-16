@@ -1,6 +1,6 @@
 package io.dods.api.abhangigkeit;
 
-import io.dods.abhaengigkeitService.AbhangigkeitService;
+import io.dods.services.abhaengigkeit.AbhangigkeitService;
 import io.dods.api.abhangigkeit.model.CreateAbhangigkeit;
 import io.dods.model.regeln.Abhangigkeit;
 import io.swagger.annotations.ApiOperation;

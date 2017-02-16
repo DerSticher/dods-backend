@@ -1,6 +1,6 @@
 package io.dods.api.attribute;
 
-import io.dods.attributeService.zeremonie.ZeremonieService;
+import io.dods.services.attribute.zeremonie.ZeremonieService;
 import io.dods.model.attribute.Zeremonie;
 import org.springframework.web.bind.annotation.RestController;
 

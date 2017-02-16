@@ -1,6 +1,6 @@
 package io.dods.api.attribute;
 
-import io.dods.attributeService.ritual.RitualService;
+import io.dods.services.attribute.ritual.RitualService;
 import io.dods.model.attribute.Ritual;
 import org.springframework.web.bind.annotation.RestController;
 

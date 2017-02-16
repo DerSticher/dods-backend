@@ -1,6 +1,6 @@
 package io.dods.api.attribute;
 
-import io.dods.attributeService.AbstractAttributService;
+import io.dods.services.attribute.AbstractAttributService;
 import io.dods.model.attribute.Attribut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;

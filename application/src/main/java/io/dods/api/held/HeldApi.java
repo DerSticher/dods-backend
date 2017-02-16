@@ -1,7 +1,7 @@
 package io.dods.api.held;
 
 import io.dods.api.held.model.HeldUpdate;
-import io.dods.heldService.HeldService;
+import io.dods.services.held.HeldService;
 import io.dods.model.attribute.Attribut;
 import io.dods.model.helden.Held;
 import io.swagger.annotations.ApiOperation;

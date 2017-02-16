@@ -1,6 +1,6 @@
 package io.dods.api.attribute;
 
-import io.dods.attributeService.segen.SegenService;
+import io.dods.services.attribute.segen.SegenService;
 import io.dods.model.attribute.Segen;
 import org.springframework.web.bind.annotation.RestController;
 

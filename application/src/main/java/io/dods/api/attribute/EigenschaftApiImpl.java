@@ -1,6 +1,6 @@
 package io.dods.api.attribute;
 
-import io.dods.attributeService.eigenschaft.EigenschaftService;
+import io.dods.services.attribute.eigenschaft.EigenschaftService;
 import io.dods.model.attribute.Eigenschaft;
 import org.springframework.web.bind.annotation.RestController;
 

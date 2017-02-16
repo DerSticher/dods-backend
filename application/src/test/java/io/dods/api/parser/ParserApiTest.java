@@ -1,7 +1,7 @@
 package io.dods.api.parser;
 
 import io.dods.model.attribute.*;
-import io.dods.parser.ParseListService;
+import io.dods.services.parser.ParseListService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

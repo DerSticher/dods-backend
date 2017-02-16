@@ -1,7 +1,7 @@
 package io.dods.api.attribute;
 
-import io.dods.abhaengigkeitService.AbhangigkeitService;
-import io.dods.attributeService.attribute.AttributeService;
+import io.dods.services.abhaengigkeit.AbhangigkeitService;
+import io.dods.services.attribute.attribute.AttributeService;
 import io.dods.model.attribute.Attribut;
 import io.dods.model.regeln.Abhangigkeit;
 import io.swagger.annotations.ApiOperation;

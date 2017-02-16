@@ -1,6 +1,6 @@
 package io.dods.api.attribute;
 
-import io.dods.attributeService.vorteil.VorteilService;
+import io.dods.services.attribute.vorteil.VorteilService;
 import io.dods.model.attribute.Vorteil;
 import org.springframework.web.bind.annotation.RestController;
 

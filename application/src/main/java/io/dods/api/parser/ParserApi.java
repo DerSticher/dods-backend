@@ -1,7 +1,7 @@
 package io.dods.api.parser;
 
 import io.dods.model.attribute.*;
-import io.dods.parser.ParseListService;
+import io.dods.services.parser.ParseListService;
 import io.dods.services.misc.LoggerService;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
