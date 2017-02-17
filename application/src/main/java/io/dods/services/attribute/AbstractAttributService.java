@@ -3,6 +3,8 @@ package io.dods.services.attribute;
 import io.dods.api.exceptions.ConflictException;
 import io.dods.api.exceptions.ResourceNotFoundException;
 import io.dods.model.attribute.Attribut;
+import io.dods.services.misc.LoggerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +14,9 @@ import java.util.List;
  */
 @Service
 public abstract class AbstractAttributService<T extends Attribut> {
+
+    @Autowired
+    private LoggerService loggerService;
 
     protected abstract AbstractAttributRepository<T> getRepository();
 
@@ -29,6 +34,8 @@ public abstract class AbstractAttributService<T extends Attribut> {
         T byName = findByName(attribut.getName());
         if (byName != null) throw new ConflictException(String.format("Value %s is not unique", attribut.getName()));
 
+        loggerService.info(getClass(),
+                String.format("Persisting new %s: %s", getClass().getSimpleName(), attribut.getName()));
         return getRepository().save(attribut);
     }
 
