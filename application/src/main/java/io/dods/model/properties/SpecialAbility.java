@@ -3,7 +3,6 @@ package io.dods.model.properties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dods.model.properties.misc.*;
 import io.dods.model.publication.Publication;
-import io.dods.services.properties.check.Check;
 import io.swagger.annotations.ApiModelProperty;
 import org.jetbrains.annotations.Nullable;
 
@@ -44,7 +43,7 @@ public class SpecialAbility extends Property implements ApFix, Casting, Checking
     private Cost cost;
 
     @Embedded
-    private CheckImpl check;
+    private Check check;
 
     @ManyToOne
     private Range range;
@@ -64,7 +63,7 @@ public class SpecialAbility extends Property implements ApFix, Casting, Checking
                           Group group,
                           CastTime castTime,
                           Cost cost,
-                          CheckImpl check,
+                          Check check,
                           Range range,
                           Duration duration,
                           ImprovementChart improvementChart,

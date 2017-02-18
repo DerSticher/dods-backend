@@ -1,11 +1,10 @@
 package io.dods.model.properties;
 
 import io.dods.model.exceptions.HasNoDefaultLevelException;
-import io.dods.model.properties.misc.CheckImpl;
+import io.dods.model.properties.misc.Check;
 import io.dods.model.properties.misc.Checking;
 import io.dods.model.properties.misc.ImprovementChart;
 import io.dods.model.properties.misc.ImprovementCharted;
-import io.dods.services.properties.check.Check;
 
 import javax.persistence.*;
 
@@ -40,7 +39,7 @@ public class Skill extends Property implements Checking, ImprovementCharted {
     private ImprovementChart improvementChart;
 
     @Embedded
-    private CheckImpl check;
+    private Check check;
 
     @Enumerated(EnumType.STRING)
     private Gruppe gruppe;
@@ -48,7 +47,7 @@ public class Skill extends Property implements Checking, ImprovementCharted {
     public Skill() {
     }
 
-    public Skill(ImprovementChart improvementChart, CheckImpl check, Gruppe gruppe, String name) {
+    public Skill(ImprovementChart improvementChart, Check check, Gruppe gruppe, String name) {
         super("", name, null);
         this.improvementChart = improvementChart;
         this.check = check;

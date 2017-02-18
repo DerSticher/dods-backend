@@ -1,6 +1,6 @@
 package io.dods.services.parser.valueParser;
 
-import io.dods.model.properties.misc.CheckImpl;
+import io.dods.model.properties.misc.Check;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.Test;
@@ -22,7 +22,7 @@ import static junit.framework.TestCase.assertTrue;
 @RunWith(Parameterized.class)
 @SpringBootTest
 @ActiveProfiles("integration")
-public class ParseCheckServiceTest extends AbstractParseServiceTest {
+public class ParseCheckImplServiceTest extends AbstractParseServiceTest {
 
     @Autowired
     private ParseCheckService service;
@@ -39,7 +39,7 @@ public class ParseCheckServiceTest extends AbstractParseServiceTest {
     @Test
     public void testParse() {
         Document document = Jsoup.parse(line);
-        CheckImpl check = service.parseProbe(document);
+        Check check = service.parseProbe(document);
 
         assertNotNull("line: " + line, check);
         assertNotNull("line: " + line, check.getCheck(1));

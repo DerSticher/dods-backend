@@ -2,7 +2,6 @@ package io.dods.model.properties.misc;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dods.model.properties.Ability;
-import io.dods.services.properties.check.Check;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.Embeddable;
@@ -13,7 +12,7 @@ import java.util.List;
  * @author Richard Gottschalk
  */
 @Embeddable
-public class CheckImpl implements Check {
+public class Check {
 
     @JsonProperty("teilprobe1")
     @OneToOne
@@ -27,10 +26,10 @@ public class CheckImpl implements Check {
     @OneToOne
     private Ability check3;
 
-    public CheckImpl() {
+    public Check() {
     }
 
-    public CheckImpl(List<Ability> eigenschaften) {
+    public Check(List<Ability> eigenschaften) {
         for (int i = 0; i < eigenschaften.size(); i++) {
             setCheck(i + 1, eigenschaften.get(i));
         }
@@ -74,20 +73,5 @@ public class CheckImpl implements Check {
                 return check3;
         }
         throw new IllegalArgumentException(String.format("index has to be 1, 2 or 3. (Was %d)", oneBasedIndex));
-    }
-
-    @Override
-    public long getCheck1Id() {
-        return check1.getId();
-    }
-
-    @Override
-    public long getCheck2Id() {
-        return check2.getId();
-    }
-
-    @Override
-    public long getCheck3Id() {
-        return check3.getId();
     }
 }

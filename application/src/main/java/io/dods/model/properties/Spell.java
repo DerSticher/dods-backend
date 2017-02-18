@@ -2,7 +2,6 @@ package io.dods.model.properties;
 
 import io.dods.model.properties.misc.*;
 import io.dods.model.publication.Publication;
-import io.dods.services.properties.check.Check;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -27,7 +26,7 @@ public class Spell extends Property implements Casting, Checking, Costs, Ranged,
     private ImprovementChart improvementChart;
 
     @Embedded
-    private CheckImpl check;
+    private Check check;
 
     @ManyToOne
     private Range range;
@@ -48,7 +47,7 @@ public class Spell extends Property implements Casting, Checking, Costs, Ranged,
                  List<Publication> publication,
                  Cost cost,
                  ImprovementChart improvementChart,
-                 CheckImpl check,
+                 Check check,
                  Range range,
                  Duration duration,
                  CastTime castTime,

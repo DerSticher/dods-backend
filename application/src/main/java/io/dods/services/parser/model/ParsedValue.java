@@ -20,7 +20,7 @@ public class ParsedValue implements Serializable {
     private CastTime castTime;
     private ImprovementChart improvementChart;
     private Cost cost;
-    private CheckImpl check;
+    private Check check;
     private Range range;
     private Duration duration;
     private List<Target> target;
@@ -58,11 +58,11 @@ public class ParsedValue implements Serializable {
         this.improvementChart = improvementChart;
     }
 
-    public CheckImpl getCheck() {
+    public Check getCheck() {
         return check;
     }
 
-    public void setCheck(CheckImpl check) {
+    public void setCheck(Check check) {
         this.check = check;
     }
 

@@ -2,7 +2,6 @@ package io.dods.model.properties;
 
 import io.dods.model.properties.misc.*;
 import io.dods.model.publication.Publication;
-import io.dods.services.properties.check.Check;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -20,7 +19,7 @@ public class Ceremony extends Property implements Casting, Checking, Costs, Rang
     public static final String NAME = "Zeremonie";
 
     @Embedded
-    private CheckImpl check;
+    private Check check;
 
     @ManyToOne
     private Range range;
@@ -46,7 +45,7 @@ public class Ceremony extends Property implements Casting, Checking, Costs, Rang
     public Ceremony(String wikiUrl,
                     List<Publication> publication,
                     Cost cost,
-                    CheckImpl check,
+                    Check check,
                     Range range,
                     CastTime castTime,
                     Duration duration,

@@ -2,7 +2,6 @@ package io.dods.model.properties;
 
 import io.dods.model.properties.misc.*;
 import io.dods.model.publication.Publication;
-import io.dods.services.properties.check.Check;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -28,7 +27,7 @@ public class Ritual extends Property implements Casting, Checking, Ranged, Costs
     private ImprovementChart improvementChart;
 
     @Embedded
-    private CheckImpl check;
+    private Check check;
 
     @ManyToOne
     private Range range;
@@ -48,7 +47,7 @@ public class Ritual extends Property implements Casting, Checking, Ranged, Costs
                   CastTime castTime,
                   ImprovementChart improvementChart,
                   Range range,
-                  CheckImpl check,
+                  Check check,
                   Duration duration,
                   List<Target> targets,
                   String name) {

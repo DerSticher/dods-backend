@@ -2,7 +2,6 @@ package io.dods.model.properties;
 
 import io.dods.model.properties.misc.*;
 import io.dods.model.publication.Publication;
-import io.dods.services.properties.check.Check;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -32,7 +31,7 @@ public class LiturgicalChant extends Property implements Casting, Checking, Cost
     private Cost cost;
 
     @Embedded
-    private CheckImpl check;
+    private Check check;
 
     @ManyToOne
     private Duration duration;
@@ -49,7 +48,7 @@ public class LiturgicalChant extends Property implements Casting, Checking, Cost
                            ImprovementChart improvementChart,
                            Range range,
                            Cost cost,
-                           CheckImpl check,
+                           Check check,
                            Duration duration,
                            List<Target> targets,
                            String name) {
