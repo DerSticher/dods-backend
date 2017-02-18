@@ -1,7 +1,7 @@
 package io.dods.services.parser.valueParser;
 
-import io.dods.model.publikation.Publikation;
-import io.dods.model.publikation.Werk;
+import io.dods.model.publication.Publication;
+import io.dods.model.publication.Book;
 import org.jsoup.Jsoup;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,54 +23,54 @@ import static junit.framework.TestCase.*;
 public class ParsePublicationServiceTest {
 
     @Autowired
-    ParsePublikationService service;
+    ParsePublicationService service;
 
     @Test
     public void parseSinglePublicationTest() throws Exception {
         String content = "<p>Publikation: Regelwerk Seite 123</p>";
 
-        List<Publikation> publikations = service.parsePublikations(Jsoup.parse(content));
+        List<Publication> publications = service.parsePublications(Jsoup.parse(content));
 
-        assertEquals(1, publikations.size());
+        assertEquals(1, publications.size());
 
-        Publikation publikation = publikations.get(0);
-        assertNotNull(publikation.getWerk());
-        assertEquals(123, publikation.getPage());
+        Publication publication = publications.get(0);
+        assertNotNull(publication.getBook());
+        assertEquals(123, publication.getPage());
 
-        Werk werk = publikation.getWerk();
-        assertTrue("Regelwerk".equals(werk.getName()));
+        Book book = publication.getBook();
+        assertTrue("Regelwerk".equals(book.getName()));
     }
 
     @Test
     public void parseMultiplePublicationsTest() throws Exception {
         String content = "<p>Publikation: Regelwerk Seite 123, Super Fancy Regelwerk Seite 1337</p>";
 
-        List<Publikation> publikations = service.parsePublikations(Jsoup.parse(content));
+        List<Publication> publications = service.parsePublications(Jsoup.parse(content));
 
-        assertEquals(2, publikations.size());
+        assertEquals(2, publications.size());
 
-        Publikation publikation1 = publikations.get(0);
-        assertNotNull(publikation1.getWerk());
-        assertEquals(123, publikation1.getPage());
+        Publication publication1 = publications.get(0);
+        assertNotNull(publication1.getBook());
+        assertEquals(123, publication1.getPage());
 
-        Werk werk1 = publikation1.getWerk();
-        assertTrue("Regelwerk".equals(werk1.getName()));
+        Book book1 = publication1.getBook();
+        assertTrue("Regelwerk".equals(book1.getName()));
 
         // second publication
-        Publikation publikation2 = publikations.get(1);
-        assertNotNull(publikation2.getWerk());
-        assertEquals(1337, publikation2.getPage());
+        Publication publication2 = publications.get(1);
+        assertNotNull(publication2.getBook());
+        assertEquals(1337, publication2.getPage());
 
-        Werk werk2 = publikation2.getWerk();
-        assertTrue("Super Fancy Regelwerk".equals(werk2.getName()));
+        Book book2 = publication2.getBook();
+        assertTrue("Super Fancy Regelwerk".equals(book2.getName()));
     }
 
     @Test
     public void parseNoPublicationTest() throws Exception {
         String content = "";
 
-        List<Publikation> publikations = service.parsePublikations(Jsoup.parse(content));
+        List<Publication> publications = service.parsePublications(Jsoup.parse(content));
 
-        assertEquals(0, publikations.size());
+        assertEquals(0, publications.size());
     }
 }

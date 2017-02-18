@@ -1,6 +1,6 @@
 package io.dods.api.parser;
 
-import io.dods.model.attribute.*;
+import io.dods.model.properties.*;
 import io.dods.services.parser.ParseListService;
 import io.dods.services.misc.LoggerService;
 import org.jetbrains.annotations.Nullable;
@@ -50,26 +50,26 @@ public class ParserApi {
         parseVorteil();
 
         // and keep the dependencies in the last spot
-        parseVoraussetzung();
+        parseDependencies();
 
         if (loggerService != null) loggerService.info(getClass(), String.format("Parsing done. Time: %d ms", System.currentTimeMillis() - timer));
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "kampftechnik", method = RequestMethod.POST)
-    public List<Kampftechnik> parseKampftechnik() {
-        List<Kampftechnik> kampftechniken = new ArrayList<>();
+    public List<CombatTechnique> parseKampftechnik() {
+        List<CombatTechnique> kampftechniken = new ArrayList<>();
 
-        kampftechniken.addAll(parseListService.parseKampftechnik("http://www.ulisses-regelwiki.de/index.php/KT_Fernkampf.html", true));
-        kampftechniken.addAll(parseListService.parseKampftechnik("http://www.ulisses-regelwiki.de/index.php/KT_Nahkampftechniken.html", false));
+        kampftechniken.addAll(parseListService.parseCombatTechnique("http://www.ulisses-regelwiki.de/index.php/KT_Fernkampf.html", true));
+        kampftechniken.addAll(parseListService.parseCombatTechnique("http://www.ulisses-regelwiki.de/index.php/KT_Nahkampftechniken.html", false));
 
         return kampftechniken;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "liturgie", method = RequestMethod.POST)
-    public List<Liturgie> parseLiturgie() {
-        return parseListService.parseLiturgie("http://www.ulisses-regelwiki.de/index.php/lt_liturgien.html");
+    public List<LiturgicalChant> parseLiturgie() {
+        return parseListService.parseLiturgicalChant("http://www.ulisses-regelwiki.de/index.php/lt_liturgien.html");
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -80,73 +80,73 @@ public class ParserApi {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "sonderfertigkeit", method = RequestMethod.POST)
-    public List<Sonderfertigkeit> parseSonderfertigkeit() {
-        List<Sonderfertigkeit> sonderfertigkeit = new ArrayList<>();
+    public List<SpecialAbility> parseSonderfertigkeit() {
+        List<SpecialAbility> specialAbility = new ArrayList<>();
 
-        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/Ahnenzeichen.html"));
-        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.KARMAL, "http://www.ulisses-regelwiki.de/index.php/SF_karmal.html"));
-        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/SF_Magie.html"));
-        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.PROFAN, "http://www.ulisses-regelwiki.de/index.php/sf_allgemeine_sonderfertigkeiten.html"));
-        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/bannundschutz.html"));
-        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.KAMPF, "http://www.ulisses-regelwiki.de/index.php/Befehls_SF.html"));
-        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/drituale.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/Ahnenzeichen.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.KARMAL, "http://www.ulisses-regelwiki.de/index.php/SF_karmal.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/SF_Magie.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.PROFAN, "http://www.ulisses-regelwiki.de/index.php/sf_allgemeine_sonderfertigkeiten.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/bannundschutz.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.KAMPF, "http://www.ulisses-regelwiki.de/index.php/Befehls_SF.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/drituale.html"));
 
-        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.KAMPF, "http://www.ulisses-regelwiki.de/index.php/SF_Erweitertekampfstilsonderfertigkeiten.html"));
-        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.PROFAN, "http://www.ulisses-regelwiki.de/index.php/ESF_Elfenlieder.html"));
-        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/ErweiterteZaubersonderfertigkeiten.html"));
-        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/herituel.html"));
-        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/HSF_Hexenflueche.html"));
-        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.KAMPF, "http://www.ulisses-regelwiki.de/index.php/sf_kampfsonderfertigkeiten.html"));
-        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.KAMPF, "http://www.ulisses-regelwiki.de/index.php/SF_Kampfstilsonderfertigkeiten.html"));
-        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.PROFAN, "http://www.ulisses-regelwiki.de/index.php/SF_Pruegelsonderfertigkeiten.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.KAMPF, "http://www.ulisses-regelwiki.de/index.php/SF_Erweitertekampfstilsonderfertigkeiten.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.PROFAN, "http://www.ulisses-regelwiki.de/index.php/ESF_Elfenlieder.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/ErweiterteZaubersonderfertigkeiten.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/herituel.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/HSF_Hexenflueche.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.KAMPF, "http://www.ulisses-regelwiki.de/index.php/sf_kampfsonderfertigkeiten.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.KAMPF, "http://www.ulisses-regelwiki.de/index.php/SF_Kampfstilsonderfertigkeiten.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.PROFAN, "http://www.ulisses-regelwiki.de/index.php/SF_Pruegelsonderfertigkeiten.html"));
 
-        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.PROFAN, "http://www.ulisses-regelwiki.de/index.php/SF_Schick.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.PROFAN, "http://www.ulisses-regelwiki.de/index.php/SF_Schick.html"));
         // ... Sprachen und Schriften ...
-        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/SSF_Stabzauber.html"));
-        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.PROFAN, "http://www.ulisses-regelwiki.de/index.php/SF_Tier.html"));
-        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.PROFAN, "http://www.ulisses-regelwiki.de/index.php/VSF_Vertrautentricks.html"));
-        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/verelfenl.html"));
-        sonderfertigkeit.addAll(parseListService.parseSonderfertigkeit(Sonderfertigkeit.Gruppe.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/Zauberstilsonderfertigkeiten.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/SSF_Stabzauber.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.PROFAN, "http://www.ulisses-regelwiki.de/index.php/SF_Tier.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.PROFAN, "http://www.ulisses-regelwiki.de/index.php/VSF_Vertrautentricks.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/verelfenl.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/Zauberstilsonderfertigkeiten.html"));
 
-        return sonderfertigkeit;
+        return specialAbility;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "segen", method = RequestMethod.POST)
-    public List<Segen> parseSegen() {
-        return parseListService.parseSegen("http://www.ulisses-regelwiki.de/index.php/Lit_Segnungen.html");
+    public List<Bless> parseSegen() {
+        return parseListService.parseBless("http://www.ulisses-regelwiki.de/index.php/Lit_Segnungen.html");
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "vorteil", method = RequestMethod.POST)
-    public List<Vorteil> parseVorteil() {
-        List<Vorteil> vorteil = new ArrayList<>();
-        vorteil.addAll(parseListService.parseVorteil("http://www.ulisses-regelwiki.de/index.php/vorteile.html"));
-        vorteil.addAll(parseListService.parseVorteil("http://www.ulisses-regelwiki.de/index.php/nachteile.html"));
-        return vorteil;
+    public List<Advantage> parseVorteil() {
+        List<Advantage> advantage = new ArrayList<>();
+        advantage.addAll(parseListService.parseAdvantage("http://www.ulisses-regelwiki.de/index.php/vorteile.html"));
+        advantage.addAll(parseListService.parseAdvantage("http://www.ulisses-regelwiki.de/index.php/nachteile.html"));
+        return advantage;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "zauber", method = RequestMethod.POST)
-    public List<Zauber> parseZauber() {
-        return parseListService.parseZauber("http://www.ulisses-regelwiki.de/index.php/za_zaubersprueche.html");
+    public List<Spell> parseZauber() {
+        return parseListService.parseSpell("http://www.ulisses-regelwiki.de/index.php/za_zaubersprueche.html");
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "zaubertrick", method = RequestMethod.POST)
-    public List<Zaubertrick> parseZaubertrick() {
-        return parseListService.parseZaubertrick("http://www.ulisses-regelwiki.de/index.php/Zauber_Zaubertricks.html");
+    public List<Cantrip> parseZaubertrick() {
+        return parseListService.parseCantrip("http://www.ulisses-regelwiki.de/index.php/Zauber_Zaubertricks.html");
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "zeremonie", method = RequestMethod.POST)
-    public List<Zeremonie> parseZeremonie() {
-        return parseListService.parseZeremonie("http://www.ulisses-regelwiki.de/index.php/lt_zeremonien.html");
+    public List<Ceremony> parseZeremonie() {
+        return parseListService.parseCeremony("http://www.ulisses-regelwiki.de/index.php/lt_zeremonien.html");
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "voraussetzung", method = RequestMethod.POST)
-    public void parseVoraussetzung() {
-        parseListService.parseVorraussetzungen();
+    public void parseDependencies() {
+        parseListService.parseDependencies();
     }
 }

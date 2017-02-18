@@ -55,7 +55,7 @@ public class ParseValueLevelService {
 
     private ParsedValue parseLevel(ParsedValue parsedValue, int level) {
         ParsedValue copy = parsedValue.copy();
-        copy.setPublikations(null);
+        copy.setPublications(null);
 
         Matcher matcher = PATTERN_NAME.matcher(parsedValue.getName());
         if (matcher.find()) {

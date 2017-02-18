@@ -1,6 +1,6 @@
 package io.dods.services.parser.model;
 
-import io.dods.model.attribute.Attribut;
+import io.dods.model.properties.Property;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author Richard Gottschalk
  */
-public class ParsedData<T extends Attribut> {
+public class ParsedData<T extends Property> {
 
     private T attribut;
 

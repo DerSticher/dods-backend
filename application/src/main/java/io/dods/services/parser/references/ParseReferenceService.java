@@ -1,16 +1,16 @@
 package io.dods.services.parser.references;
 
-import io.dods.services.attribute.AbstractAttributService;
-import io.dods.services.attribute.attribute.AttributeService;
-import io.dods.services.attribute.fertigkeit.FertigkeitService;
-import io.dods.services.attribute.kampftechnik.KampftechnikService;
-import io.dods.services.attribute.liturgie.LiturgieService;
-import io.dods.services.attribute.ritual.RitualService;
-import io.dods.services.attribute.zauber.ZauberService;
-import io.dods.services.attribute.zeremonie.ZeremonieService;
-import io.dods.model.attribute.Attribut;
-import io.dods.model.attribute.misc.Kostentabelle;
-import io.dods.model.attribute.misc.UsesKostentabelle;
+import io.dods.model.properties.Property;
+import io.dods.services.properties.AbstractPropertyService;
+import io.dods.services.properties.property.PropertyService;
+import io.dods.services.properties.skill.SkillService;
+import io.dods.services.properties.combatTechnique.CombatTechniqueService;
+import io.dods.services.properties.liturgicalChant.LiturgicalChantService;
+import io.dods.services.properties.ritual.RitualService;
+import io.dods.services.properties.spell.SpellService;
+import io.dods.services.properties.ceremony.CeremonyService;
+import io.dods.model.properties.misc.ImprovementChart;
+import io.dods.model.properties.misc.ImprovementCharted;
 import io.dods.services.parser.model.ParsedValue;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,39 +26,39 @@ import java.util.Objects;
 @Service
 public class ParseReferenceService {
 
-    private final AttributeService attributeService;
+    private final PropertyService propertyService;
 
-    private final FertigkeitService fertigkeitService;
+    private final SkillService skillService;
 
-    private final KampftechnikService kampftechnikService;
+    private final CombatTechniqueService combatTechniqueService;
 
-    private final LiturgieService liturgieService;
+    private final LiturgicalChantService liturgicalChantService;
 
-    private final ZeremonieService zeremonieService;
+    private final CeremonyService ceremonyService;
 
     private final RitualService ritualService;
 
-    private final ZauberService zauberService;
+    private final SpellService spellService;
 
     @Autowired
-    public ParseReferenceService(AttributeService attributeService,
-                                 FertigkeitService fertigkeitService,
-                                 KampftechnikService kampftechnikService,
-                                 LiturgieService liturgieService,
-                                 ZeremonieService zeremonieService,
+    public ParseReferenceService(PropertyService propertyService,
+                                 SkillService skillService,
+                                 CombatTechniqueService combatTechniqueService,
+                                 LiturgicalChantService liturgicalChantService,
+                                 CeremonyService ceremonyService,
                                  RitualService ritualService,
-                                 ZauberService zauberService) {
-        this.attributeService = attributeService;
-        this.fertigkeitService = fertigkeitService;
-        this.kampftechnikService = kampftechnikService;
-        this.liturgieService = liturgieService;
-        this.zeremonieService = zeremonieService;
+                                 SpellService spellService) {
+        this.propertyService = propertyService;
+        this.skillService = skillService;
+        this.combatTechniqueService = combatTechniqueService;
+        this.liturgicalChantService = liturgicalChantService;
+        this.ceremonyService = ceremonyService;
         this.ritualService = ritualService;
-        this.zauberService = zauberService;
+        this.spellService = spellService;
     }
 
     private interface OnSetPriceCallback {
-        default int onSetPrice(@NotNull UsesKostentabelle referencedValue) {
+        default int onSetPrice(@NotNull ImprovementCharted referencedValue) {
             return 0;
         }
     }
@@ -134,10 +134,10 @@ public class ParseReferenceService {
     private OnSetPriceCallback createOnSetPriceCallback(final int a, final int b, final int c, final int d) {
         return new OnSetPriceCallback() {
             @Override
-            public int onSetPrice(@NotNull UsesKostentabelle referencedValue) {
-                Kostentabelle kostentabelle = referencedValue.getKostentabelle();
-                if (kostentabelle != null) {
-                    switch (kostentabelle) {
+            public int onSetPrice(@NotNull ImprovementCharted referencedValue) {
+                ImprovementChart improvementChart = referencedValue.getImprovementChart();
+                if (improvementChart != null) {
+                    switch (improvementChart) {
                         case A: return a;
                         case B: return b;
                         case C: return c;
@@ -149,9 +149,9 @@ public class ParseReferenceService {
         };
     }
 
-    private <T extends Attribut> List<ParsedValue> createReferences(ParsedValue original,
-                                                                AbstractAttributService<T> referencedService,
-                                                                OnSetPriceCallback onSetPriceCallback) {
+    private <T extends Property> List<ParsedValue> createReferences(ParsedValue original,
+                                                                    AbstractPropertyService<T> referencedService,
+                                                                    OnSetPriceCallback onSetPriceCallback) {
         List<ParsedValue> list = new ArrayList<>();
 
         List<T> all = referencedService.findAll();
@@ -160,10 +160,10 @@ public class ParseReferenceService {
                 .forEach(referedAttribute -> {
                     ParsedValue copy = original.copy();
                     copy.setName(referedAttribute.getName());
-                    copy.setPublikations(null);
+                    copy.setPublications(null);
 
-                    if (referedAttribute instanceof UsesKostentabelle) {
-                        copy.setApWert(onSetPriceCallback.onSetPrice((UsesKostentabelle) referedAttribute));
+                    if (referedAttribute instanceof ImprovementCharted) {
+                        copy.setApWert(onSetPriceCallback.onSetPrice((ImprovementCharted) referedAttribute));
                     }
 
                     list.add(copy);
@@ -175,27 +175,27 @@ public class ParseReferenceService {
 //    Profan stuff
 
     private List<ParsedValue> createFertigkeitReferences(ParsedValue parsedValue, OnSetPriceCallback onSetPriceCallback) {
-        return createReferences(parsedValue, fertigkeitService, onSetPriceCallback);
+        return createReferences(parsedValue, skillService, onSetPriceCallback);
     }
 
     private List<ParsedValue> createKampftechnikReferences(ParsedValue parsedValue, OnSetPriceCallback onSetPriceCallback) {
-        return createReferences(parsedValue, kampftechnikService, onSetPriceCallback);
+        return createReferences(parsedValue, combatTechniqueService, onSetPriceCallback);
     }
 
 //    Karma stuff
 
     private List<ParsedValue> createLiturgieReferences(ParsedValue parsedValue, OnSetPriceCallback onSetPriceCallback) {
-        return createReferences(parsedValue, liturgieService, onSetPriceCallback);
+        return createReferences(parsedValue, liturgicalChantService, onSetPriceCallback);
     }
 
     private List<ParsedValue> createZeremonieReferences(ParsedValue parsedValue, OnSetPriceCallback onSetPriceCallback) {
-        return createReferences(parsedValue, zeremonieService, onSetPriceCallback);
+        return createReferences(parsedValue, ceremonyService, onSetPriceCallback);
     }
 
 //    Magic stuff
 
     private List<ParsedValue> createZauberspruchReferences(ParsedValue parsedValue, OnSetPriceCallback onSetPriceCallback) {
-        return createReferences(parsedValue, zauberService, onSetPriceCallback);
+        return createReferences(parsedValue, spellService, onSetPriceCallback);
     }
 
     private List<ParsedValue> createRitualReferences(ParsedValue parsedValue, OnSetPriceCallback onSetPriceCallback) {

@@ -1,8 +1,8 @@
 package io.dods.services.parser.model;
 
-import io.dods.model.attribute.Eigenschaft;
-import io.dods.model.attribute.misc.*;
-import io.dods.model.publikation.Publikation;
+import io.dods.model.properties.Ability;
+import io.dods.model.properties.misc.*;
+import io.dods.model.publication.Publication;
 import org.springframework.util.SerializationUtils;
 
 import java.io.Serializable;
@@ -17,17 +17,17 @@ public class ParsedValue implements Serializable {
     private String name;
     private String regel;
 
-    private Dauer dauer;
-    private Kostentabelle kostentabelle;
-    private Nutzkosten nutzkosten;
-    private Probe probe;
-    private Reichweite reichweite;
-    private Wirkungsdauer wirkungsdauer;
-    private List<Zielkategorie> zielkategorie;
-    private List<Aspekt> aspekt;
+    private CastTime castTime;
+    private ImprovementChart improvementChart;
+    private Cost cost;
+    private CheckImpl check;
+    private Range range;
+    private Duration duration;
+    private List<Target> target;
+    private List<Aspect> aspect;
     private int apWert;
-    private Eigenschaft leiteigenschaft;
-    private List<Publikation> publikations;
+    private Ability leiteigenschaft;
+    private List<Publication> publications;
 
     public ParsedValue copy() {
         byte[] serialize = SerializationUtils.serialize(this);
@@ -42,52 +42,52 @@ public class ParsedValue implements Serializable {
         this.regel = regel;
     }
 
-    public Dauer getDauer() {
-        return dauer;
+    public CastTime getCastTime() {
+        return castTime;
     }
 
-    public void setDauer(Dauer dauer) {
-        this.dauer = dauer;
+    public void setCastTime(CastTime castTime) {
+        this.castTime = castTime;
     }
 
-    public Kostentabelle getKostentabelle() {
-        return kostentabelle;
+    public ImprovementChart getImprovementChart() {
+        return improvementChart;
     }
 
-    public void setKostentabelle(Kostentabelle kostentabelle) {
-        this.kostentabelle = kostentabelle;
+    public void setImprovementChart(ImprovementChart improvementChart) {
+        this.improvementChart = improvementChart;
     }
 
-    public Probe getProbe() {
-        return probe;
+    public CheckImpl getCheck() {
+        return check;
     }
 
-    public void setProbe(Probe probe) {
-        this.probe = probe;
+    public void setCheck(CheckImpl check) {
+        this.check = check;
     }
 
-    public Wirkungsdauer getWirkungsdauer() {
-        return wirkungsdauer;
+    public Duration getDuration() {
+        return duration;
     }
 
-    public void setWirkungsdauer(Wirkungsdauer wirkungsdauer) {
-        this.wirkungsdauer = wirkungsdauer;
+    public void setDuration(Duration duration) {
+        this.duration = duration;
     }
 
-    public List<Zielkategorie> getZielkategorie() {
-        return zielkategorie;
+    public List<Target> getTarget() {
+        return target;
     }
 
-    public void setZielkategorie(List<Zielkategorie> zielkategorie) {
-        this.zielkategorie = zielkategorie;
+    public void setTarget(List<Target> target) {
+        this.target = target;
     }
 
-    public Reichweite getReichweite() {
-        return reichweite;
+    public Range getRange() {
+        return range;
     }
 
-    public void setReichweite(Reichweite reichweite) {
-        this.reichweite = reichweite;
+    public void setRange(Range range) {
+        this.range = range;
     }
 
     public String getName() {
@@ -98,20 +98,20 @@ public class ParsedValue implements Serializable {
         this.name = name;
     }
 
-    public void setAspekt(List<Aspekt> aspekt) {
-        this.aspekt = aspekt;
+    public void setAspect(List<Aspect> aspect) {
+        this.aspect = aspect;
     }
 
-    public List<Aspekt> getAspekt() {
-        return aspekt;
+    public List<Aspect> getAspect() {
+        return aspect;
     }
 
-    public Nutzkosten getNutzkosten() {
-        return nutzkosten;
+    public Cost getCost() {
+        return cost;
     }
 
-    public void setNutzkosten(Nutzkosten nutzkosten) {
-        this.nutzkosten = nutzkosten;
+    public void setCost(Cost cost) {
+        this.cost = cost;
     }
 
     public void setApWert(int apWert) {
@@ -130,19 +130,19 @@ public class ParsedValue implements Serializable {
         this.wikiUrl = wikiUrl;
     }
 
-    public void setLeiteigenschaft(Eigenschaft leiteigenschaft) {
+    public void setLeiteigenschaft(Ability leiteigenschaft) {
         this.leiteigenschaft = leiteigenschaft;
     }
 
-    public Eigenschaft getLeiteigenschaft() {
+    public Ability getLeiteigenschaft() {
         return leiteigenschaft;
     }
 
-    public void setPublikations(List<Publikation> publikations) {
-        this.publikations = publikations;
+    public void setPublications(List<Publication> publications) {
+        this.publications = publications;
     }
 
-    public List<Publikation> getPublikations() {
-        return publikations;
+    public List<Publication> getPublications() {
+        return publications;
     }
 }

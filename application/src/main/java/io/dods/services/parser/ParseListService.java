@@ -1,20 +1,21 @@
 package io.dods.services.parser;
 
-import io.dods.services.attribute.AbstractAttributService;
-import io.dods.services.attribute.attribute.AttributeService;
-import io.dods.services.attribute.kampftechnik.KampftechnikService;
-import io.dods.services.attribute.liturgie.LiturgieService;
-import io.dods.services.attribute.ritual.RitualService;
-import io.dods.services.attribute.segen.SegenService;
-import io.dods.services.attribute.sonderfertigkeit.SonderfertigkeitService;
-import io.dods.services.attribute.vorteil.VorteilService;
-import io.dods.services.attribute.zauber.ZauberService;
-import io.dods.services.attribute.zaubertrick.ZaubertrickService;
-import io.dods.services.attribute.zeremonie.ZeremonieService;
-import io.dods.model.attribute.*;
-import io.dods.services.parser.model.ParsedData;
-import io.dods.services.parser.valueParser.VoraussetzungService;
+import io.dods.model.properties.*;
 import io.dods.services.misc.LoggerService;
+import io.dods.services.parser.model.ParsedData;
+import io.dods.services.parser.valueParser.CreateDependencyService;
+import io.dods.services.parser.valueParser.ParseDependencyService;
+import io.dods.services.properties.AbstractPropertyService;
+import io.dods.services.properties.combatTechnique.CombatTechniqueService;
+import io.dods.services.properties.liturgicalChant.LiturgicalChantService;
+import io.dods.services.properties.property.PropertyService;
+import io.dods.services.properties.ritual.RitualService;
+import io.dods.services.properties.bless.BlessService;
+import io.dods.services.properties.specialAbility.SpecialAbilityService;
+import io.dods.services.properties.advantage.AdvantageService;
+import io.dods.services.properties.spell.SpellService;
+import io.dods.services.properties.cantrip.CantripService;
+import io.dods.services.properties.ceremony.CeremonyService;
 import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -37,57 +38,61 @@ public class ParseListService {
 
     private final ParserService parserService;
 
-    private final AttributeService attributeService;
+    private final PropertyService propertyService;
 
-    private final KampftechnikService kampftechnikService;
+    private final CombatTechniqueService combatTechniqueService;
 
-    private final LiturgieService liturgieService;
+    private final LiturgicalChantService liturgicalChantService;
 
     private final RitualService ritualService;
 
-    private final SonderfertigkeitService sonderfertigkeitService;
+    private final SpecialAbilityService specialAbilityService;
 
-    private final SegenService segenService;
+    private final BlessService blessService;
 
-    private final VorteilService vorteilService;
+    private final AdvantageService advantageService;
 
-    private final ZauberService zauberService;
+    private final SpellService spellService;
 
-    private final ZaubertrickService zaubertrickService;
+    private final CantripService cantripService;
 
-    private final ZeremonieService zeremonieService;
+    private final CeremonyService ceremonyService;
 
-    private final VoraussetzungService voraussetzungService;
+    private final ParseDependencyService voraussetzungService;
 
     private final LoggerService loggerService;
 
+    private final CreateDependencyService createDependencyService;
+
     @Autowired
     public ParseListService(ParserService parserService,
-                            KampftechnikService kampftechnikService,
-                            AttributeService attributeService,
-                            LiturgieService liturgieService,
+                            CombatTechniqueService combatTechniqueService,
+                            PropertyService propertyService,
+                            LiturgicalChantService liturgicalChantService,
                             RitualService ritualService,
-                            SonderfertigkeitService sonderfertigkeitService,
-                            SegenService segenService,
-                            VorteilService vorteilService,
-                            VoraussetzungService voraussetzungService,
-                            ZauberService zauberService,
-                            ZaubertrickService zaubertrickService,
-                            ZeremonieService zeremonieService,
-                            LoggerService loggerService) {
-        this.kampftechnikService = kampftechnikService;
+                            SpecialAbilityService specialAbilityService,
+                            BlessService blessService,
+                            AdvantageService advantageService,
+                            ParseDependencyService voraussetzungService,
+                            SpellService spellService,
+                            CantripService cantripService,
+                            CeremonyService ceremonyService,
+                            LoggerService loggerService,
+                            CreateDependencyService createDependencyService) {
+        this.combatTechniqueService = combatTechniqueService;
         this.parserService = parserService;
-        this.attributeService = attributeService;
-        this.liturgieService = liturgieService;
+        this.propertyService = propertyService;
+        this.liturgicalChantService = liturgicalChantService;
         this.ritualService = ritualService;
-        this.sonderfertigkeitService = sonderfertigkeitService;
-        this.segenService = segenService;
-        this.vorteilService = vorteilService;
+        this.specialAbilityService = specialAbilityService;
+        this.blessService = blessService;
+        this.advantageService = advantageService;
         this.voraussetzungService = voraussetzungService;
-        this.zauberService = zauberService;
-        this.zaubertrickService = zaubertrickService;
-        this.zeremonieService = zeremonieService;
+        this.spellService = spellService;
+        this.cantripService = cantripService;
+        this.ceremonyService = ceremonyService;
         this.loggerService = loggerService;
+        this.createDependencyService = createDependencyService;
     }
 
     private List<String> searchLinks(String url) {
@@ -113,7 +118,7 @@ public class ParseListService {
                 .collect(Collectors.toList());
     }
 
-    private <T extends Attribut> List<T> persist(AbstractAttributService<T> service, ParsedData<T> parsedData) {
+    private <T extends Property> List<T> persist(AbstractPropertyService<T> service, ParsedData<T> parsedData) {
         if (parsedData.isEmpty()) {
             loggerService.warn(getClass(), "No data found for current URL");
             return Collections.emptyList();
@@ -129,7 +134,7 @@ public class ParseListService {
                 .collect(Collectors.toList());
     }
 
-    private <T extends Attribut> T persistChild(@NotNull AbstractAttributService<T> service, T persistedParent, @NotNull T attribut) {
+    private <T extends Property> T persistChild(@NotNull AbstractPropertyService<T> service, T persistedParent, @NotNull T attribut) {
         if (persistedParent.getId() == null || persistedParent.getId() == 0) {
             throw new IllegalStateException(
                     String.format("persistedParent should have an ID != 0. Value: %s",
@@ -147,7 +152,7 @@ public class ParseListService {
         return service.save(attribut);
     }
 
-    private <T extends Attribut> T persistParent(@NotNull AbstractAttributService<T> service, @NotNull T attribut) {
+    private <T extends Property> T persistParent(@NotNull AbstractPropertyService<T> service, @NotNull T attribut) {
         T persistedAttribute = service.findByName(attribut.getName());
 
         if (persistedAttribute == null) {
@@ -156,24 +161,24 @@ public class ParseListService {
         return persistedAttribute;
     }
 
-    public List<Kampftechnik> parseKampftechnik(String listUrl, boolean isFernkampf) {
-        loggerService.debug(getClass(), "parsing Kampftechnik");
+    public List<CombatTechnique> parseCombatTechnique(String listUrl, boolean isRangedCombat) {
+        loggerService.debug(getClass(), "parsing CombatTechnique");
         List<String> urls = searchLinks(listUrl);
 
         return urls.stream()
-                .map(url -> parserService.parseKampftechnik(url, isFernkampf))
-                .map(x -> persist(kampftechnikService, x))
+                .map(url -> parserService.parseCombatTechnique(url, isRangedCombat))
+                .map(x -> persist(combatTechniqueService, x))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }
 
-    public List<Liturgie> parseLiturgie(String listUrl) {
-        loggerService.debug(getClass(), "parsing Liturgie");
+    public List<LiturgicalChant> parseLiturgicalChant(String listUrl) {
+        loggerService.debug(getClass(), "parsing LiturgicalChant");
         List<String> urls = searchLinks(listUrl);
 
         return urls.stream()
-                .map(parserService::parseLiturgie)
-                .map(x -> persist(liturgieService, x))
+                .map(parserService::parseLiturgicalChant)
+                .map(x -> persist(liturgicalChantService, x))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }
@@ -189,78 +194,78 @@ public class ParseListService {
                 .collect(Collectors.toList());
     }
 
-    public List<Sonderfertigkeit> parseSonderfertigkeit(Sonderfertigkeit.Gruppe gruppe, String listUrl) {
-        loggerService.debug(getClass(), "parsing Sonderfertigkeit");
+    public List<SpecialAbility> parseSpecialAbility(SpecialAbility.Group group, String listUrl) {
+        loggerService.debug(getClass(), "parsing SpecialAbility");
         List<String> urls = searchLinks(listUrl);
 
         return urls.stream()
-                .map(url -> parserService.parseSonderfertigkeit(url, gruppe))
-                .map(x -> persist(sonderfertigkeitService, x))
+                .map(url -> parserService.parseSpecialAbility(url, group))
+                .map(x -> persist(specialAbilityService, x))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }
 
-    public List<Segen> parseSegen(String listUrl) {
-        loggerService.debug(getClass(), "parsing Segen");
+    public List<Bless> parseBless(String listUrl) {
+        loggerService.debug(getClass(), "parsing Bless");
         List<String> urls = searchLinks(listUrl);
 
         return urls.stream()
-                .map(parserService::parseSegen)
-                .map(x -> persist(segenService, x))
+                .map(parserService::parseBless)
+                .map(x -> persist(blessService, x))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }
 
-    public List<Vorteil> parseVorteil(String listUrl) {
-        loggerService.debug(getClass(), "parsing Vorteil");
+    public List<Advantage> parseAdvantage(String listUrl) {
+        loggerService.debug(getClass(), "parsing Advantage");
         List<String> urls = searchLinks(listUrl);
 
         return urls.stream()
-                .map(parserService::parseVorteil)
-                .map(x -> persist(vorteilService, x))
+                .map(parserService::parseAdvantage)
+                .map(x -> persist(advantageService, x))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }
 
-    public List<Zauber> parseZauber(String listUrl) {
-        loggerService.debug(getClass(), "parsing Zauber");
+    public List<Spell> parseSpell(String listUrl) {
+        loggerService.debug(getClass(), "parsing Spell");
         List<String> urls = searchLinks(listUrl);
 
         return urls.stream()
-                .map(parserService::parseZauber)
-                .map(x -> persist(zauberService, x))
+                .map(parserService::parseSpell)
+                .map(x -> persist(spellService, x))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }
 
-    public List<Zaubertrick> parseZaubertrick(String listUrl) {
-        loggerService.debug(getClass(), "parsing Zaubertrick");
+    public List<Cantrip> parseCantrip(String listUrl) {
+        loggerService.debug(getClass(), "parsing Cantrip");
         List<String> urls = searchLinks(listUrl);
 
         return urls.stream()
-                .map(parserService::parseZaubertrick)
-                .map(x -> persist(zaubertrickService, x))
+                .map(parserService::parseCantrip)
+                .map(x -> persist(cantripService, x))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }
 
-    public List<Zeremonie> parseZeremonie(String listUrl) {
-        loggerService.debug(getClass(), "parsing Zeremonie");
+    public List<Ceremony> parseCeremony(String listUrl) {
+        loggerService.debug(getClass(), "parsing Ceremony");
         List<String> urls = searchLinks(listUrl);
 
         return urls.stream()
-                .map(parserService::parseZeremonie)
-                .map(x -> persist(zeremonieService, x))
+                .map(parserService::parseCeremony)
+                .map(x -> persist(ceremonyService, x))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }
 
-    public void parseVorraussetzungen() {
-        loggerService.debug(getClass(), "parsing Vorraussetzungen");
-        Iterable<Attribut> attributs = attributeService.find(null, null, false);
+    public void parseDependencies() {
+        loggerService.debug(getClass(), "parsing Dependencies");
+        Iterable<Property> attributes = propertyService.find(null, null, false);
 
-        for (Attribut attribut : attributs) {
-            voraussetzungService.parseVoraussetzung(attribut);
+        for (Property property : attributes) {
+            createDependencyService.parseDependency(property);
         }
     }
 

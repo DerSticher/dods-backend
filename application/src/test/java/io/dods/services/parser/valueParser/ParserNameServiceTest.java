@@ -41,7 +41,7 @@ public class ParserNameServiceTest {
 
     @Test
     public void parseTraditionNameTest() {
-        Document document = Jsoup.parse("<html><body><h1>Die Tradition (Boronkirche) als Sonderfertigkeit</h1></body></html>");
+        Document document = Jsoup.parse("<html><body><h1>Die Tradition (Boronkirche) als SpecialAbility</h1></body></html>");
         String s = service.parseName(document);
         assertTrue(String.format("Expected name was \"Tradition (Boronkirche)\" but was \"%s\"! " +
                         "This method should return the simplified name in case of stupid Adjectives", s),

@@ -1,11 +1,11 @@
 package io.dods.services.held;
 
 import io.dods.interfaces.repositories.NamedDodsRepository;
-import io.dods.model.helden.Held;
+import io.dods.model.heroes.Hero;
 
 /**
  * @author Richard Gottschalk
  */
-interface HeldRepository extends NamedDodsRepository<Held, String> {
-    Held findById(String id);
+interface HeldRepository extends NamedDodsRepository<Hero, String> {
+    Hero findById(String id);
 }

@@ -1,6 +1,6 @@
 package io.dods.api.parser;
 
-import io.dods.model.attribute.*;
+import io.dods.model.properties.*;
 import io.dods.services.parser.ParseListService;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,38 +29,38 @@ public class ParserApiTest {
 
     ParserApi mockedService;
 
-    Kampftechnik kampftechnik = new Kampftechnik();
-    Liturgie liturgie = new Liturgie();
+    CombatTechnique combatTechnique = new CombatTechnique();
+    LiturgicalChant liturgicalChant = new LiturgicalChant();
     Ritual ritual = new Ritual();
-    Sonderfertigkeit sonderfertigkeit = new Sonderfertigkeit();
-    Segen segen = new Segen();
-    Vorteil vorteil = new Vorteil();
-    Zauber zauber = new Zauber();
-    Zaubertrick zaubertrick = new Zaubertrick();
-    Zeremonie zeremonie = new Zeremonie();
+    SpecialAbility specialAbility = new SpecialAbility();
+    Bless bless = new Bless();
+    Advantage advantage = new Advantage();
+    Spell spell = new Spell();
+    Cantrip cantrip = new Cantrip();
+    Ceremony ceremony = new Ceremony();
 
     @Before
     public void setup() throws Exception {
         ParseListService mock = Mockito.mock(ParseListService.class);
 
-        Mockito.when(mock.parseKampftechnik(anyString(), anyBoolean()))
-                .thenReturn(Collections.singletonList(kampftechnik));
-        Mockito.when(mock.parseLiturgie(anyString()))
-                .thenReturn(Collections.singletonList(liturgie));
+        Mockito.when(mock.parseCombatTechnique(anyString(), anyBoolean()))
+                .thenReturn(Collections.singletonList(combatTechnique));
+        Mockito.when(mock.parseLiturgicalChant(anyString()))
+                .thenReturn(Collections.singletonList(liturgicalChant));
         Mockito.when(mock.parseRitual(anyString()))
                 .thenReturn(Collections.singletonList(ritual));
-        Mockito.when(mock.parseSonderfertigkeit(any(), anyString()))
-                .thenReturn(Collections.singletonList(sonderfertigkeit));
-        Mockito.when(mock.parseSegen(anyString()))
-                .thenReturn(Collections.singletonList(segen));
-        Mockito.when(mock.parseVorteil(anyString()))
-                .thenReturn(Collections.singletonList(vorteil));
-        Mockito.when(mock.parseZauber(anyString()))
-                .thenReturn(Collections.singletonList(zauber));
-        Mockito.when(mock.parseZaubertrick(anyString()))
-                .thenReturn(Collections.singletonList(zaubertrick));
-        Mockito.when(mock.parseZeremonie(anyString()))
-                .thenReturn(Collections.singletonList(zeremonie));
+        Mockito.when(mock.parseSpecialAbility(any(), anyString()))
+                .thenReturn(Collections.singletonList(specialAbility));
+        Mockito.when(mock.parseBless(anyString()))
+                .thenReturn(Collections.singletonList(bless));
+        Mockito.when(mock.parseAdvantage(anyString()))
+                .thenReturn(Collections.singletonList(advantage));
+        Mockito.when(mock.parseSpell(anyString()))
+                .thenReturn(Collections.singletonList(spell));
+        Mockito.when(mock.parseCantrip(anyString()))
+                .thenReturn(Collections.singletonList(cantrip));
+        Mockito.when(mock.parseCeremony(anyString()))
+                .thenReturn(Collections.singletonList(ceremony));
 
         this.mockedService = new ParserApi(mock, null);
     }
@@ -80,12 +80,12 @@ public class ParserApiTest {
 
     @Test
     public void testParseKampftechnik() throws Exception {
-        parseElement(kampftechnik, 2, mockedService.parseKampftechnik());
+        parseElement(combatTechnique, 2, mockedService.parseKampftechnik());
     }
 
     @Test
     public void testParseLiturgie() throws Exception {
-        parseElement(liturgie, 1, mockedService.parseLiturgie());
+        parseElement(liturgicalChant, 1, mockedService.parseLiturgie());
     }
 
     @Test
@@ -95,31 +95,31 @@ public class ParserApiTest {
 
     @Test
     public void testParseSonderfertigkeit() throws Exception {
-        parseElement(sonderfertigkeit, 21, mockedService.parseSonderfertigkeit());
+        parseElement(specialAbility, 21, mockedService.parseSonderfertigkeit());
     }
 
     @Test
     public void testParseSegen() throws Exception {
-        parseElement(segen, 1, mockedService.parseSegen());
+        parseElement(bless, 1, mockedService.parseSegen());
     }
 
     @Test
     public void testParseVorteil() throws Exception {
-        parseElement(vorteil, 2, mockedService.parseVorteil());
+        parseElement(advantage, 2, mockedService.parseVorteil());
     }
 
     @Test
     public void testParseZauber() throws Exception {
-        parseElement(zauber, 1, mockedService.parseZauber());
+        parseElement(spell, 1, mockedService.parseZauber());
     }
 
     @Test
     public void testParseZaubertrick() throws Exception {
-        parseElement(zaubertrick, 1, mockedService.parseZaubertrick());
+        parseElement(cantrip, 1, mockedService.parseZaubertrick());
     }
 
     @Test
     public void testParseZeremonie() throws Exception {
-        parseElement(zeremonie, 1, mockedService.parseZeremonie());
+        parseElement(ceremony, 1, mockedService.parseZeremonie());
     }
 }

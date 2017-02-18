@@ -1,6 +1,6 @@
 package io.dods.services.regelwerk;
 
-import io.dods.model.regeln.Regelwerk;
+import io.dods.model.rules.Regelwerk;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
