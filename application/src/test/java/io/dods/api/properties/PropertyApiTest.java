@@ -61,7 +61,7 @@ public class PropertyApiTest {
 
     @Test
     public void getSubcategoriesOfVorteil() {
-        List<Property> properties = propertyApi.get("Advantage", "Adel", false);
+        List<Property> properties = propertyApi.get("Vorteil", "Adel", false);
         Assume.assumeTrue("ignore if Adel was not found! Probably it is not parsed, yet", properties.size() > 0);
 
         Property adel = properties.get(0);
@@ -73,7 +73,7 @@ public class PropertyApiTest {
     @Test(expected = ResourceNotFoundException.class)
     public void getAbhaengigkeitOfEigenschaftTest() {
         // "Mut" should not have any sort of Abhaengigkeit!
-        List<Property> properties = propertyApi.get("Ability", "Mut", false);
+        List<Property> properties = propertyApi.get("Eigenschaft", "Mut", false);
         Property mut = properties.get(0);
 
         propertyApi.getAbhangigkeit(mut.getId());
@@ -81,7 +81,7 @@ public class PropertyApiTest {
 
     @Test
     public void getAbhaengigkeitOfVorteilTest() {
-        List<Property> properties = propertyApi.get("Advantage", "Reich", false);
+        List<Property> properties = propertyApi.get("Vorteil", "Reich", false);
         Assume.assumeTrue("ignore if Reich was not found! Probably it is not parsed, yet", properties.size() > 0);
         Property reich = properties.get(0);
 
