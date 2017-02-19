@@ -1,4 +1,4 @@
-package io.dods.services.publikation;
+package io.dods.services.publication;
 
 import io.dods.interfaces.services.NamedDodsDatabaseService;
 import io.dods.model.publication.Book;

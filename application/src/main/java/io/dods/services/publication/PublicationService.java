@@ -1,10 +1,12 @@
-package io.dods.services.publikation;
+package io.dods.services.publication;
 
 import io.dods.interfaces.services.DodsDatabaseService;
 import io.dods.model.publication.Book;
 import io.dods.model.publication.Publication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author Richard Gottschalk
@@ -30,7 +32,7 @@ public class PublicationService implements DodsDatabaseService<Long, Publication
     public Publication findByBookAndPageOrCreate(String werkName, int page) {
         Book book = bookService.findByNameOrCreate(werkName);
 
-        Publication publication = getRepository().findByBookAndPage(book, page);
+        Publication publication = getRepository().findFirstByBookAndPage(book, page);
 
         if (publication == null) {
             publication = new Publication();
@@ -42,5 +44,19 @@ public class PublicationService implements DodsDatabaseService<Long, Publication
             publication = publicationRepository.save(publication);
         }
         return publication;
+    }
+
+    public List<Publication> findByBook(Book book) {
+        return getRepository().findAllByBookOrderByPageAsc(book);
+    }
+
+    public List<Publication> find(Book book, int page) {
+        if (book == null) throw new IllegalArgumentException("book can not be null");
+
+        if (page > 0) {
+            return getRepository().findByBookAndPage(book, page);
+        } else {
+            return getRepository().findAllByBookOrderByPageAsc(book);
+        }
     }
 }

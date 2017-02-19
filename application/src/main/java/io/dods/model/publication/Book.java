@@ -1,5 +1,7 @@
 package io.dods.model.publication;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dods.interfaces.HasId;
 import io.dods.model.Named;
 
@@ -19,8 +21,13 @@ public class Book implements HasId<Long>, Named, Serializable {
     @Column
     private String name;
 
+    @JsonProperty
     @Column
-    private String shop;
+    private String shopUrl;
+
+    @JsonProperty("pflicht")
+    @Column
+    private Boolean isRequired;
 
     public Book() {
     }
@@ -47,12 +54,22 @@ public class Book implements HasId<Long>, Named, Serializable {
         this.id = id;
     }
 
+    @JsonIgnore
+    public Boolean getRequired() {
+        return isRequired;
+    }
+
+    @JsonIgnore
+    public String getShopUrl() {
+        return shopUrl;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", shop='" + shop + '\'' +
+                ", shopUrl='" + shopUrl + '\'' +
                 '}';
     }
 }

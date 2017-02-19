@@ -1,7 +1,7 @@
 package io.dods.services.parser.valueParser;
 
 import io.dods.model.publication.Publication;
-import io.dods.services.publikation.PublicationService;
+import io.dods.services.publication.PublicationService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
