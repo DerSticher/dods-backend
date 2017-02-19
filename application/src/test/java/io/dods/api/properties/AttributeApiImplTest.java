@@ -16,10 +16,10 @@ import static junit.framework.TestCase.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @ActiveProfiles("integration")
-public class AbilityApiImplTest {
+public class AttributeApiImplTest {
 
     @Autowired
-    private AbilityApiImpl api;
+    private AttributeApiImpl api;
 
     @Test(expected = ResourceNotFoundException.class)
     public void testGetIllegalValue() {

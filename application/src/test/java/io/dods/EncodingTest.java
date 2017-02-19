@@ -1,7 +1,7 @@
 package io.dods;
 
-import io.dods.model.properties.Ability;
-import io.dods.services.properties.ability.AbilityService;
+import io.dods.model.properties.Attribute;
+import io.dods.services.properties.ability.AttributeService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +20,11 @@ import static org.springframework.test.util.AssertionErrors.*;
 public class EncodingTest {
 
     @Autowired
-    private AbilityService abilityService;
+    private AttributeService attributeService;
 
     @Test
     public void testEncoding() {
-        Ability koerperkraft = abilityService.findById(8L);
+        Attribute koerperkraft = attributeService.findById(8L);
         assertEquals("Körperkraft should have 11 characters! -> probably encoding problems",
                 11, koerperkraft.getName().length());
         assertTrue("Names do not match", "Körperkraft".equals(koerperkraft.getName()));

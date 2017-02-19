@@ -1,6 +1,6 @@
 package io.dods.services.parser.model;
 
-import io.dods.model.properties.Ability;
+import io.dods.model.properties.Attribute;
 import io.dods.model.properties.misc.*;
 import io.dods.model.publication.Publication;
 import org.springframework.util.SerializationUtils;
@@ -26,7 +26,7 @@ public class ParsedValue implements Serializable {
     private List<Target> target;
     private List<Aspect> aspect;
     private int apWert;
-    private Ability leiteigenschaft;
+    private List<Attribute> primaryAttributes;
     private List<Publication> publications;
 
     public ParsedValue copy() {
@@ -130,12 +130,12 @@ public class ParsedValue implements Serializable {
         this.wikiUrl = wikiUrl;
     }
 
-    public void setLeiteigenschaft(Ability leiteigenschaft) {
-        this.leiteigenschaft = leiteigenschaft;
+    public void setPrimaryAttributes(List<Attribute> primaryAttributes) {
+        this.primaryAttributes = primaryAttributes;
     }
 
-    public Ability getLeiteigenschaft() {
-        return leiteigenschaft;
+    public List<Attribute> getPrimaryAttributes() {
+        return primaryAttributes;
     }
 
     public void setPublications(List<Publication> publications) {

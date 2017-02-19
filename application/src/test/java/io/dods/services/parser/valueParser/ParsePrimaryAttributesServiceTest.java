@@ -1,6 +1,6 @@
 package io.dods.services.parser.valueParser;
 
-import io.dods.model.properties.Ability;
+import io.dods.model.properties.Attribute;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.Test;
@@ -28,7 +28,7 @@ public class ParsePrimaryAttributesServiceTest extends AbstractParseServiceTest 
     private ParsePrimaryAttributesService service;
 
     @Parameterized.Parameter(0)
-    public String expected;
+    public List<String> expected;
 
     @Parameterized.Parameter(1)
     public List<String> lines;
@@ -36,9 +36,10 @@ public class ParsePrimaryAttributesServiceTest extends AbstractParseServiceTest 
     @Parameterized.Parameters
     public static Collection<Object[]> parameters() {
         return Arrays.asList(new Object[][] {
-                {"Mut", ParserSources.getHtml("Leiteigenschaft", "Mut")},
-                {"Körperkraft", ParserSources.getHtml("Leiteigenschaft", "Körperkraft")},
-                {"Fingerfertigkeit", ParserSources.getHtml("Leiteigenschaft", "Fingerfertigkeit")}
+                {Arrays.asList("Mut"), ParserSources.getHtml("Leiteigenschaft", "Mut")},
+                {Arrays.asList("Körperkraft"), ParserSources.getHtml("Leiteigenschaft", "Körperkraft")},
+                {Arrays.asList("Fingerfertigkeit"), ParserSources.getHtml("Leiteigenschaft", "Fingerfertigkeit")},
+                {Arrays.asList("Gewandtheit", "Körperkraft"), ParserSources.getHtml("Leiteigenschaft", "Gewandtheit/Körperkraft")}
         });
     }
 
@@ -46,9 +47,18 @@ public class ParsePrimaryAttributesServiceTest extends AbstractParseServiceTest 
     public void testParse() {
         for (String line : lines) {
             Document document = Jsoup.parse(line);
-            Ability ability = service.parsePrimaryAttributes(document);
-            assertNotNull("line: " + line, ability);
-            assertTrue("line: " + line, expected.equals(ability.getName()));
+
+            List<Attribute> primaryAttributes = service.parsePrimaryAttributes(document);
+            assertNotNull("line: " + line, primaryAttributes);
+            assertEquals("line: " + line, expected.size(), primaryAttributes.size());
+
+
+            for (int i = 0; i < primaryAttributes.size(); i++) {
+                Attribute actualResult = primaryAttributes.get(i);
+                String expectedValue = expected.get(i);
+
+                assertTrue("Expected \"" + expectedValue + "\" but was: " + actualResult.getName(), expectedValue.equals(actualResult.getName()));
+            }
         }
     }
 

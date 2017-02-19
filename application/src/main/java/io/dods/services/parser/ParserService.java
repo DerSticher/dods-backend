@@ -88,7 +88,7 @@ class ParserService {
         value.setDuration(parseDurationService.parseDuration(document));
         value.setTarget(parseTargetService.parseTargets(document));
         value.setAspect(parseAspectService.parseAspect(document));
-        value.setLeiteigenschaft(parsePrimaryAttributesService.parsePrimaryAttributes(document));
+        value.setPrimaryAttributes(parsePrimaryAttributesService.parsePrimaryAttributes(document));
         value.setPublications(parsePublicationServiceService.parsePublications(document));
 
         return value;
@@ -99,7 +99,7 @@ class ParserService {
             return parseSimple(url, value -> new CombatTechnique(
                     value.getWikiUrl(),
                     value.getPublications(),
-                    value.getLeiteigenschaft(),
+                    value.getPrimaryAttributes(),
                     value.getImprovementChart(),
                     value.getName(),
                     isRangedCombat));

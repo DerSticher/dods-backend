@@ -2,7 +2,7 @@ package io.dods.services.held;
 
 import io.dods.api.exceptions.ResourceNotFoundException;
 import io.dods.api.hero.model.HeroUpdate;
-import io.dods.model.properties.Ability;
+import io.dods.model.properties.Attribute;
 import io.dods.model.properties.CombatTechnique;
 import io.dods.model.properties.Property;
 import io.dods.model.heroes.Hero;
@@ -33,7 +33,7 @@ public class HeroService {
     }
 
     private void initializeHero(Hero hero) {
-        Iterable<Property> abilities = propertyService.find(Ability.NAME, null, false);
+        Iterable<Property> abilities = propertyService.find(Attribute.NAME, null, false);
         abilities.forEach(eigenschaft -> hero.addProperty(new HeroProperty(eigenschaft, eigenschaft.getDefaultLevel())));
 
         Iterable<Property> skills = propertyService.find(Skill.NAME, null, false);

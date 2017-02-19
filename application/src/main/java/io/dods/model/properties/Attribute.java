@@ -14,22 +14,22 @@ import javax.persistence.Enumerated;
  * @author Richard Gottschalk
  */
 @Entity
-@DiscriminatorValue(Ability.NAME)
-public class Ability extends Property implements ImprovementCharted {
+@DiscriminatorValue(Attribute.NAME)
+public class Attribute extends Property implements ImprovementCharted {
 
     public static final String NAME = "Eigenschaft";
 
     @Enumerated(EnumType.STRING)
     private ImprovementChart improvementChart = ImprovementChart.E;
 
-    public Ability() {
+    public Attribute() {
     }
 
-    public Ability(ImprovementChart improvementChart) {
+    public Attribute(ImprovementChart improvementChart) {
         this.improvementChart = improvementChart;
     }
 
-    public Ability(ImprovementChart improvementChart, String name) {
+    public Attribute(ImprovementChart improvementChart, String name) {
         super("", name, null);
         this.improvementChart = improvementChart;
     }

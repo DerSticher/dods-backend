@@ -1,7 +1,7 @@
 package io.dods.api.properties;
 
 import io.dods.api.exceptions.ResourceNotFoundException;
-import io.dods.model.properties.Ability;
+import io.dods.model.properties.Attribute;
 import io.dods.model.properties.Property;
 import io.dods.model.properties.Skill;
 import io.dods.model.rules.Dependency;
@@ -30,7 +30,7 @@ public class PropertyApiTest {
 
     @Test
     public void getAllEigenschaftenTest() {
-        List<Property> properties = propertyApi.get(Ability.NAME, null, false);
+        List<Property> properties = propertyApi.get(Attribute.NAME, null, false);
         assertEquals(8, properties.size());
     }
 

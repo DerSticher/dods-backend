@@ -1,7 +1,7 @@
 package io.dods.model.properties.misc;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.dods.model.properties.Ability;
+import io.dods.model.properties.Attribute;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.Embeddable;
@@ -16,20 +16,20 @@ public class Check {
 
     @JsonProperty("teilprobe1")
     @OneToOne
-    private Ability check1;
+    private Attribute check1;
 
     @JsonProperty("teilprobe2")
     @OneToOne
-    private Ability check2;
+    private Attribute check2;
 
     @JsonProperty("teilprobe3")
     @OneToOne
-    private Ability check3;
+    private Attribute check3;
 
     public Check() {
     }
 
-    public Check(List<Ability> eigenschaften) {
+    public Check(List<Attribute> eigenschaften) {
         for (int i = 0; i < eigenschaften.size(); i++) {
             setCheck(i + 1, eigenschaften.get(i));
         }
@@ -40,30 +40,30 @@ public class Check {
 
         for (int i = 1; i <= 3; i++) {
             if (i > 1) stringBuilder.append('/');
-            Ability ability = getCheck(i);
-            stringBuilder.append(ability.getName());
+            Attribute attribute = getCheck(i);
+            stringBuilder.append(attribute.getName());
         }
 
         return stringBuilder.toString();
     }
 
-    public void setCheck(int oneBasedIndex, Ability ability) {
+    public void setCheck(int oneBasedIndex, Attribute attribute) {
         switch (oneBasedIndex) {
             case 1:
-                check1 = ability;
+                check1 = attribute;
                 break;
             case 2:
-                check2 = ability;
+                check2 = attribute;
                 break;
             case 3:
-                check3 = ability;
+                check3 = attribute;
                 break;
             default:
                 throw new IllegalArgumentException(String.format("index has to be 1, 2 or 3. (Was %d)", oneBasedIndex));
         }
     }
 
-    public Ability getCheck(int oneBasedIndex) {
+    public Attribute getCheck(int oneBasedIndex) {
         switch (oneBasedIndex) {
             case 1:
                 return check1;
