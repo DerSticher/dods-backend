@@ -76,7 +76,7 @@ public class PropertyApiTest {
         List<Property> properties = propertyApi.get("Eigenschaft", "Mut", false);
         Property mut = properties.get(0);
 
-        propertyApi.getAbhangigkeit(mut.getId());
+        propertyApi.getDependencyById(mut.getId());
     }
 
     @Test
@@ -85,7 +85,7 @@ public class PropertyApiTest {
         Assume.assumeTrue("ignore if Reich was not found! Probably it is not parsed, yet", properties.size() > 0);
         Property reich = properties.get(0);
 
-        Dependency dependency = propertyApi.getAbhangigkeit(reich.getId()); // ID 209 is "Reich"
+        Dependency dependency = propertyApi.getDependencyById(reich.getId()); // ID 209 is "Reich"
         assertNotNull("Reich should have some sort of Dependency!", dependency);
     }
 

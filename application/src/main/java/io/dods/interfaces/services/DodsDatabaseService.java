@@ -19,7 +19,9 @@ public interface DodsDatabaseService<
 
     default DATA findById(ID id) throws ResourceNotFoundException {
         DATA byId = getRepository().findById(id);
-        if (byId == null) throw new ResourceNotFoundException();
+        if (byId == null) {
+            throw new ResourceNotFoundException(String.format("Unable to find id %s", String.valueOf(id)));
+        }
         return byId;
     }
 

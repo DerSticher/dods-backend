@@ -1,9 +1,9 @@
 package io.dods.api.properties;
 
 import io.dods.model.properties.Property;
+import io.dods.model.rules.Dependency;
 import io.dods.services.dependency.DependencyService;
 import io.dods.services.properties.property.PropertyService;
-import io.dods.model.rules.Dependency;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -50,7 +50,6 @@ public class PropertyApi {
         return propertyService.findById(Long.parseLong(id));
     }
 
-    @ApiOperation("a list of subcategories if available. Or an empty list")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "the List", response = Property.class, responseContainer = "List")
     })
@@ -60,13 +59,12 @@ public class PropertyApi {
         return propertyService.findSubcategoriesById(Long.parseLong(id));
     }
 
-    @ApiOperation("a list of subcategories if available. Or an empty list")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "the List", response = Property.class, responseContainer = "List")
+            @ApiResponse(code = 200, message = "the List", response = Dependency.class)
     })
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "attribut/{id}/abhangigkeit", method = RequestMethod.GET)
-    public Dependency getAbhangigkeit(@PathVariable("id") long id) {
+    public Dependency getDependencyById(@PathVariable("id") long id) {
         return dependencyService.findByEffectProperty(id);
     }
 
