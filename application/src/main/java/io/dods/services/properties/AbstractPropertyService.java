@@ -27,7 +27,8 @@ public abstract class AbstractPropertyService<T extends Property> {
     public T findById(long id) {
         T attribut = getRepository().findById(id);
         if (attribut != null) return attribut;
-        throw new ResourceNotFoundException();
+
+        throw new ResourceNotFoundException(String.format("%s was not able to find id %d", getClass().getSimpleName(), id));
     }
 
     public T save(T attribut) {
