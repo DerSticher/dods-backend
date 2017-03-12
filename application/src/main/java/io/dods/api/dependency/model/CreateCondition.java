@@ -28,7 +28,6 @@ public class CreateCondition {
         AND,
         OR,
         MIN,
-        MAX,
         NOT,
         HAS
     }

@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class HeroProperty {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private long id;
 
@@ -30,6 +30,10 @@ public class HeroProperty {
 
     public HeroProperty() {
         // default constructor for ORM
+    }
+
+    public HeroProperty(@NotNull Property property) {
+        this(property, 1);
     }
 
     public HeroProperty(@NotNull Property property, int level) {
@@ -54,7 +58,7 @@ public class HeroProperty {
         this.level = level;
     }
 
-    public boolean isAttribut(Property property) {
+    public boolean isProperty(Property property) {
         if (this.property != null) return this.property.equals(property);
         return false;
     }

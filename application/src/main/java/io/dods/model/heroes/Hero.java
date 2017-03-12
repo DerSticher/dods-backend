@@ -2,6 +2,7 @@ package io.dods.model.heroes;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dods.model.Named;
+import io.dods.model.creation.Experience;
 import io.dods.model.properties.Property;
 import io.dods.model.properties.misc.ApFix;
 import org.hibernate.annotations.GenericGenerator;
@@ -11,6 +12,8 @@ import org.jetbrains.annotations.Nullable;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author Richard Gottschalk
@@ -58,9 +61,16 @@ public class Hero implements ApFix, Named {
     @JsonProperty("groesse")
     private double bodyHeight;
 
-    @Nullable
-    public HeroProperty getProperty(Property property) {
-        return heroProperties.parallelStream().filter(a -> a.isAttribut(property)).findFirst().orElse(null);
+    @ManyToOne
+    @JsonProperty("start_erfahrung")
+    private Experience startingExperience;
+
+    @Column
+    @JsonProperty("erfahrung_ignorieren")
+    private boolean ignoreExperience;
+
+    public Optional<HeroProperty> getProperty(Property property) {
+        return heroProperties.parallelStream().filter(a -> a.isProperty(property)).findFirst();
     }
 
     @Nullable
@@ -79,11 +89,11 @@ public class Hero implements ApFix, Named {
                     Property.class.getSimpleName()));
         }
 
-        @Nullable HeroProperty currentHeroProperty = getProperty(heroProperty.getProperty());
-        if (currentHeroProperty == null) {
-            heroProperties.add(heroProperty);
-        } else {
+        HeroProperty currentHeroProperty = getProperty(heroProperty.getProperty()).orElse(null);
+        if (currentHeroProperty != null) {
             currentHeroProperty.setLevel(heroProperty.getLevel());
+        } else {
+            heroProperties.add(heroProperty);
         }
     }
 
@@ -115,6 +125,12 @@ public class Hero implements ApFix, Named {
      */
     public List<HeroProperty> getHeroProperties() {
         return heroProperties;
+    }
+
+    public List<HeroProperty> getHeroProperties(String type) {
+        return heroProperties.stream()
+                .filter(heroProperty -> heroProperty.getProperty().getType().equals(type))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -189,5 +205,21 @@ public class Hero implements ApFix, Named {
 
     public double getBodyHeight() {
         return bodyHeight;
+    }
+
+    public Experience getStartingExperience() {
+        return startingExperience;
+    }
+
+    public void setStartingExperience(Experience startingExperience) {
+        this.startingExperience = startingExperience;
+    }
+
+    public boolean ignoreExperience() {
+        return ignoreExperience;
+    }
+
+    public void setIgnoreExperience(boolean ignoreExperience) {
+        this.ignoreExperience = ignoreExperience;
     }
 }

@@ -25,4 +25,8 @@ public interface NamedDodsDatabaseService<
 
     DATA findByNameOrCreate(String name);
 
+    default List<DATA> findAllSorted() {
+        return getRepository().findAllByOrderByNameAsc();
+    }
+
 }

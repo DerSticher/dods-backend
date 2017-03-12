@@ -1,16 +1,20 @@
 package io.dods.services.dependency;
 
-import io.dods.api.dependency.model.CreateDependency;
 import io.dods.api.dependency.model.CreateCondition;
+import io.dods.api.dependency.model.CreateDependency;
 import io.dods.api.dependency.model.CreateEffect;
 import io.dods.api.exceptions.ResourceNotFoundException;
+import io.dods.interfaces.services.DodsDatabaseService;
+import io.dods.model.conditions.*;
+import io.dods.model.conditions.level.MinLevelCondition;
+import io.dods.model.conditions.level.check.FixedLevelCheck;
+import io.dods.model.conditions.lists.AndCondition;
+import io.dods.model.conditions.lists.OrCondition;
+import io.dods.model.properties.Property;
 import io.dods.model.rules.Dependency;
 import io.dods.model.rules.Effect;
 import io.dods.services.properties.property.PropertyService;
-import io.dods.interfaces.services.DodsDatabaseService;
-import io.dods.model.properties.Property;
-import io.dods.model.conditions.*;
-import io.dods.services.regelwerk.RegelwerkService;
+import io.dods.services.rules.RuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +34,7 @@ public class DependencyService implements DodsDatabaseService<Long, Dependency, 
     private PropertyService propertyService;
 
     @Autowired
-    private RegelwerkService regelwerkService;
+    private RuleService ruleService;
 
     public Dependency persist(CreateDependency createDependency) {
         Dependency dependency = parse(createDependency);
@@ -46,15 +50,19 @@ public class DependencyService implements DodsDatabaseService<Long, Dependency, 
     }
 
     public Dependency findByEffectProperty(long attributId) {
-        Dependency dependency = dependencyRepository.findByEffectPropertyId(attributId);
+        Dependency dependency = dependencyRepository.findFirstByEffectPropertyId(attributId);
         if (dependency == null) throw new ResourceNotFoundException();
         return dependency;
+    }
+
+    public List<Dependency> findAllObligatory() {
+        return dependencyRepository.findByEffectPropertyIsNull();
     }
 
     private Dependency parse(CreateDependency createDependency) {
         Dependency dependency = new Dependency();
 
-        dependency.setRegelwerk(regelwerkService.findById(createDependency.getRegelwerkId()));
+        dependency.setRule(ruleService.findById(createDependency.getRegelwerkId()));
         dependency.setCondition(parse(createDependency.getCreateCondition()));
         dependency.setEffect(parse(createDependency.getCreateEffect()));
 
@@ -65,7 +73,6 @@ public class DependencyService implements DodsDatabaseService<Long, Dependency, 
         Effect effect = new Effect();
 
         effect.setProperty(propertyService.findById(createEffect.getPropertyId()));
-        effect.setLevel(createEffect.getLevel());
 
         return effect;
     }
@@ -81,10 +88,8 @@ public class DependencyService implements DodsDatabaseService<Long, Dependency, 
                 condition = new OrCondition(parse(createCondition.getSublist()));
                 break;
             case MIN:
-                condition = new MinCondition(propertyService.findById(createCondition.getPropertyId()), createCondition.getLevel());
-                break;
-            case MAX:
-                condition = new MaxCondition(propertyService.findById(createCondition.getPropertyId()), createCondition.getLevel());
+                condition = new MinLevelCondition(propertyService.findById(createCondition.getPropertyId()),
+                        new FixedLevelCheck(createCondition.getLevel()), 0);
                 break;
             case NOT:
                 condition = new NotCondition(parse(createCondition.getSubelement()));

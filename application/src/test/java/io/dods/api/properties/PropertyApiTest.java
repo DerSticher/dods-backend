@@ -70,15 +70,6 @@ public class PropertyApiTest {
         assertTrue("Adel should have 3 subcategories", subcategories.size() == 3);
     }
 
-    @Test(expected = ResourceNotFoundException.class)
-    public void getAbhaengigkeitOfEigenschaftTest() {
-        // "Mut" should not have any sort of Abhaengigkeit!
-        List<Property> properties = propertyApi.get("Eigenschaft", "Mut", false);
-        Property mut = properties.get(0);
-
-        propertyApi.getDependencyById(mut.getId());
-    }
-
     @Test
     public void getAbhaengigkeitOfVorteilTest() {
         List<Property> properties = propertyApi.get("Vorteil", "Reich", false);

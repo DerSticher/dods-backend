@@ -10,22 +10,33 @@ public class CreateEffect {
     @JsonProperty("propertyId")
     private long propertyId;
 
-    @JsonProperty("level")
-    private int level;
+    @JsonProperty("absoluteLevel")
+    private int absoluteLevel;
+
+    @JsonProperty("relativeLevel")
+    private int relativeLevel;
 
     public long getPropertyId() {
         return propertyId;
     }
 
-    public void setPropertyId(int propertyId) {
+    public void setPropertyId(long propertyId) {
         this.propertyId = propertyId;
     }
 
-    public int getLevel() {
-        return level;
+    public int getAbsoluteLevel() {
+        return absoluteLevel;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
+    public void setAbsoluteLevel(int absoluteLevel) {
+        this.absoluteLevel = absoluteLevel;
+    }
+
+    public int getRelativeLevel() {
+        return relativeLevel;
+    }
+
+    public void setRelativeLevel(int relativeLevel) {
+        this.relativeLevel = relativeLevel;
     }
 }

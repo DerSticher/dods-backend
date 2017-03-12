@@ -16,5 +16,6 @@ public interface NamedDodsRepository<
 
     List<DATA> findByName(String name);
     DATA findFirstByName(String name);
+    List<DATA> findAllByOrderByNameAsc();
 
 }

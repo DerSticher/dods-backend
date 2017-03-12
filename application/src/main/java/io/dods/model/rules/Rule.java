@@ -9,17 +9,17 @@ import javax.persistence.Entity;
  * @author Richard Gottschalk
  */
 @Entity
-public class Regelwerk extends BaseNamedValue {
+public class Rule extends BaseNamedValue {
 
     @Column
     private boolean isOptional;
 
-    public Regelwerk(boolean isOptional) {
+    public Rule(boolean isOptional) {
         super();
         this.isOptional = isOptional;
     }
 
-    public Regelwerk(boolean isOptional, String name) {
+    public Rule(boolean isOptional, String name) {
         super(name);
         this.isOptional = isOptional;
     }

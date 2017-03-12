@@ -2,8 +2,10 @@ package io.dods.model.rules;
 
 import io.dods.interfaces.HasId;
 import io.dods.model.conditions.Condition;
+import io.dods.model.conditions.LevelRange;
 import io.dods.model.heroes.Hero;
-import org.jetbrains.annotations.Contract;
+import io.dods.model.heroes.HeroProperty;
+import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.*;
 
@@ -15,6 +17,9 @@ import javax.persistence.*;
  * @author Richard Gottschalk
  */
 @Entity
+@Table(indexes = {
+        @Index(columnList = "id")
+})
 public class Dependency implements HasId<Long> {
 
     @Id
@@ -22,7 +27,7 @@ public class Dependency implements HasId<Long> {
     private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    private Regelwerk regelwerk;
+    private Rule rule;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Condition condition;
@@ -37,30 +42,22 @@ public class Dependency implements HasId<Long> {
         this(effect, condition, null);
     }
 
-    public Dependency(Effect effect, Condition condition, Regelwerk regelwerk) {
+    public Dependency(Effect effect, Condition condition, Rule rule) {
         this.effect = effect;
         this.condition = condition;
-        this.regelwerk = regelwerk;
+        this.rule = rule;
     }
 
     public boolean isConditionFulfilled(Hero hero) {
         return condition == null || condition.isFulfilled(hero);
     }
 
-    public boolean isEffectFulfilled(Hero hero) {
-        return effect.isFulfilled(hero);
+    public Rule getRule() {
+        return rule;
     }
 
-    public Status getStatus(Hero hero) {
-        return Status.parseStatus(this, hero);
-    }
-
-    public Regelwerk getRegelwerk() {
-        return regelwerk;
-    }
-
-    public void setRegelwerk(Regelwerk regelwerk) {
-        this.regelwerk = regelwerk;
+    public void setRule(Rule rule) {
+        this.rule = rule;
     }
 
     public Condition getCondition() {
@@ -87,34 +84,30 @@ public class Dependency implements HasId<Long> {
         this.id = id;
     }
 
-    public enum Status {
-        NOTHING_FULFILLED(true),
-        REQUIREMENTS_MET(true),
-        REQUIREMENTS_NOT_MET(false),
-        FULFILLED(true);
-
-        private boolean isValid;
-
-        Status(boolean isValid) {
-            this.isValid = isValid;
-        }
-
-        public boolean isValid() {
-            return isValid;
-        }
-
-        @Contract("null, _ -> fail; !null, null -> fail")
-        public static Status parseStatus(Dependency dependency, Hero hero) {
-            if (dependency == null) throw new IllegalArgumentException("dependency cannot be null");
-            if (hero == null) throw new IllegalArgumentException("heroes cannot be null");
-
-            boolean conditionFulfilled = dependency.isConditionFulfilled(hero);
-            boolean effectFulfilled = dependency.isEffectFulfilled(hero);
-
-            if (conditionFulfilled && effectFulfilled) return FULFILLED;
-            if (conditionFulfilled) return REQUIREMENTS_MET;
-            if (effectFulfilled) return REQUIREMENTS_NOT_MET;
-            return NOTHING_FULFILLED;
-        }
+    public boolean isObligatory() {
+        return getEffect().getProperty() == null;
     }
+
+    public boolean isEffectFulfilledByExperienceLevel(Hero hero) {
+        LevelRange levelRange = getLevelRange(hero);
+        return getEffect().isFulfilledByExperience(hero, levelRange);
+    }
+
+    @Nullable
+    private LevelRange getLevelRange(Hero hero) {
+        if (condition != null) {
+            return condition.getLevelRange(hero);
+        }
+        return null;
+    }
+
+    public int getMaxEffectLevel(Hero hero) {
+        LevelRange levelRange = getLevelRange(hero);
+        return effect.getMaxLevel(hero, levelRange);
+    }
+
+    public int getHeroEffectLevel(Hero hero) {
+        return hero.getProperty(effect.getProperty()).map(HeroProperty::getLevel).orElse(0);
+    }
+
 }

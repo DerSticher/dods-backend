@@ -5,9 +5,11 @@ import io.dods.api.dependency.model.CreateCondition;
 import io.dods.api.dependency.model.CreateEffect;
 import io.dods.api.properties.PropertyApi;
 import io.dods.api.exceptions.ResourceNotFoundException;
+import io.dods.model.properties.Advantage;
 import io.dods.model.properties.Property;
 import io.dods.model.conditions.Condition;
 import io.dods.model.rules.Dependency;
+import io.dods.services.properties.advantage.AdvantageService;
 import org.junit.Assume;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,6 +35,9 @@ public class AbhaengigkeitApiTest {
 
     @Autowired
     private PropertyApi propertyApi;
+
+    @Autowired
+    private AdvantageService advantageService;
 
     @Test
     public void getAbhaengigkeitByIdTest() {
@@ -63,7 +68,7 @@ public class AbhaengigkeitApiTest {
 
     @Test (expected = ResourceNotFoundException.class)
     public void findOneWithIllegalIdTest() {
-        api.find(1L);// 1 is "Mut"
+        api.find(-1L);
     }
 
     @Test
@@ -97,14 +102,16 @@ public class AbhaengigkeitApiTest {
 
     @Test
     public void testPostAndDeleteTest() {
+        Advantage advantage = advantageService.save(new Advantage());
+
         CreateCondition createCondition = new CreateCondition();
         createCondition.setLevel(15);
         createCondition.setPropertyId(1);
         createCondition.setType(CreateCondition.Type.MIN);
 
         CreateEffect createEffect = new CreateEffect();
-        createEffect.setPropertyId(9);
-        createEffect.setLevel(20);
+        createEffect.setPropertyId(advantage.getId());
+        createEffect.setAbsoluteLevel(20);
 
         CreateDependency createDependency = new CreateDependency();
         createDependency.setCreateCondition(createCondition);
@@ -114,11 +121,11 @@ public class AbhaengigkeitApiTest {
         assertNotNull(dependency);
         assertNotNull(dependency.getId());
 
-        assertEquals("there should be exactly one Dependency", 1L, api.find(9L).size());
+        assertEquals("there should be exactly one Dependency", 1L, api.find(advantage.getId()).size());
 
         api.delete(dependency.getId());
         try {
-            assertEquals("there should not be an Dependency anymore", 0L, api.find(9L).size());
+            assertEquals("there should not be an Dependency anymore", 0L, api.find(advantage.getId()).size());
             assertTrue(false); // should not reach this code!
         } catch (ResourceNotFoundException expected) {
             assertTrue(true);

@@ -2,13 +2,8 @@ package io.dods.services.held;
 
 import io.dods.api.exceptions.ResourceNotFoundException;
 import io.dods.api.hero.model.HeroUpdate;
-import io.dods.model.properties.Attribute;
-import io.dods.model.properties.CombatTechnique;
-import io.dods.model.properties.Property;
 import io.dods.model.heroes.Hero;
 import io.dods.services.properties.property.PropertyService;
-import io.dods.model.properties.Skill;
-import io.dods.model.heroes.HeroProperty;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,23 +20,6 @@ public class HeroService {
 
     @Autowired
     private PropertyService propertyService;
-
-    public Hero createNew() {
-        Hero hero = new Hero();
-        initializeHero(hero);
-        return heldRepository.save(hero);
-    }
-
-    private void initializeHero(Hero hero) {
-        Iterable<Property> abilities = propertyService.find(Attribute.NAME, null, false);
-        abilities.forEach(eigenschaft -> hero.addProperty(new HeroProperty(eigenschaft, eigenschaft.getDefaultLevel())));
-
-        Iterable<Property> skills = propertyService.find(Skill.NAME, null, false);
-        skills.forEach(fertigkeit -> hero.addProperty(new HeroProperty(fertigkeit, fertigkeit.getDefaultLevel())));
-
-        Iterable<Property> combatAbilities = propertyService.find(CombatTechnique.NAME, null, false);
-        combatAbilities.forEach(kampftechnik -> hero.addProperty(new HeroProperty(kampftechnik, kampftechnik.getDefaultLevel())));
-    }
 
     public Hero findById(String id) {
         return heldRepository.findById(id);
@@ -90,5 +68,9 @@ public class HeroService {
 
     public Iterable<Hero> findAll() {
         return heldRepository.findAll();
+    }
+
+    public Hero save(Hero hero) {
+        return heldRepository.save(hero);
     }
 }

@@ -4,6 +4,8 @@ import io.dods.api.hero.model.HeroUpdate;
 import io.dods.model.heroes.Hero;
 import io.dods.services.held.HeroService;
 import io.dods.model.properties.Property;
+import io.dods.model.rules.Dependency;
+import io.dods.services.creation.CreationService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -17,6 +19,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping
 @RestController
 public class HeroApi {
+
+    @Autowired
+    private CreationService creationService;
 
     @Autowired
     private HeroService heroService;
@@ -46,7 +51,7 @@ public class HeroApi {
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "held", method = RequestMethod.POST)
     public Hero post() {
-        return heroService.createNew();
+        return creationService.createNew();
     }
 
     @ApiOperation("deletes a heroes")

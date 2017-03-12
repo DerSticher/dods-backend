@@ -1,5 +1,9 @@
 package io.dods.services.parser.valueParser;
 
+import io.dods.model.conditions.level.MinLevelCondition;
+import io.dods.model.conditions.level.check.FixedLevelCheck;
+import io.dods.model.conditions.lists.AndCondition;
+import io.dods.model.conditions.lists.OrCondition;
 import io.dods.model.properties.Property;
 import io.dods.model.rules.Effect;
 import io.dods.services.dependency.DependencyService;
@@ -81,7 +85,7 @@ public class CreateDependencyService {
     private Dependency createAbhangigkeit(Property effect, String voraussetzung) {
         Dependency dependency = new Dependency();
 
-        dependency.setEffect(new Effect(effect, 1));
+        dependency.setEffect(new Effect(effect));
 
         Condition condition = parseBedingung(voraussetzung);
         if (condition == null) return null;
@@ -144,8 +148,8 @@ public class CreateDependencyService {
                 }
             }
         }
-        if (andBedingung.getAnd().size() == 1) {
-            return andBedingung.getAnd().get(0);
+        if (andBedingung.getConditions().size() == 1) {
+            return andBedingung.getConditions().get(0);
         }
 
         for (Condition condition : bedingungenBuffer) {
@@ -200,7 +204,7 @@ public class CreateDependencyService {
                 if (text.length() > 0) {
                     try {
                         int level = Integer.parseInt(strings.get(strings.size() - 1));
-                        return new MinCondition(property, level);
+                        return new MinLevelCondition(property, new FixedLevelCheck(level), 0);
                     } catch (NumberFormatException ignore) {
                         Property subProperty = findAttribut(text);
                         if (subProperty != null) {

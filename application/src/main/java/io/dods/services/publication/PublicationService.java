@@ -41,7 +41,7 @@ public class PublicationService implements DodsDatabaseService<Long, Publication
             publication.setBook(book);
             publication.setPage(page);
 
-            publication = publicationRepository.save(publication);
+            return getRepository().save(publication);
         }
         return publication;
     }

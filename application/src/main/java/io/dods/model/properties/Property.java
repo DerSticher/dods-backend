@@ -21,6 +21,9 @@ import java.util.List;
  * @author Richard Gottschalk
  */
 @Entity
+@Table(indexes = {
+        @Index(columnList = "id")
+})
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 @JsonAutoDetect()
@@ -50,9 +53,7 @@ public abstract class Property implements HasId<Long>, Named, Serializable {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Publication> publication;
 
-    public Property() {
-        this.type = getClass().getSimpleName();
-    }
+    public Property() {}
 
     public Property(String wikiUrl, String name, List<Publication> publications) {
         this();
@@ -115,11 +116,11 @@ public abstract class Property implements HasId<Long>, Named, Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || !getClass().equals(o.getClass())) return false;
 
         Property property = (Property) o;
 
-        return id == property.id;
+        return id.equals(property.id);
     }
 
     @Override

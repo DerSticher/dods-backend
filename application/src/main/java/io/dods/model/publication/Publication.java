@@ -16,7 +16,7 @@ public class Publication implements HasId<Long>, Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonProperty("werk")
     private Book book;
 
