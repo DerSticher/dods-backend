@@ -62,6 +62,12 @@ public abstract class Property implements HasId<Long>, Named, Serializable {
         this.publication = publications;
     }
 
+    public void update(Property property) {
+        this.name = property.name;
+        this.wikiUrl = property.wikiUrl;
+        this.type = property.type;
+    }
+
     public int calculateAp(int level) {
         if (this instanceof ImprovementCharted) {
             return ((ImprovementCharted)this).getAp(level);

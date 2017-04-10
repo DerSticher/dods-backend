@@ -143,13 +143,22 @@ public class ParseListService {
 
         T persistedChild = service.findByNameAndSubcategoryOf(attribut.getName(), persistedParent);
 
-        if (persistedChild != null) return persistedChild;
+        if (persistedChild != null) {
+            // check for update
+            update(persistedChild, attribut);
+            service.save(persistedChild);
+            return persistedChild;
+        }
 
         attribut.setSubcategoryOf(persistedParent);
         loggerService.info(getClass(),
                 String.format("persisting new %s named \"%s\" referencing %s",
                         attribut.getClass().getSimpleName(), attribut.getName(), persistedParent.getName()));
         return service.save(attribut);
+    }
+
+    private <T extends Property> void update(@NotNull T persistedProperty, @NotNull T parsedProperty) {
+        persistedProperty.update(parsedProperty);
     }
 
     private <T extends Property> T persistParent(@NotNull AbstractPropertyService<T> service, @NotNull T attribut) {

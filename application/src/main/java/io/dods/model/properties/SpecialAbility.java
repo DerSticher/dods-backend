@@ -21,10 +21,29 @@ public class SpecialAbility extends Property implements ApFix, Casting, Checking
     public static final String NAME = "Sonderfertigkeit";
 
     public enum Group {
-        KAMPF,
         KARMAL,
+
         MAGISCH,
-        PROFAN
+        MAGISCH_AHNENZEICHEN,
+        MAGISCH_DOLCH,
+        MAGISCH_ELFENLIED,
+        MAGISCH_ELFENLIED_VERZERRT,
+        MAGISCH_ERWEITERT,
+        MAGISCH_FLUCH,
+        MAGISCH_HERRSCHAFTSRITUAL,
+        MAGISCH_STAB,
+        MAGISCH_VERTRAUTENTIER,
+        MAGISCH_STIL,
+
+        PROFAN,
+        PROFAN_ALLGEMEIN,
+        PROFAN_BEFEHL,
+        PROFAN_KAMPF,
+        PROFAN_KAMPF_ERWEITERT,
+        PROFAN_KAMPF_STIL,
+        PROFAN_PRUEGEL,
+        PROFAN_SCHICKSALSPUNKT,
+        PROFAN_TIER
     }
 
     @Column
@@ -77,6 +96,21 @@ public class SpecialAbility extends Property implements ApFix, Casting, Checking
         this.range = range;
         this.duration = duration;
         this.improvementChart = improvementChart;
+    }
+
+    @Override
+    public void update(Property property) {
+        super.update(property);
+
+        SpecialAbility castedProperty = (SpecialAbility) property;
+        this.ap = castedProperty.ap;
+        this.group = castedProperty.group;
+        this.castTime = castedProperty.castTime;
+        this.cost = castedProperty.cost;
+        this.check = castedProperty.check;
+        this.range = castedProperty.range;
+        this.duration = castedProperty.duration;
+        this.improvementChart = castedProperty.improvementChart;
     }
 
     @Override

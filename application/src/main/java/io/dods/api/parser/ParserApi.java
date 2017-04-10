@@ -83,30 +83,30 @@ public class ParserApi {
     public List<SpecialAbility> parseSonderfertigkeit() {
         List<SpecialAbility> specialAbility = new ArrayList<>();
 
-        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/Ahnenzeichen.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH_AHNENZEICHEN, "http://www.ulisses-regelwiki.de/index.php/Ahnenzeichen.html"));
         specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.KARMAL, "http://www.ulisses-regelwiki.de/index.php/SF_karmal.html"));
         specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/SF_Magie.html"));
-        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.PROFAN, "http://www.ulisses-regelwiki.de/index.php/sf_allgemeine_sonderfertigkeiten.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.PROFAN_ALLGEMEIN, "http://www.ulisses-regelwiki.de/index.php/sf_allgemeine_sonderfertigkeiten.html"));
         specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/bannundschutz.html"));
-        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.KAMPF, "http://www.ulisses-regelwiki.de/index.php/Befehls_SF.html"));
-        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/drituale.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.PROFAN_BEFEHL, "http://www.ulisses-regelwiki.de/index.php/Befehls_SF.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH_DOLCH, "http://www.ulisses-regelwiki.de/index.php/drituale.html"));
 
-        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.KAMPF, "http://www.ulisses-regelwiki.de/index.php/SF_Erweitertekampfstilsonderfertigkeiten.html"));
-        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.PROFAN, "http://www.ulisses-regelwiki.de/index.php/ESF_Elfenlieder.html"));
-        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/ErweiterteZaubersonderfertigkeiten.html"));
-        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/herituel.html"));
-        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/HSF_Hexenflueche.html"));
-        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.KAMPF, "http://www.ulisses-regelwiki.de/index.php/sf_kampfsonderfertigkeiten.html"));
-        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.KAMPF, "http://www.ulisses-regelwiki.de/index.php/SF_Kampfstilsonderfertigkeiten.html"));
-        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.PROFAN, "http://www.ulisses-regelwiki.de/index.php/SF_Pruegelsonderfertigkeiten.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.PROFAN_KAMPF_ERWEITERT, "http://www.ulisses-regelwiki.de/index.php/SF_Erweitertekampfstilsonderfertigkeiten.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH_ELFENLIED, "http://www.ulisses-regelwiki.de/index.php/ESF_Elfenlieder.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH_ERWEITERT, "http://www.ulisses-regelwiki.de/index.php/ErweiterteZaubersonderfertigkeiten.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH_HERRSCHAFTSRITUAL, "http://www.ulisses-regelwiki.de/index.php/herituel.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH_FLUCH, "http://www.ulisses-regelwiki.de/index.php/HSF_Hexenflueche.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.PROFAN_KAMPF, "http://www.ulisses-regelwiki.de/index.php/sf_kampfsonderfertigkeiten.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.PROFAN_KAMPF_STIL, "http://www.ulisses-regelwiki.de/index.php/SF_Kampfstilsonderfertigkeiten.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.PROFAN_PRUEGEL, "http://www.ulisses-regelwiki.de/index.php/SF_Pruegelsonderfertigkeiten.html"));
 
-        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.PROFAN, "http://www.ulisses-regelwiki.de/index.php/SF_Schick.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.PROFAN_SCHICKSALSPUNKT, "http://www.ulisses-regelwiki.de/index.php/SF_Schick.html"));
         // ... Sprachen und Schriften ...
-        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/SSF_Stabzauber.html"));
-        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.PROFAN, "http://www.ulisses-regelwiki.de/index.php/SF_Tier.html"));
-        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.PROFAN, "http://www.ulisses-regelwiki.de/index.php/VSF_Vertrautentricks.html"));
-        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/verelfenl.html"));
-        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH, "http://www.ulisses-regelwiki.de/index.php/Zauberstilsonderfertigkeiten.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH_STAB, "http://www.ulisses-regelwiki.de/index.php/SSF_Stabzauber.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.PROFAN_TIER, "http://www.ulisses-regelwiki.de/index.php/SF_Tier.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH_VERTRAUTENTIER, "http://www.ulisses-regelwiki.de/index.php/VSF_Vertrautentricks.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH_ELFENLIED_VERZERRT, "http://www.ulisses-regelwiki.de/index.php/verelfenl.html"));
+        specialAbility.addAll(parseListService.parseSpecialAbility(SpecialAbility.Group.MAGISCH_STIL, "http://www.ulisses-regelwiki.de/index.php/Zauberstilsonderfertigkeiten.html"));
 
         return specialAbility;
     }
