@@ -176,6 +176,7 @@ public class ParseListService {
 
         return urls.stream()
                 .map(url -> parserService.parseCombatTechnique(url, isRangedCombat))
+                .flatMap(List::stream)
                 .map(x -> persist(combatTechniqueService, x))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
@@ -187,6 +188,7 @@ public class ParseListService {
 
         return urls.stream()
                 .map(parserService::parseLiturgicalChant)
+                .flatMap(List::stream)
                 .map(x -> persist(liturgicalChantService, x))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
@@ -198,6 +200,7 @@ public class ParseListService {
 
         return urls.stream()
                 .map(parserService::parseRitual)
+                .flatMap(List::stream)
                 .map(x -> persist(ritualService, x))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
@@ -209,6 +212,7 @@ public class ParseListService {
 
         return urls.stream()
                 .map(url -> parserService.parseSpecialAbility(url, group))
+                .flatMap(List::stream)
                 .map(x -> persist(specialAbilityService, x))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
@@ -220,6 +224,7 @@ public class ParseListService {
 
         return urls.stream()
                 .map(parserService::parseBless)
+                .flatMap(List::stream)
                 .map(x -> persist(blessService, x))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
@@ -231,6 +236,7 @@ public class ParseListService {
 
         return urls.stream()
                 .map(parserService::parseAdvantage)
+                .flatMap(List::stream)
                 .map(x -> persist(advantageService, x))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
@@ -242,6 +248,7 @@ public class ParseListService {
 
         return urls.stream()
                 .map(parserService::parseSpell)
+                .flatMap(List::stream)
                 .map(x -> persist(spellService, x))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
@@ -253,6 +260,7 @@ public class ParseListService {
 
         return urls.stream()
                 .map(parserService::parseCantrip)
+                .flatMap(List::stream)
                 .map(x -> persist(cantripService, x))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
@@ -264,6 +272,7 @@ public class ParseListService {
 
         return urls.stream()
                 .map(parserService::parseCeremony)
+                .flatMap(List::stream)
                 .map(x -> persist(ceremonyService, x))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());

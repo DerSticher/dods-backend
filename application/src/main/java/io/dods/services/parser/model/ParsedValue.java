@@ -3,6 +3,7 @@ package io.dods.services.parser.model;
 import io.dods.model.properties.Attribute;
 import io.dods.model.properties.misc.*;
 import io.dods.model.publication.Publication;
+import io.dods.services.parser.valueParser.ParseApValueService;
 import org.springframework.util.SerializationUtils;
 
 import java.io.Serializable;
@@ -25,9 +26,10 @@ public class ParsedValue implements Serializable {
     private Duration duration;
     private List<Target> target;
     private List<Aspect> aspect;
-    private int apWert;
+    private int apValue;
     private List<Attribute> primaryAttributes;
     private List<Publication> publications;
+    private ParseApValueService.ParsedApValue parsedApValue;
 
     public ParsedValue copy() {
         byte[] serialize = SerializationUtils.serialize(this);
@@ -114,12 +116,12 @@ public class ParsedValue implements Serializable {
         this.cost = cost;
     }
 
-    public void setApWert(int apWert) {
-        this.apWert = apWert;
+    public void setApValue(int apValue) {
+        this.apValue = apValue;
     }
 
-    public int getApWert() {
-        return apWert;
+    public int getApValue() {
+        return apValue;
     }
 
     public String getWikiUrl() {
@@ -144,5 +146,13 @@ public class ParsedValue implements Serializable {
 
     public List<Publication> getPublications() {
         return publications;
+    }
+
+    public void setParsedApValue(ParseApValueService.ParsedApValue parsedApValue) {
+        this.parsedApValue = parsedApValue;
+    }
+
+    public ParseApValueService.ParsedApValue getParsedApValue() {
+        return parsedApValue;
     }
 }

@@ -4,6 +4,7 @@ import io.dods.model.properties.*;
 import io.dods.services.parser.misc.DocumentService;
 import io.dods.services.parser.model.ParsedData;
 import io.dods.services.parser.model.ParsedValue;
+import io.dods.services.parser.references.ParseDifferencesService;
 import io.dods.services.parser.references.ParseReferenceService;
 import io.dods.services.parser.references.ParseValueLevelService;
 import io.dods.services.parser.valueParser.*;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +23,8 @@ import java.util.stream.Collectors;
  */
 @Service
 class ParserService {
+
+    private final ParseDifferencesService parseDifferencesService;
 
     private final ParseValueLevelService parseValueLevelService;
 
@@ -53,7 +57,8 @@ class ParserService {
     private final ParsePublicationService parsePublicationServiceService;
 
     @Autowired
-    public ParserService(ParseCastTimeService parseCastTimeService, ParseValueLevelService parseValueLevelService, ParseReferenceService parseReferenceService, ParsePrimaryAttributesService parsePrimaryAttributesService, ParseApValueService parseApValueService, ParseNameService parseNameService, ParseImprovementChartService parseImprovementChartService, ParseCheckService parseCheckService, ParseRangeService parseRangeService, DocumentService documentService, ParseAspectService parseAspectService, ParseTargetService parseTargetService, ParseDurationService parseDurationService, ParseCostService parseCostService, ParsePublicationService parsePublicationServiceService) {
+    public ParserService(ParseDifferencesService parseDifferencesService, ParseCastTimeService parseCastTimeService, ParseValueLevelService parseValueLevelService, ParseReferenceService parseReferenceService, ParsePrimaryAttributesService parsePrimaryAttributesService, ParseApValueService parseApValueService, ParseNameService parseNameService, ParseImprovementChartService parseImprovementChartService, ParseCheckService parseCheckService, ParseRangeService parseRangeService, DocumentService documentService, ParseAspectService parseAspectService, ParseTargetService parseTargetService, ParseDurationService parseDurationService, ParseCostService parseCostService, ParsePublicationService parsePublicationServiceService) {
+        this.parseDifferencesService = parseDifferencesService;
         this.parseCastTimeService = parseCastTimeService;
         this.parseValueLevelService = parseValueLevelService;
         this.parseReferenceService = parseReferenceService;
@@ -81,7 +86,8 @@ class ParserService {
         value.setRange(parseRangeService.parseRange(document));
         value.setCost(parseCostService.parseCost(document));
 
-        value.setApWert(parseApValueService.parseApValue(document));
+        value.setParsedApValue(parseApValueService.parseApValue(document));
+
         value.setCastTime(parseCastTimeService.parseCastTime(document));
         value.setImprovementChart(parseImprovementChartService.parseImprovementChart(document));
         value.setCheck(parseCheckService.parseProbe(document));
@@ -94,7 +100,7 @@ class ParserService {
         return value;
     }
 
-    public ParsedData<CombatTechnique> parseCombatTechnique(String url, boolean isRangedCombat) {
+    public List<ParsedData<CombatTechnique>> parseCombatTechnique(String url, boolean isRangedCombat) {
         try {
             return parseSimple(url, value -> new CombatTechnique(
                     value.getWikiUrl(),
@@ -108,7 +114,7 @@ class ParserService {
         }
     }
 
-    public ParsedData<LiturgicalChant> parseLiturgicalChant(String url) {
+    public List<ParsedData<LiturgicalChant>> parseLiturgicalChant(String url) {
         try {
             return parseSimple(url, value -> new LiturgicalChant(
                     value.getWikiUrl(),
@@ -126,7 +132,7 @@ class ParserService {
         }
     }
 
-    public ParsedData<Ritual> parseRitual(String url) {
+    public List<ParsedData<Ritual>> parseRitual(String url) {
         try {
             return parseSimple(url, value -> new Ritual(
                     value.getWikiUrl(),
@@ -144,12 +150,12 @@ class ParserService {
         }
     }
 
-    public ParsedData<SpecialAbility> parseSpecialAbility(String url, SpecialAbility.Group group) {
+    public List<ParsedData<SpecialAbility>> parseSpecialAbility(String url, SpecialAbility.Group group) {
         try {
-            return parseSimple(url, value -> new SpecialAbility(
+            return Collections.unmodifiableList(parseSimple(url, value -> new SpecialAbility(
                         value.getWikiUrl(),
                         value.getPublications(),
-                        value.getApWert(),
+                        value.getApValue(),
                     group,
                         value.getCastTime(),
                         value.getCost(),
@@ -157,13 +163,13 @@ class ParserService {
                         value.getRange(),
                         value.getDuration(),
                         value.getImprovementChart(),
-                        value.getName()));
+                        value.getName())));
         } catch (IOException e) {
             return null;
         }
     }
 
-    public ParsedData<Bless> parseBless(String url) {
+    public List<ParsedData<Bless>> parseBless(String url) {
         try {
             return parseSimple(url, value -> new Bless(
                 value.getWikiUrl(),
@@ -179,12 +185,12 @@ class ParserService {
         }
     }
 
-    public ParsedData<Advantage> parseAdvantage(String url) {
+    public List<ParsedData<Advantage>> parseAdvantage(String url) {
         try {
             return parseSimple(url, value -> new Advantage(
                         value.getWikiUrl(),
                         value.getPublications(),
-                        value.getApWert(),
+                        value.getApValue(),
                         value.getRange(),
                         value.getName()));
         } catch (IOException e) {
@@ -192,7 +198,7 @@ class ParserService {
         }
     }
 
-    public ParsedData<Spell> parseSpell(String url) {
+    public List<ParsedData<Spell>> parseSpell(String url) {
         try {
             return parseSimple(url, value -> new Spell(
                     value.getWikiUrl(),
@@ -210,7 +216,7 @@ class ParserService {
         }
     }
 
-    public ParsedData<Cantrip> parseCantrip(String url) {
+    public List<ParsedData<Cantrip>> parseCantrip(String url) {
         try {
             return parseSimple(url, value -> new Cantrip(
                     value.getWikiUrl(),
@@ -224,7 +230,7 @@ class ParserService {
         }
     }
 
-    public ParsedData<Ceremony> parseCeremony(String url) {
+    public List<ParsedData<Ceremony>> parseCeremony(String url) {
         try {
             return parseSimple(url, value -> new Ceremony(
                     value.getWikiUrl(),
@@ -246,14 +252,24 @@ class ParserService {
         T parse(ParsedValue parsedValue);
     }
 
-    public <T extends Property> ParsedData<T> parseSimple(String url, ParseCallback<T> parseCallback) throws IOException {
+    public <T extends Property> List<ParsedData<T>> parseSimple(String url, ParseCallback<T> parseCallback) throws IOException {
         ParsedValue parsedValue = parseDetails(url);
 
+        List<ParsedValue> parsedValues = parseDifferencesService.getDifferences(parsedValue);
+
+        List<ParsedData<T>> parsedData = new ArrayList<>();
+        for (ParsedValue value : parsedValues) {
+            parsedData.add(parse(value, parseCallback));
+        }
+        return parsedData;
+    }
+
+    public <T extends Property> ParsedData<T> parse(ParsedValue parsedValue, ParseCallback<T> parseCallback) throws IOException {
         List<ParsedValue> parsedValues = new ArrayList<>();
         parsedValues.addAll(parseValueLevelService.checkForLevels(parsedValue));
         parsedValues.addAll(parseReferenceService.checkForSubcategories(parsedValue));
 
-        List<T> collect = parsedValues.stream()
+        List<T> children = parsedValues.stream()
                 .map(parseCallback::parse)
                 .collect(Collectors.toList());
 
@@ -261,6 +277,6 @@ class ParserService {
 
         T data = parseCallback.parse(parsedValue);
 
-        return new ParsedData<>(data, collect);
+        return new ParsedData<>(data, children);
     }
 }

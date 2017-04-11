@@ -1,6 +1,7 @@
 package io.dods.services.parser.references;
 
 import io.dods.services.parser.model.ParsedValue;
+import io.dods.services.parser.valueParser.ParseApValueService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,6 +24,8 @@ public class ParseValueLevelService {
 
         if (hasLevel(parsedValue)) {
             list.addAll(parseLevels(parsedValue));
+        } else {
+            parsedValue.setApValue(parsedValue.getParsedApValue().getAp(1));
         }
 
         parsedValue.setName(getOriginalName(parsedValue));
@@ -63,7 +66,8 @@ public class ParseValueLevelService {
             copy.setName(romanLevel);
         }
 
-        copy.setApWert(level * parsedValue.getApWert());
+        ParseApValueService.ParsedApValue apValue = parsedValue.getParsedApValue();
+        copy.setApValue(apValue.getAp(level));
 
         return copy;
     }

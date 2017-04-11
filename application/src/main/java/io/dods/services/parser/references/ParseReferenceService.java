@@ -108,6 +108,28 @@ public class ParseReferenceService {
 
             list.addAll(createKampftechnikReferences(parsedValue, onSetPriceCallback));
 
+        } else if (parsedValue.getName().equals("Adaption (Zauber)")) {
+            OnSetPriceCallback onSetPriceCallback = createOnSetPriceCallback(5, 10, 15, 20);
+
+            list.addAll(createZauberspruchReferences(parsedValue, onSetPriceCallback));
+
+        } else if (parsedValue.getName().equals("Lieblingszauber")) {
+            OnSetPriceCallback onSetPriceCallback = createOnSetPriceCallback(3, 6, 9, 12);
+
+            list.addAll(createZauberspruchReferences(parsedValue, onSetPriceCallback));
+
+        } else if (parsedValue.getName().equals("Fertigkeitsspezialisierung (Talente) 1")) {
+            OnSetPriceCallback onSetPriceCallback1 = createOnSetPriceCallback(1, 2, 3, 4);
+            list.addAll(createFertigkeitReferences(parsedValue, onSetPriceCallback1));
+
+        } else if (parsedValue.getName().equals("Fertigkeitsspezialisierung (Talente) 2")) {
+            OnSetPriceCallback onSetPriceCallback1 = createOnSetPriceCallback(2, 4, 6, 8);
+            list.addAll(createFertigkeitReferences(parsedValue, onSetPriceCallback1));
+
+        } else if (parsedValue.getName().equals("Fertigkeitsspezialisierung (Talente) 3")) {
+            OnSetPriceCallback onSetPriceCallback1 = createOnSetPriceCallback(3, 6, 9, 12);
+            list.addAll(createFertigkeitReferences(parsedValue, onSetPriceCallback1));
+
 //        } else if (parsedValue.getName().startsWith("Tradition")) {
 //            list.addAll(find("Tradition", parsedValue));
 
@@ -163,7 +185,7 @@ public class ParseReferenceService {
                     copy.setPublications(null);
 
                     if (referedAttribute instanceof ImprovementCharted) {
-                        copy.setApWert(onSetPriceCallback.onSetPrice((ImprovementCharted) referedAttribute));
+                        copy.setApValue(onSetPriceCallback.onSetPrice((ImprovementCharted) referedAttribute));
                     }
 
                     list.add(copy);
